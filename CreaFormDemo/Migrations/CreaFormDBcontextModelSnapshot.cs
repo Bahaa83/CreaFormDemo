@@ -709,7 +709,7 @@ namespace CreaFormDemo.Migrations
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
@@ -732,7 +732,7 @@ namespace CreaFormDemo.Migrations
                     b.Property<string>("role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("users");
                 });

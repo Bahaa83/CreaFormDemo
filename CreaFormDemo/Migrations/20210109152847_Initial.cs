@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CreaFormDemo.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -113,16 +113,18 @@ namespace CreaFormDemo.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSald = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    UserIdThatCreatedit = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.ID);
+                    table.PrimaryKey("PK_users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -243,7 +245,7 @@ namespace CreaFormDemo.Migrations
                         name: "FK_Rådgivare_users_UserID",
                         column: x => x.UserID,
                         principalTable: "users",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -331,7 +333,7 @@ namespace CreaFormDemo.Migrations
                         name: "FK_Klient_users_UserID",
                         column: x => x.UserID,
                         principalTable: "users",
-                        principalColumn: "ID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

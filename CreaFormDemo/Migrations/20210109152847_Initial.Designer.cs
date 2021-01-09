@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20201231222707_initial")]
-    partial class initial
+    [Migration("20210109152847_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -711,10 +711,13 @@ namespace CreaFormDemo.Migrations
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.User", b =>
                 {
-                    b.Property<int>("ID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
 
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
@@ -722,13 +725,16 @@ namespace CreaFormDemo.Migrations
                     b.Property<byte[]>("PasswordSald")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<string>("UserIdThatCreatedit")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("ID");
+                    b.HasKey("Id");
 
                     b.ToTable("users");
                 });

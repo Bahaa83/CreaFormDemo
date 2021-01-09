@@ -11,5 +11,6 @@ namespace CreaFormDemo.Repository
         Task<bool> UserExists(string name);
         Task<User> Rigester(int UserID,string name, string password,string role);
         Task<User> Login(string name, string password);
+       
     }
 }

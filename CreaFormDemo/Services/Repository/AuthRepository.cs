@@ -28,7 +28,7 @@ namespace CreaFormDemo.Services.Repository
         public async Task<bool> UserExists(string name)
         {
       
-            if(await _dB.Users.AnyAsync(x => x.UserName.Equals(name)))
+            if(await _dB.users.AnyAsync(x => x.UserName.Equals(name)))
             {
                 return true;
             }
@@ -37,19 +37,19 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<User> Login(string name, string password)
         {
-            var user = await _dB.Users.FirstOrDefaultAsync(x => x.UserName.Equals(name));
-        //    if(user==null)
-        //    {
-        //        return null;
-        //    }
-        //    if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, password))
-        //        return null;
-        //    user.Token = GenerateJwtToken(user);
+            var user = await _dB.users.FirstOrDefaultAsync(x => x.UserName.Equals(name));
+            if (user == null)
+            {
+                return null;
+            }
+            if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, password))
+                return null;
+            user.Token = GenerateJwtToken(user);
             return user;
 
         }
 
-       public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(User user)
         {
             var tokenhandler = new JwtSecurityTokenHandler();
             var Key = Encoding.ASCII.GetBytes(_appsettings.Secret);
@@ -57,8 +57,8 @@ namespace CreaFormDemo.Services.Repository
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                    new Claim(ClaimTypes.Name,user.UserName)
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role,user.role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256Signature)
@@ -75,12 +75,12 @@ namespace CreaFormDemo.Services.Repository
             var newuser = new User()
             {
                 UserName = name,
-                //PasswordHash = passwordhash,
-                //PasswordSald = passwordsald,
-                //role = role,
+                PasswordHash = passwordhash,
+                PasswordSald = passwordsald,
+                role = role,
                 UserIdThatCreatedit = userID.ToString()
             };
-               await _dB.Users.AddAsync(newuser);
+               await _dB.users.AddAsync(newuser);
                 await _dB.SaveChangesAsync();
             
          
@@ -116,5 +116,7 @@ namespace CreaFormDemo.Services.Repository
                 return true;
             }
         }
+
+       
     }
 }

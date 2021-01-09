@@ -5,16 +5,19 @@ using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CreaFormDemo.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -24,11 +27,13 @@ namespace CreaFormDemo.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IMapper mapper;
+        
 
-        public AccountsController(IAuthRepository repo,IMapper mapper)
+        public AccountsController(IMapper mapper, IAuthRepository repo)
         {
-            this.repo = repo;
+          
             this.mapper = mapper;
+            this.repo = repo;
         }
 
       
@@ -48,7 +53,7 @@ namespace CreaFormDemo.Controllers
             {
                 if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
                 {
-                    return Unauthorized();
+                    return Unauthorized("Du är inte auktoriserad");
                 }
                 if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
                 var user = await repo.Rigester(id,model.UserName.ToLower(), model.Password,"Client");
@@ -71,7 +76,7 @@ namespace CreaFormDemo.Controllers
         /// <param name="id">User ID</param>
         /// <returns>Användare med rådgivares role</returns>
         [Authorize(Roles ="Admin")]
-        [HttpPost("{ID}/CreateAdvisor")]
+        [HttpPost("{id}/CreateAdvisor")]
       
         [ProducesResponseType(201,Type =typeof(CreateUserDto))]
         [ProducesDefaultResponseType]
@@ -111,20 +116,22 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                
+              
                 var user = await repo.Login(model.UserName.ToLower(), model.Password);
                 if (user == null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
-                if (user.IsBlocked == true) return Unauthorized(new { message= "Din konto har avbrutit !" });
-                var userdtoReturn = mapper.Map<UserDto>(user);
-                return Ok(userdtoReturn);
+                if (user.IsBlocked == true) return Unauthorized(new { message = "Din konto har avbrutit !" });
+                var userdto = mapper.Map<UserDto>(user);
+                return Ok(userdto);
 
-            }GHGGHHHDDDDDDDDDDDDDD  
+            }
             catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+       
+
 
 
     }

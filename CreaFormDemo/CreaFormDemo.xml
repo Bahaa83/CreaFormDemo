@@ -4,7 +4,7 @@
         <name>CreaFormDemo</name>
     </assembly>
     <members>
-        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewKlient(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewKlient(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
             <summary>
             Skapa ett nytt användare med Klients roll
             </summary>
@@ -12,7 +12,7 @@
             <param name="model">UserRegisterDto From body</param>
             <returns> Användare med Klients role</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
             <summary>
             Skapa ett nytt användare konto med rådgivare roll
             </summary>
@@ -20,7 +20,7 @@
             <param name="id">User ID</param>
             <returns>Användare med rådgivares role</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AccountsController.Loginuser(CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+        <member name="M:CreaFormDemo.Controllers.AccountsController.Loginuser(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
             <summary>
             logga in
             </summary>

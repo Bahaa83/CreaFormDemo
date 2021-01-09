@@ -17,20 +17,20 @@ namespace CreaFormDemo.Services.Data
         }
         public void SeedUserData()
         {
-            if (!db.Users.Any())
+            if (!db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
                 CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
                 var newuser = new User()
                 {
                     UserName = "Bahaa",
-                    //PasswordHash = passwordhash,
-                    //PasswordSald = passwordsald,
-                    //role = "Admin",
-                   
-                    
+                    PasswordHash = passwordhash,
+                    PasswordSald = passwordsald,
+                    role = "Admin",
+
+
                 };
-                db.Users.Add(newuser);
+                db.users.Add(newuser);
                 db.SaveChanges();
             }
 

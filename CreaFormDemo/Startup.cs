@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.Entitys;
-using CreaFormDemo.Entitys.Identity;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services;
@@ -107,20 +106,6 @@ namespace CreaFormDemo
                     });
 
             });
-
-            //ADD Identity
-            IdentityBuilder builder = services.AddIdentityCore<User>(opt => {
-                opt.Password.RequireDigit = false;
-                opt.Password.RequiredLength = 4;
-                opt.Password.RequireNonAlphanumeric = false;
-                opt.Password.RequireUppercase = false;
-            });
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            builder.AddEntityFrameworkStores<CreaFormDBcontext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
-
             //add Authonticat 
 
             var appsettingsection = Configuration.GetSection("Appsettings");
@@ -145,33 +130,11 @@ namespace CreaFormDemo
                     ValidateAudience = false
                 };
             });
-            services.AddMvc(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                            .RequireAuthenticatedUser()
-                            .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-                options.EnableEndpointRouting = false;
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            
 
         }
         
-        
-        //services.AddMvc(options =>
-        //    {
-        //        var policy = new AuthorizationPolicyBuilder()
-        //                    .RequireAuthenticatedUser()
-        //                    .Build();
-        //options.Filters.Add(new AuthorizeFilter(policy));
-        //        options.EnableEndpointRouting = false;
-        //    }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-    //services.AddAuthorization(
-    //        options=>{
-    //            options.AddPolicy("RequireAdminRole",policy=>policy.RequireRole("Admin"));
-    //            options.AddPolicy("ModeratePhotoRole",policy=>policy.RequireRole("Admin","Moderator"));
-    //            options.AddPolicy("VipOnly",policy=>policy.RequireRole("VIP"));
-    //        }
-    //    );
+      
 
 
 
