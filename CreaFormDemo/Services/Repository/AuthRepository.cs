@@ -57,7 +57,7 @@ namespace CreaFormDemo.Services.Repository
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.ID.ToString()),
                     new Claim(ClaimTypes.Role,user.role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
