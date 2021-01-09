@@ -80,12 +80,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-
-
-                }
+                
                 if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
                 {
                     return Unauthorized();

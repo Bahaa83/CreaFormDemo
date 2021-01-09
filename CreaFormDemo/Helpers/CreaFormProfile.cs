@@ -18,7 +18,7 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Advisor, EditAdvisorDto>().ReverseMap();
             CreateMap<Advisor, AdvisorDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
-            CreateMap<User, CreateUserDto>().ReverseMap();
+            CreateMap<User, CreatedUserDto>().ReverseMap();
             CreateMap<Client,ClientDto>().ReverseMap();
         }
     }

@@ -45,7 +45,7 @@ namespace CreaFormDemo.Controllers
         /// <returns> Användare med Klients role</returns>
         [Authorize(Roles = "Advisor")]
         [HttpPost("{id}/CreateClient")]
-        [ProducesResponseType(201, Type = typeof(CreateUserDto))]
+        [ProducesResponseType(201, Type = typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> CreateNewKlient(int id,[FromBody] UserLogInDto model)
         {
@@ -78,7 +78,7 @@ namespace CreaFormDemo.Controllers
         [Authorize(Roles ="Admin")]
         [HttpPost("{id}/CreateAdvisor")]
       
-        [ProducesResponseType(201,Type =typeof(CreateUserDto))]
+        [ProducesResponseType(201,Type =typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> CreateNewAdvisor(int id,[FromBody] UserLogInDto model)
         {
