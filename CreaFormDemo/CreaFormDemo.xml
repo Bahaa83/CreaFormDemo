@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CreaFormDemo</name>
+    </assembly>
+    <members>
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewKlient(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+            <summary>
+            Skapa ett nytt användare med Klients roll
+            </summary>
+            <param name="id">User ID</param>
+            <param name="model">UserRegisterDto From body</param>
+            <returns> Användare med Klients role</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+            <summary>
+            Skapa ett nytt användare konto med rådgivare roll
+            </summary>
+            <param name="model">UserRegisterDto From body</param>
+            <param name="id">User ID</param>
+            <returns>Användare med rådgivares role</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AccountsController.Loginuser(CreaFormDemo.DtoModel.UserDtoModel.StandardUserDto)">
+            <summary>
+            logga in
+            </summary>
+            <param name="model"></param>
+            <returns> Användaren med Token</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdminController.GetAllClients">
+            <summary>
+            Admin kan hämta alla rådgivare som är finns
+            </summary>
+            <returns>List av Rådgivare </returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdminController.CancelAdvisorAccount(System.Int32)">
+            <summary>
+            Avbryt ett Rådgivare konto
+            </summary>
+            <param name="advisorid">Rådgivare ID</param>
+            <returns>Rådgivaren som har tagits bort(hans/hennes Konto) </returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClients(System.Int32)">
+            <summary>
+            Hämta alla Klienter som  rådgivaren är ansvårig
+            </summary>
+            <param name="userid">User ID</param>
+            <returns>Lista av Klienter sor rådgivaren är ansvårig</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.CompletionAdvisor(System.Int32,CreaFormDemo.DtoModel.CreateAdvisorDto)">
+            <summary>
+             Komplettering Rådgivare profil
+            </summary>
+            <param name="id"> id</param>
+            <param name="createddvisordto">CreateAdvisorDto model</param>
+            <returns>AdvisorDto model</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.UpdateAdvisorProfile(System.Int32,CreaFormDemo.DtoModel.EditAdvisorDto)">
+            <summary>
+            Rådgivaren Kan uppdatera sin profile
+            </summary>
+            <param name=" userid">User ID </param>
+            <param name="editAdvisorDto"> editAdvisorDto MODEL</param>
+            <returns>rådgivarefilen som har uppdaterats</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClientsbyName(System.String,System.Int32)">
+             <summary>
+            Rådgivaren kan söka efter Klienten som är hans ansvar vid namn
+             </summary>
+             <param name="userid">User ID </param>
+             <param name="name">,String Namn</param>
+             <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
+        </member>
+    </members>
+</doc>
