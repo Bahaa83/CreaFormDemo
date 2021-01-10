@@ -3,10 +3,13 @@ using CreaFormDemo.DtoModel;
 using CreaFormDemo.DtoModel.UserDtoModel;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
+using CreaFormDemo.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,13 +30,18 @@ namespace CreaFormDemo.Controllers
     {
         private readonly IAuthRepository repo;
         private readonly IMapper mapper;
-        
+        private readonly Appsettings _appsettings;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public AccountsController(IMapper mapper, IAuthRepository repo)
+        public AccountsController(IMapper mapper, UserManager<User> userManager, IOptions<Appsettings> 
+            appsettings,SignInManager<User> signInManager)
         {
           
             this.mapper = mapper;
-            this.repo = repo;
+            _appsettings = appsettings.Value;
+            this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
       
@@ -107,8 +115,8 @@ namespace CreaFormDemo.Controllers
         /// <param name="model"></param>
         /// <returns> Användaren med Token</returns>
         [AllowAnonymous]
-        [HttpPost("Login")]
-        //[Route("api/Accounts/Login")]
+        [HttpPost]
+        [Route("Login")]
         [ProducesResponseType(200,Type =typeof(UserDto))]
         [ProducesDefaultResponseType]
 
@@ -116,12 +124,29 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-              
-                var user = await repo.Login(model.UserName.ToLower(), model.Password);
-                if (user == null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
+
+                //var user = await repo.Login(model.UserName.ToLower(), model.Password);
+                //if (user == null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
+                //if (user.IsBlocked == true) return Unauthorized(new { message = "Din konto har avbrutit !" });
+                //var userdto = mapper.Map<UserDto>(user);
+                //return Ok(userdto);
+                var user = await userManager.FindByNameAsync(model.UserName);
                 if (user.IsBlocked == true) return Unauthorized(new { message = "Din konto har avbrutit !" });
-                var userdto = mapper.Map<UserDto>(user);
-                return Ok(userdto);
+                if (user==null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
+                var result = await signInManager.CheckPasswordSignInAsync(user, model.Password, false);
+                if(result.Succeeded)
+                {
+                    var userToReturn= mapper.Map<UserDto>(user);
+                    return Ok(new
+                    {
+                        userToReturn,
+                        token = GenerateJwtToken(user)
+                    }); 
+                }
+                else
+                {
+                    return Unauthorized();
+                }
 
             }
             catch (Exception)
@@ -130,7 +155,25 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-       
+        private string GenerateJwtToken(User user)
+        {
+            var tokenhandler = new JwtSecurityTokenHandler();
+            var Key = Encoding.ASCII.GetBytes(_appsettings.Secret);
+            var TokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name,user.UserName)
+                }),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenhandler.CreateToken(TokenDescriptor);
+            string Token = tokenhandler.WriteToken(token);
+            return Token;
+        }
+
 
 
 

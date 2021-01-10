@@ -1,5 +1,6 @@
 ﻿using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Users;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +11,22 @@ namespace CreaFormDemo.Services.Data
     public class SeedData
     {
         private readonly CreaFormDBcontext db;
-
-        public SeedData(CreaFormDBcontext db)
+        private readonly UserManager<User> userManeger;
+        public SeedData(CreaFormDBcontext db, UserManager<User> userManeger)
         {
             this.db = db;
+            this.userManeger = userManeger;
         }
         public void SeedUserData()
         {
-            if (!db.Users.Any())
+            if (!userManeger.Users.Any())
             {
-                byte[] passwordhash, passwordsald;
-                CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
                 var newuser = new User()
                 {
                     UserName = "Bahaa",
-                    //PasswordHash = passwordhash,
-                    //PasswordSald = passwordsald,
-                    //role = "Admin",
-
-
                 };
-                db.Users.Add(newuser);
-                db.SaveChanges();
+                userManeger.CreateAsync(newuser, "bahaa1983").Wait();
             }
-
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
