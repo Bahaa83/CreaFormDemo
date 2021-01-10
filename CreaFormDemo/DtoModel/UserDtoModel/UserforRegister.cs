@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CreaFormDemo.DtoModel
+namespace CreaFormDemo.DtoModel.UserDtoModel
 {
-    public class UserDto
+    public class UserforRegister
     {
-        
-        //public int Id { get; set; }
         public string UserName { get; set; }
-     
-       
-        //public string Token { get; set; }
+
+        public string Password { get; set; }
     }
 }

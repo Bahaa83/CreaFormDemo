@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CreaFormDemo.DtoModel.ClientDtoModel;
+using CreaFormDemo.DtoModel.UserDtoModel;
 using CreaFormDemo.Entitys.Users;
 
 using System;
@@ -19,6 +20,7 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Advisor, AdvisorDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, CreatedUserDto>().ReverseMap();
+            CreateMap<User, UserforRegister>().ReverseMap();
             CreateMap<Client,ClientDto>().ReverseMap();
         }
     }

@@ -1,6 +1,10 @@
-﻿using CreaFormDemo.Entitys;
+﻿using AutoMapper;
+using CreaFormDemo.DtoModel;
+using CreaFormDemo.DtoModel.UserDtoModel;
+using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +16,27 @@ namespace CreaFormDemo.Services.Data
     {
         private readonly CreaFormDBcontext db;
         private readonly UserManager<User> userManeger;
-        public SeedData(CreaFormDBcontext db, UserManager<User> userManeger)
+        private readonly IMapper mapper;
+        public SeedData(CreaFormDBcontext db,IMapper mapper , UserManager<User> userManeger)
         {
             this.db = db;
             this.userManeger = userManeger;
+            this.mapper = mapper;
         }
-        public async void SeedUserData()
+        public  void SeedUserData()
         {
             if (!userManeger.Users.Any())
             {
-                var newuser = new User()
+                var newuser = new UserDto()
                 {
                     UserName = "Bahaa",
                     
                 };
-                await userManeger.CreateAsync(newuser, "bahaa1983");
+                var user = mapper.Map<User>(newuser);
+
+                userManeger.CreateAsync(user, "bahaa1983").Wait();
             }
+            
         }
 
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
