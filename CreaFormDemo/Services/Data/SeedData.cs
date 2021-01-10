@@ -17,15 +17,16 @@ namespace CreaFormDemo.Services.Data
             this.db = db;
             this.userManeger = userManeger;
         }
-        public void SeedUserData()
+        public async void SeedUserData()
         {
             if (!userManeger.Users.Any())
             {
                 var newuser = new User()
                 {
                     UserName = "Bahaa",
+                    
                 };
-                userManeger.CreateAsync(newuser, "bahaa1983").Wait();
+                await userManeger.CreateAsync(newuser, "bahaa1983");
             }
         }
 
