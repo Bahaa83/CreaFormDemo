@@ -1,4 +1,5 @@
 ﻿using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.IdentityEntity;
 using CreaFormDemo.Entitys.LifestyleModel.Habits;
 using CreaFormDemo.Entitys.LifestyleModel.job;
 using CreaFormDemo.Entitys.LifestyleModel.Privat;
@@ -15,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:DbContext
+    public class CreaFormDBcontext:IdentityDbContext<User,Role,int,IdentityUserClaim<int>,IdentityUserRole<int>,IdentityUserLogin<int>,IdentityRoleClaim<int>,IdentityUserToken<int>>
     {
        
 
@@ -198,7 +199,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<StrengthLackUnderGroup> strengthLackUnderGroups { get; set; }
         public DbSet<Client>  clients { get; set; }
         public DbSet<Advisor>  advisors { get; set; }
-        public DbSet<User> users { get; set; }
+        //public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
         public DbSet<clientProfile>  clientProfiles { get; set; }
         public DbSet<ClientMedicine>  clientMedicines{ get; set; }

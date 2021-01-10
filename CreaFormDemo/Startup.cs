@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.Entitys;
+using CreaFormDemo.Entitys.IdentityEntity;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services;
@@ -50,6 +51,20 @@ namespace CreaFormDemo
             services.AddControllers();
             services.AddDbContext<CreaFormDBcontext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("Connst")));
+            //Add Idintity
+            IdentityBuilder builder = services.AddIdentityCore<User>(Options =>
+            {
+                Options.Password.RequireDigit = true;
+                Options.Password.RequiredLength = 4;
+                Options.Password.RequireNonAlphanumeric = true;
+                Options.Password.RequireUppercase = true;
+            });
+            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
+            builder.AddEntityFrameworkStores<CreaFormDBcontext>();
+            builder.AddRoleValidator<RoleValidator<Role>>();
+            builder.AddRoleManager<RoleManager<Role>>();
+            builder.AddSignInManager<SignInManager<User>>();
+            //endIdentity
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
             services.AddTransient<IAdvisorRepository, AdvisorRepository>();

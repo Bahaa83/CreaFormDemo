@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys.Users
 {
-    public class User
+    public class User:IdentityUser<int>
     {
-        [Key]
-        public int ID { get; set; }
-        public string UserName { get; set; }
-        public byte[] PasswordHash { get; set; }
-        public byte[] PasswordSald { get; set; }
-        public string role { get; set; }
+        //[Key]
+        //public int ID { get; set; }
+        //public string UserName { get; set; }
+        //public byte[] PasswordHash { get; set; }
+        //public byte[] PasswordSald { get; set; }
+        //public string role { get; set; }
         public bool IsBlocked { get; set; }
         [NotMapped]
-        public string Token { get; set; }
+        //public string Token { get; set; }
         public Advisor  advisor { get; set; }
         public Client  client { get; set; }
         public string UserIdThatCreatedit { get; set; }
