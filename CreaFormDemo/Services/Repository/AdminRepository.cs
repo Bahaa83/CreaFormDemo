@@ -24,7 +24,7 @@ namespace CreaFormDemo.Services.Repository
             if (result == null) return null;
           var user= await GetUserByID(result.UserID);
             if (user == null) return null;
-            user.IsBlocked = true;
+            //user.IsBlocked = true;
             if (!await Save()) return null;
             return result;
         }

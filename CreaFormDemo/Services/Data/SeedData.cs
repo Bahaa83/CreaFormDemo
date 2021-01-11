@@ -34,7 +34,7 @@ namespace CreaFormDemo.Services.Data
                     
                 };
                 var user = mapper.Map<User>(newuser);
-
+                //user.IsBlocked = false;
                 userManeger.CreateAsync(user, newuser.Password).Wait();
             }
             

@@ -13,11 +13,6 @@
             <returns> Användare med Klients role</returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
-            <summary>
-            Skapa ett nytt användare konto med rådgivare roll
-            </summary>
-            <param name="model">UserRegisterDto From body</param>
-            <param name="id">User ID</param>
             <returns>Användare med rådgivares role</returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.AccountsController.Loginuser(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">

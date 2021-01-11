@@ -78,7 +78,7 @@ namespace CreaFormDemo.Services.Repository
                 //PasswordHash = passwordhash,
                 //PasswordSald = passwordsald,
                 //role = role,
-                UserIdThatCreatedit = userID.ToString()
+                //UserIdThatCreatedit = userID.ToString()
             };
                await _dB.Users.AddAsync(newuser);
                 await _dB.SaveChangesAsync();
