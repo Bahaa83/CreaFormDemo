@@ -28,7 +28,7 @@ namespace CreaFormDemo.Controllers
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public class AccountsController : ControllerBase
     {
-        private readonly IAuthRepository repo;
+        //private readonly IAuthRepository repo;
         private readonly IMapper mapper;
         private readonly Appsettings _appsettings;
         private readonly UserManager<User> userManager;
@@ -143,7 +143,7 @@ namespace CreaFormDemo.Controllers
                 //var userdto = mapper.Map<UserDto>(user);
                 //return Ok(userdto);
                 var user = await userManager.FindByNameAsync(model.UserName);
-                if (user.IsBlocked2) return Unauthorized(new
+                if (user.IsBlocked==true) return Unauthorized(new
                 { message = "Din konto har avbrutit ! " });
 
                 if (user==null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
