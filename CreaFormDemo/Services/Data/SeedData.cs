@@ -27,14 +27,15 @@ namespace CreaFormDemo.Services.Data
         {
             if (!userManeger.Users.Any())
             {
-                var newuser = new UserDto()
+                var newuser = new UserLogInDto()
                 {
                     UserName = "Bahaa",
+                    Password="Bahaa1983"
                     
                 };
                 var user = mapper.Map<User>(newuser);
 
-                userManeger.CreateAsync(user, "bahaa1983").Wait();
+                userManeger.CreateAsync(user, newuser.Password).Wait();
             }
             
         }

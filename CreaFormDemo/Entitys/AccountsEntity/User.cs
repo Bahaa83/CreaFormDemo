@@ -23,10 +23,8 @@ namespace CreaFormDemo.Entitys.Users
         public Advisor  advisor { get; set; }
         public Client  client { get; set; }
         public string UserIdThatCreatedit { get; set; }
-        public User()
-        {
-            IsBlocked = false;
-        }
+       
+        
     
        
     

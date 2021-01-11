@@ -52,18 +52,16 @@ namespace CreaFormDemo
             services.AddDbContext<CreaFormDBcontext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("Connst")));
             //Add Idintity
-            IdentityBuilder builder = services.AddIdentityCore<User>(Options =>
-            {
-                Options.Password.RequireDigit = true;
-                Options.Password.RequiredLength = 4;
-                Options.Password.RequireNonAlphanumeric = true;
-                Options.Password.RequireUppercase = true;
-            });
-            builder = new IdentityBuilder(builder.UserType, typeof(Role), builder.Services);
-            builder.AddEntityFrameworkStores<CreaFormDBcontext>();
-            builder.AddRoleValidator<RoleValidator<Role>>();
-            builder.AddRoleManager<RoleManager<Role>>();
-            builder.AddSignInManager<SignInManager<User>>();
+            services.AddIdentity<User, Role>(Options =>
+              {
+                  Options.Password.RequireDigit = true;
+                  Options.Password.RequiredLength = 4;
+                  Options.Password.RequireNonAlphanumeric = true;
+                  Options.Password.RequireUppercase = true;
+              }).AddEntityFrameworkStores<CreaFormDBcontext>().AddDefaultTokenProviders();
+
+
+
             //endIdentity
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();

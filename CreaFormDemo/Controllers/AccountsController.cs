@@ -83,25 +83,37 @@ namespace CreaFormDemo.Controllers
         /// <param name="model">UserRegisterDto From body</param>
         /// <param name="id">User ID</param>
         /// <returns>Användare med rådgivares role</returns>
-        [Authorize(Roles ="Admin")]
-        [HttpPost("{id}/CreateAdvisor")]
+        //[Authorize(Roles ="Admin")]
+        [AllowAnonymous]
+        [HttpPost("CreateAdvisor")]
       
         [ProducesResponseType(201,Type =typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> CreateNewAdvisor(int id,[FromBody] UserLogInDto model)
+        public async Task<ActionResult> CreateNewAdvisor(/*int id,*/[FromBody] UserLogInDto model)
         {
             try
             {
-                if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                //if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                //{
+                //    return Unauthorized();
+                //}
+                //if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
+                //var user = await repo.Rigester(id,model.UserName.ToLower(), model.Password, "Advisor");
+                //if (user == null)
+                //{ return BadRequest("Ett fel uppstod när Rådgivaren registreras"); }
+                
+                var Existuser = await userManager.FindByNameAsync(model.UserName);
+                if(Existuser != null) return BadRequest("Användarnamnet är redan registrerat");
+                var user = mapper.Map<User>(model);
+                var result = await userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
                 {
-                    return Unauthorized();
+                    return StatusCode(201, model);
                 }
-                if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
-                var user = await repo.Rigester(id,model.UserName.ToLower(), model.Password, "Advisor");
-                if (user == null)
-                { return BadRequest("Ett fel uppstod när Rådgivaren registreras"); }
-               
-                return StatusCode(201, model);
+                else
+                {
+                    { return BadRequest("Ett fel uppstod när Rådgivaren registreras"); }
+                }
             }
             catch (Exception)
             {
@@ -131,7 +143,7 @@ namespace CreaFormDemo.Controllers
                 //var userdto = mapper.Map<UserDto>(user);
                 //return Ok(userdto);
                 var user = await userManager.FindByNameAsync(model.UserName);
-                if (user.IsBlocked == true) return Unauthorized(new
+                if (user.IsBlocked2) return Unauthorized(new
                 { message = "Din konto har avbrutit ! " });
 
                 if (user==null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
