@@ -15,30 +15,29 @@ namespace CreaFormDemo.Services.Data
     public class SeedData
     {
         private readonly CreaFormDBcontext db;
-        private readonly UserManager<User> userManeger;
-        private readonly IMapper mapper;
-        public SeedData(CreaFormDBcontext db,IMapper mapper , UserManager<User> userManeger)
+
+        public SeedData(CreaFormDBcontext db)
         {
             this.db = db;
-            this.userManeger = userManeger;
-            this.mapper = mapper;
         }
-        public  void SeedUserData()
+        public void SeedUserData()
         {
-            if (!userManeger.Users.Any())
+            if (!db.users.Any())
             {
-                var newuser = new UserLogInDto()
+                byte[] passwordhash, passwordsald;
+                CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
+                var newuser = new User()
                 {
                     UserName = "Bahaa",
-                    Password="Bahaa1983"
-                    
+                    PasswordHash = passwordhash,
+                    PasswordSald = passwordsald,
+                    role = "Admin"
                 };
-                var user = mapper.Map<User>(newuser);
-                //user.IsBlocked = false;
-                userManeger.CreateAsync(user, newuser.Password).Wait();
+                db.users.Add(newuser);
+                db.SaveChanges();
             }
-            
         }
+
 
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
         {

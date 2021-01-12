@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.DtoModel
 {
-    public class CreaFormProfile:Profile
+    public class CreaFormProfile : Profile
     {
         public CreaFormProfile()
         {
@@ -20,10 +20,8 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Advisor, AdvisorDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, CreatedUserDto>().ReverseMap();
-            CreateMap<User,UserLogInDto>().ReverseMap();
-
-            CreateMap<User, UserforRegister>().ReverseMap();
-            CreateMap<Client,ClientDto>().ReverseMap();
+            CreateMap<Client, ClientDto>().ReverseMap();
         }
+
     }
 }

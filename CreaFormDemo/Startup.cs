@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.Entitys;
-using CreaFormDemo.Entitys.IdentityEntity;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services;
@@ -51,18 +50,6 @@ namespace CreaFormDemo
             services.AddControllers();
             services.AddDbContext<CreaFormDBcontext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("Connst")));
-            //Add Idintity
-            services.AddIdentity<User, Role>(Options =>
-              {
-                  Options.Password.RequireDigit = true;
-                  Options.Password.RequiredLength = 4;
-                  Options.Password.RequireNonAlphanumeric = true;
-                  Options.Password.RequireUppercase = true;
-              }).AddEntityFrameworkStores<CreaFormDBcontext>().AddDefaultTokenProviders();
-
-
-
-            //endIdentity
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
             services.AddTransient<IAdvisorRepository, AdvisorRepository>();
