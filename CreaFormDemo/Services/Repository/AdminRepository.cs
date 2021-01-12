@@ -54,9 +54,9 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task <IEnumerable<Advisor>>GetAdvisorByName(string name)
         {
-            var Advisor = await dB.advisors.Where(x => x.FirstName.Equals(name.ToLower())).ToListAsync();
-            if (Advisor.Count() == 0) return null;
-            return Advisor;
+            var advisors = await dB.advisors.Where(x => x.FirstName.Equals(name.ToLower())).ToListAsync();
+            if (advisors==null) return null;
+            return advisors;
         }
     }
 }

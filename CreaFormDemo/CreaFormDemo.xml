@@ -27,7 +27,7 @@
             <param name="model"></param>
             <returns> Användaren med Token</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdminController.GetAllClients">
+        <member name="M:CreaFormDemo.Controllers.AdminController.GetAllAdvisors">
             <summary>
             Admin kan hämta alla rådgivare som är finns
             </summary>
@@ -39,6 +39,13 @@
             </summary>
             <param name="advisorid">Rådgivare ID</param>
             <returns>Rådgivaren som har tagits bort(hans/hennes Konto) </returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdminController.GetAdvisorByname(System.String)">
+            <summary>
+            Admin kan söka efter en Rådgivare via namn
+            </summary>
+            <param name="Name">Rådgivaren namn</param>
+            <returns></returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClients(System.Int32)">
             <summary>
