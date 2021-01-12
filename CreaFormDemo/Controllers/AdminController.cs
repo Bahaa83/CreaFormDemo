@@ -37,7 +37,7 @@ namespace CreaFormDemo.Controllers
         [HttpGet]
         [ProducesResponseType(200,Type =typeof(List<AdvisorDto>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>GetAllClients()
+        public async Task<ActionResult> GetAllAdvisors()
         {
             try
             {
@@ -76,6 +76,36 @@ namespace CreaFormDemo.Controllers
                 var deletedadvisor = new AdvisorDto();
                 deletedadvisor= mapper.Map<AdvisorDto>(result);
                 return deletedadvisor;
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Admin kan söka efter en Rådgivare via namn
+        /// </summary>
+        /// <param name="userid">id</param>
+        /// <param name="Name">Rådgivaren namn</param>
+        /// <returns></returns>
+        [Authorize(Roles ="Admin")]
+        [HttpGet("AdvisorByName")]
+        [ProducesResponseType(200,Type =typeof(AdvisorDto))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult>GetAdvisorByname(string Name)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(Name)) return BadRequest();
+                var advisors = await repo.GetAdvisorByName(Name);
+                if (advisors.Count() == 0) return BadRequest($"Det finns inte Klienter som matchar den här namnet!{Name}");
+                var advisorsDto = new List<AdvisorDto>();
+                foreach (var advisor in advisors)
+                {
+                    advisorsDto.Add(mapper.Map<AdvisorDto>(advisor));
+                }
+                return Ok(advisorsDto);
             }
             catch (Exception)
             {

@@ -12,5 +12,6 @@ namespace CreaFormDemo.Services.IRepository
         Task<Advisor> CancelAdvisorAccount(int advisorID);
         Task<Advisor> GetAdvisorByID(int id);
         Task<bool> Save();
+        Task<IEnumerable<Advisor>> GetAdvisorByName(string name);
     }
 }

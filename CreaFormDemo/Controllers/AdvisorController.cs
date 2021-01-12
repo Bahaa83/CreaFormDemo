@@ -150,7 +150,7 @@ namespace CreaFormDemo.Controllers
         /// <param name="name">,String Namn</param>
         /// <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         [Authorize(Roles ="Advisor")]
-        [HttpGet("{userid}/GetClientsName")]
+        [HttpGet("{userid}/ClientByName")]
         [ProducesResponseType(200,Type =typeof(List<ClientDto>))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>GetClientsbyName( string name, int userid)
@@ -164,7 +164,7 @@ namespace CreaFormDemo.Controllers
                 if (string.IsNullOrEmpty(name)) return BadRequest();
                 var advisor = await repo.GetAdvisorByUserID(userid);
                 var Clients = await repo.GetClientbyName( name, advisor.ID);
-                if (Clients.Count()==0) return NotFound("Det finns inte Klienter som matchar den här namnet!");
+                if (Clients.Count()==0) return NotFound($"Det finns inte Klienter som matchar den här namnet!{ name}");
                 var ClientsDto = new List<ClientDto>();
                 foreach (var client in Clients)
                 {
