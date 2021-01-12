@@ -98,7 +98,7 @@ namespace CreaFormDemo.Controllers
             {
                 if (string.IsNullOrEmpty(Name)) return BadRequest();
                 var advisors = await repo.GetAdvisorByName(Name);
-                if (advisors ==null) return BadRequest($"Det finns inte Klienter som matchar den här namnet!{Name}");
+                if (advisors.Count()==0) return BadRequest($"Det finns inte Klienter som matchar den här namnet!{Name}");
                 var advisorsDto = new List<AdvisorDto>();
                 foreach (var advisor in advisors)
                 {
