@@ -122,7 +122,8 @@ namespace CreaFormDemo.Controllers
             {
 
                 var user = await repo.Login(model.UserName.ToLower(), model.Password);
-                if (user == null) return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
+                if (user == null)
+                    return BadRequest(new { message = "Användarnamn eller lösenord är felaktigt" });
                 if (user.IsBlocked == true) return Unauthorized(new { message = "Din konto har avbrutit !" });
                 var userdto = mapper.Map<UserDto>(user);
                 return Ok(userdto);
