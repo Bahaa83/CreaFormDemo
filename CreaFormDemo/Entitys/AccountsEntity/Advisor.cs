@@ -18,7 +18,11 @@ namespace CreaFormDemo.Entitys.Users
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Addres { get; set; }
+        [Column(name: "Gatuadressr")]
+        public string Streetaddress { get; set; }
+        [Column(name: "Postnummer")]
+        public int ZiPCod { get; set; }
+        public string Ort { get; set; }
 
         public IEnumerable<Client>  clients{ get; set; }
 

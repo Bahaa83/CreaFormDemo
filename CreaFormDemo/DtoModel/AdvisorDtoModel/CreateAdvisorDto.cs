@@ -27,7 +27,11 @@ namespace CreaFormDemo.DtoModel
         [Required(ErrorMessage = " Phone är obligatorisk")]
         public string Phone { get; set; }
 
-        [Required(ErrorMessage = "Addresen är obligatorisk")]
-        public string Addres { get; set; }
+        [Required(ErrorMessage = "Gatuadress är obligatorisk")]
+        public string Streetaddress { get; set; }
+        [Required(ErrorMessage = "Postnummer är obligatorisk")]
+        public int ZiPCod { get; set; }
+        [Required(ErrorMessage = "Ort är obligatorisk")]
+        public string  Ort { get; set; }
     }
 }

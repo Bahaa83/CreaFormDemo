@@ -14,8 +14,9 @@ namespace CreaFormDemo.DtoModel
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public string Addres { get; set; }
-
+        public string Streetaddress { get; set; }
+        public int ZiPCod { get; set; }
+        public string Ort { get; set; }
         public int UserID { get; set; }
 
 
