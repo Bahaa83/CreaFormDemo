@@ -62,12 +62,12 @@
             <param name="createddvisordto">CreateAdvisorDto model</param>
             <returns>AdvisorDto model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.UpdateAdvisorProfile(System.Int32,CreaFormDemo.DtoModel.EditAdvisorDto)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.UpdateAdvisorProfile(System.Int32,CreaFormDemo.DtoModel.CreateAdvisorDto)">
             <summary>
             Rådgivaren Kan uppdatera sin profile
             </summary>
             <param name=" userid">User ID </param>
-            <param name="editAdvisorDto"> editAdvisorDto MODEL</param>
+            <param name="editAdvisor"> CreateAdvisorDto MODEL</param>
             <returns>rådgivarefilen som har uppdaterats</returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClientsbyName(System.String,System.Int32)">

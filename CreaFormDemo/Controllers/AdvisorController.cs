@@ -112,13 +112,13 @@ namespace CreaFormDemo.Controllers
         /// Rådgivaren Kan uppdatera sin profile
         /// </summary>
         /// <param name=" userid">User ID </param>
-        /// <param name="editAdvisorDto"> editAdvisorDto MODEL</param>
+        /// <param name="editAdvisor"> CreateAdvisorDto MODEL</param>
         /// <returns>rådgivarefilen som har uppdaterats</returns>
         [Authorize(Roles = "Advisor")]
         [HttpPut("{userid}/Update")]
         [ProducesResponseType(204, Type = typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateAdvisorProfile(int userid , [FromBody] EditAdvisorDto editAdvisorDto)
+        public async Task<ActionResult> UpdateAdvisorProfile(int userid , [FromBody] CreateAdvisorDto editAdvisor)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace CreaFormDemo.Controllers
               
                 var advisorfromRepo = await repo.GetAdvisorByUserID(userid);
                 if (advisorfromRepo == null) return NotFound();
-                mapper.Map(editAdvisorDto, advisorfromRepo);
+                mapper.Map(editAdvisor, advisorfromRepo);
 
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
 

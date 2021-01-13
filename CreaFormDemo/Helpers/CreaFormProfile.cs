@@ -16,7 +16,7 @@ namespace CreaFormDemo.DtoModel
         {
             CreateMap<AdvisorDto, CreateAdvisorDto>().ForMember(des => des.ConfirmEmail, opt => opt.MapFrom(scr => scr.Email));
             CreateMap<CreateAdvisorDto, AdvisorDto>();
-            CreateMap<Advisor, EditAdvisorDto>().ReverseMap();
+            CreateMap<CreateAdvisorDto, Advisor>().ReverseMap();
             CreateMap<Advisor, AdvisorDto>().ReverseMap();
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, CreatedUserDto>().ReverseMap();
