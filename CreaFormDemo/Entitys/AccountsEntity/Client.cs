@@ -18,9 +18,13 @@ namespace CreaFormDemo.Entitys.Users
         public string Firstname { get; set; }
         [Column(name: "Efternamn")]
         public string Lastname { get; set; }
-        public string Address { get; set; }
         public string Email { get; set; }
         public string phone { get; set; }
+        [Column(name: "Gatuadress")]
+        public string Streetaddress { get; set; }
+        [Column(name: "Postnummer")]
+        public int ZiPCod { get; set; }
+        public string Ort { get; set; }
         [Column(name: "Är företagskonto")]
         public bool isCompany { get; set; }
 
