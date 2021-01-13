@@ -134,7 +134,7 @@ namespace CreaFormDemo.Controllers
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
 
                 var advisordto = mapper.Map<AdvisorDto>(advisorfromRepo);
-                return StatusCode(204, advisordto);
+                return Ok(advisordto);
             }
             catch (Exception)
             {
