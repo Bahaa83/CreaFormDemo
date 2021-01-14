@@ -51,8 +51,9 @@ namespace CreaFormDemo
             services.AddDbContext<CreaFormDBcontext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("Connst")));
             services.AddScoped<IAuthRepository,AuthRepository>();
-            services.AddTransient<IAdminRepository, AdminRepository>();
-            services.AddTransient<IAdvisorRepository, AdvisorRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IAdvisorRepository, AdvisorRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
             services.AddTransient<SeedData>();
             services.AddAutoMapper(typeof(CreaFormProfile));
 

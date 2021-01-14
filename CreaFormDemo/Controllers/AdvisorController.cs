@@ -38,7 +38,7 @@ namespace CreaFormDemo.Controllers
         /// <returns>Lista av Klienter sor rådgivaren är ansvårig</returns>
         [Authorize(Roles ="Advisor")]
         [HttpGet("{userid}/GetClients")]
-        [ProducesResponseType(200,Type = typeof(List<ClientDto>))]
+        [ProducesResponseType(200,Type = typeof(List<ClientToReturnDto>))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>GetClients(int userid)
         {
@@ -50,12 +50,12 @@ namespace CreaFormDemo.Controllers
                 }
                 var advisor =  await repo.GetAdvisorByUserID( userid);
                var  Clients = await repo.GetClients(advisor.ID);
-                var ClientsDto = new List<ClientDto>();
+                var ClientsDto = new List<ClientToReturnDto>();
 
                 if (Clients.Count() == 0) return NotFound("Det finns inga kunder som du är ansvariga för dem ! ");
                 foreach (var client in Clients)
                 {
-                    ClientsDto.Add(mapper.Map<ClientDto>(client));
+                    ClientsDto.Add(mapper.Map<ClientToReturnDto>(client));
                 }
                 return Ok(ClientsDto);
             }
@@ -73,7 +73,7 @@ namespace CreaFormDemo.Controllers
         /// <returns>AdvisorDto model</returns>
 
         [Authorize(Roles = "Advisor")]
-        [HttpPost("{id}/Completion")]
+        [HttpPost("{id}/CompletionAdvisor")]
         [ProducesResponseType(201,Type=typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>CompletionAdvisor(int id, [FromBody]CreateAdvisorDto createddvisordto)
@@ -151,7 +151,7 @@ namespace CreaFormDemo.Controllers
         /// <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         [Authorize(Roles ="Advisor")]
         [HttpGet("{userid}/ClientByName")]
-        [ProducesResponseType(200,Type =typeof(List<ClientDto>))]
+        [ProducesResponseType(200,Type =typeof(List<ClientToReturnDto>))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>GetClientsbyName( string name, int userid)
         {
@@ -165,10 +165,10 @@ namespace CreaFormDemo.Controllers
                 var advisor = await repo.GetAdvisorByUserID(userid);
                 var Clients = await repo.GetClientbyName( name, advisor.ID);
                 if (Clients.Count()==0) return NotFound($"Det finns inte Klienter som matchar den här namnet!{ name}");
-                var ClientsDto = new List<ClientDto>();
+                var ClientsDto = new List<ClientToReturnDto>();
                 foreach (var client in Clients)
                 {
-                    ClientsDto.Add(mapper.Map<ClientDto>(client));
+                    ClientsDto.Add(mapper.Map<ClientToReturnDto>(client));
                 }
                 
                 return Ok(ClientsDto) ;

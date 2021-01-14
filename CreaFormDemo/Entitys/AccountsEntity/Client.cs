@@ -28,8 +28,6 @@ namespace CreaFormDemo.Entitys.Users
         [Column(name: "Är företagskonto")]
         public bool isCompany { get; set; }
 
-
-        
         public int UserID { get; set; }
         public User  user { get; set; }
 
