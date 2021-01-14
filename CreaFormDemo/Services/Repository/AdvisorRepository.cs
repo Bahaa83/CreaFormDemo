@@ -41,7 +41,9 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<IEnumerable<Client>> GetClients(int advisorID)
         {
-            return await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
+           var clients= await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
+            if (clients == null) return null;
+            return clients;
         }
 
         public async Task<bool> Save()

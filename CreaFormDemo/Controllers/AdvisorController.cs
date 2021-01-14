@@ -50,14 +50,14 @@ namespace CreaFormDemo.Controllers
                 }
                 var advisor =  await repo.GetAdvisorByUserID( userid);
                var  Clients = await repo.GetClients(advisor.ID);
-                var ClientsDto = new List<ClientToReturnDto>();
+                var ClientsToreturn = new List<ClientToReturnDto>();
 
-                if (Clients.Count() == 0) return NotFound("Det finns inga kunder som du är ansvariga för dem ! ");
+                if (Clients == null) return NotFound("Det finns inga kunder som du är ansvariga för dem ! ");
                 foreach (var client in Clients)
                 {
-                    ClientsDto.Add(mapper.Map<ClientToReturnDto>(client));
+                    ClientsToreturn.Add(mapper.Map<ClientToReturnDto>(client));
                 }
-                return Ok(ClientsDto);
+                return Ok(ClientsToreturn);
             }
             catch (Exception)
             {
