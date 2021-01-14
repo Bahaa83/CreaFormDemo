@@ -78,5 +78,13 @@
              <param name="name">,String Namn</param>
              <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.CompletionClient(System.Int32,CreaFormDemo.DtoModel.ClientDtoModel.CompletionClientDto)">
+            <summary>
+            Klienten kan komplettera sin profile(Namn och kontakt uppgifter)
+            </summary>
+            <param name="userid">User id som gjorde inloggning</param>
+            <param name="model">CompletionClientDto model</param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

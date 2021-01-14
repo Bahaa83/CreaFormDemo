@@ -36,7 +36,6 @@ namespace CreaFormDemo.DtoModel.ClientDtoModel
         [Required]
         public bool isCompany { get; set; }
 
-        public int UserID { get; set; }
-        public int AdvisorID { get; set; }
+        
     }
 }
