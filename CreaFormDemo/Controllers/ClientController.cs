@@ -56,7 +56,6 @@ namespace CreaFormDemo.Controllers
                 }
 
                 var advisor = await advisorRepo.GetAdvisorByUserID(int.Parse(user.UserIdThatCreatedit));
-                if (advisor == null) return BadRequest("från advisor");
                 var clientDto = mapper.Map<ClientDto>(model);
                 clientDto.AdvisorID = advisor.ID ;
                 clientDto.UserID = userid;
