@@ -23,11 +23,13 @@ namespace CreaFormDemo.Controllers
     {
         private readonly IClientRepository repo;
         private readonly IMapper mapper;
+        private readonly IAdvisorRepository advisorRepo;
 
-        public ClientController(IClientRepository repo,IMapper mapper)
+        public ClientController(IClientRepository repo,IMapper mapper, IAdvisorRepository advisorRepo)
         {
             this.repo = repo;
             this.mapper = mapper;
+            this.advisorRepo = advisorRepo;
         }
         /// <summary>
         /// Klienten kan komplettera sin profile(Namn och kontakt uppgifter)
@@ -52,8 +54,9 @@ namespace CreaFormDemo.Controllers
                 {
                     return BadRequest();
                 }
+                var advisor = await advisorRepo.GetAdvisorByUserID(int.Parse(user.UserIdThatCreatedit));
                 var clientDto = mapper.Map<ClientDto>(model);
-                clientDto.AdvisorID = int.Parse(user.UserIdThatCreatedit);
+                clientDto.AdvisorID = advisor.ID;
                 clientDto.UserID = user.ID;
                 var client = mapper.Map<Client>(clientDto);
                 var result = await repo.CompletionClientProfile(client);
