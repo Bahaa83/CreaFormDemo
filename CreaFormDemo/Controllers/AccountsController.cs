@@ -116,7 +116,7 @@ namespace CreaFormDemo.Controllers
         [ProducesResponseType(200, Type = typeof(UserDto))]
         [ProducesDefaultResponseType]
 
-        public async Task<ActionResult> Loginuser([FromBody] UserLogInDto model)
+        public async Task<ActionResult> LoginUser([FromBody] UserLogInDto model)
         {
             try
             {
