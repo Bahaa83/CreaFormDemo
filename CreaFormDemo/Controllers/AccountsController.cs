@@ -51,7 +51,7 @@ namespace CreaFormDemo.Controllers
         [HttpPost("{id}/CreateClient")]
         [ProducesResponseType(201, Type = typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> CreateNewKlient(int id, [FromBody] UserLogInDto model)
+        public async Task<ActionResult> CreateNewClient(int id, [FromBody] UserLogInDto model)
         {
             try
             {
