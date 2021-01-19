@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210111120245_initial")]
-    partial class initial
+    [Migration("20210119173257_INITIAL")]
+    partial class INITIAL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -141,7 +141,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestyleAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
@@ -233,6 +233,9 @@ namespace CreaFormDemo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -433,7 +436,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestylAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
@@ -556,7 +559,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestylAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
@@ -636,9 +639,6 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Addres")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
@@ -650,11 +650,22 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Efternamn");
 
+                    b.Property<string>("Ort")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Streetaddress")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Gatuadress");
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
+
+                    b.Property<int>("ZiPCod")
+                        .HasColumnType("int")
+                        .HasColumnName("Postnummer");
 
                     b.HasKey("ID");
 
@@ -671,9 +682,6 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("AdvisorID")
                         .HasColumnType("int")
                         .HasColumnName("Rådgivare ID");
@@ -689,8 +697,19 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Efternamn");
 
+                    b.Property<string>("Ort")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Streetaddress")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Gatuadress");
+
                     b.Property<int>("UserID")
                         .HasColumnType("int");
+
+                    b.Property<int>("ZiPCod")
+                        .HasColumnType("int")
+                        .HasColumnName("Postnummer");
 
                     b.Property<bool>("isCompany")
                         .HasColumnType("bit")

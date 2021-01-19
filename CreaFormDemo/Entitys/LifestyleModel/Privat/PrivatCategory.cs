@@ -17,7 +17,7 @@ namespace CreaFormDemo.Entitys.LifestyleModel.Privat
         public string CategoryName { get; set; }
         public IEnumerable<PrivatQuestion>  privatQuestions { get; set; }
         [ForeignKey(nameof(lifestyleArea))]
-        [Column("Livs stil område")]
+        [Column("Livs stil område ID")]
         public int LifestylAreaID { get; set; }
         public  LifestyleArea lifestyleArea { get; set; }
 

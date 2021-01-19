@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CreaFormDemo.Migrations
 {
-    public partial class initial : Migration
+    public partial class INITIAL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +12,8 @@ namespace CreaFormDemo.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -134,14 +135,14 @@ namespace CreaFormDemo.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     KategoriNamn = table.Column<string>(name: "Kategori Namn", type: "nvarchar(max)", nullable: true),
-                    Livsstilområde = table.Column<int>(name: "Livs stil område", type: "int", nullable: false)
+                    LivsstilområdeID = table.Column<int>(name: "Livs stil område ID", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Arbete Kategori", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Arbete Kategori_Livs stil område_Livs stil område",
-                        column: x => x.Livsstilområde,
+                        name: "FK_Arbete Kategori_Livs stil område_Livs stil område ID",
+                        column: x => x.LivsstilområdeID,
                         principalTable: "Livs stil område",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -154,14 +155,14 @@ namespace CreaFormDemo.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Kategorinamn = table.Column<string>(name: "Kategori namn", type: "nvarchar(max)", nullable: true),
-                    Livsstilområde = table.Column<int>(name: "Livs stil område", type: "int", nullable: false)
+                    LivsstilområdeID = table.Column<int>(name: "Livs stil område ID", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Privat kategori", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Privat kategori_Livs stil område_Livs stil område",
-                        column: x => x.Livsstilområde,
+                        name: "FK_Privat kategori_Livs stil område_Livs stil område ID",
+                        column: x => x.LivsstilområdeID,
                         principalTable: "Livs stil område",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -174,14 +175,14 @@ namespace CreaFormDemo.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     kategorisNamn = table.Column<string>(name: "kategoris Namn", type: "nvarchar(max)", nullable: true),
-                    Livsstilområde = table.Column<int>(name: "Livs stil område", type: "int", nullable: false)
+                    LivsstilområdeID = table.Column<int>(name: "Livs stil område ID", type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vanors kategori", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Vanors kategori_Livs stil område_Livs stil område",
-                        column: x => x.Livsstilområde,
+                        name: "FK_Vanors kategori_Livs stil område_Livs stil område ID",
+                        column: x => x.LivsstilområdeID,
                         principalTable: "Livs stil område",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
@@ -235,7 +236,9 @@ namespace CreaFormDemo.Migrations
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Addres = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postnummer = table.Column<int>(type: "int", nullable: false),
+                    Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -314,9 +317,11 @@ namespace CreaFormDemo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postnummer = table.Column<int>(type: "int", nullable: false),
+                    Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ärföretagskonto = table.Column<bool>(name: "Är företagskonto", type: "bit", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
                     RådgivareID = table.Column<int>(name: "Rådgivare ID", type: "int", nullable: false)
@@ -533,9 +538,9 @@ namespace CreaFormDemo.Migrations
                 column: "Kategori ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Arbete Kategori_Livs stil område",
+                name: "IX_Arbete Kategori_Livs stil område ID",
                 table: "Arbete Kategori",
-                column: "Livs stil område",
+                column: "Livs stil område ID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -595,9 +600,9 @@ namespace CreaFormDemo.Migrations
                 column: "kategori ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Privat kategori_Livs stil område",
+                name: "IX_Privat kategori_Livs stil område ID",
                 table: "Privat kategori",
-                column: "Livs stil område",
+                column: "Livs stil område ID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -637,9 +642,9 @@ namespace CreaFormDemo.Migrations
                 column: "kategori ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vanors kategori_Livs stil område",
+                name: "IX_Vanors kategori_Livs stil område ID",
                 table: "Vanors kategori",
-                column: "Livs stil område",
+                column: "Livs stil område ID",
                 unique: true);
         }
 

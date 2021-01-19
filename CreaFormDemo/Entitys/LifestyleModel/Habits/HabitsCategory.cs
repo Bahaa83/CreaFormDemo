@@ -14,11 +14,11 @@ namespace CreaFormDemo.Entitys.LifestyleModel.Habits
         public int ID { get; set; }
         [Column(name: "kategoris Namn")]
         public string CategoryName { get; set; }
-        [Column(name:"Vanors Frågor")]
+        
         public IEnumerable<HabitsQuestion>  habitsQuestions{ get; set; }
 
         [ForeignKey(nameof(lifestyleArea))]
-        [Column(name: "Livs stil område")]
+        [Column(name: "Livs stil område ID")]
         public int LifestyleAreaID { get; set; }
         public LifestyleArea lifestyleArea { get; set; }
     }

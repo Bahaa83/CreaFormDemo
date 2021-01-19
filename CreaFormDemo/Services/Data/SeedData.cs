@@ -51,22 +51,7 @@ namespace CreaFormDemo.Services.Data
                     db.lifestyleAreas.Add(lifestyle);
                 }
                 db.SaveChanges();
-                //var lifestyleArea1 = new LifestyleArea()
-                //{
-                //    Name="Vanor"
-                //};
-                //var lifestyleArea2 = new LifestyleArea()
-                //{
-                //    Name = "Arbete"
-                //};
-                //var lifestyleArea3 = new LifestyleArea()
-                //{
-                //    Name = "Privat"
-                //};
-                //db.lifestyleAreas.Add(lifestyleArea1);
-                //db.lifestyleAreas.Add(lifestyleArea2);
-                //db.lifestyleAreas.Add(lifestyleArea3);
-                //db.SaveChanges();
+               
             }
             if(!db.habitsCategories.Any())
             {
@@ -79,9 +64,9 @@ namespace CreaFormDemo.Services.Data
                         
                     };
                     db.habitsCategories.Add(categoryname);
-                    db.SaveChanges();
+                   
                 }
-                
+                db.SaveChanges();
             }
         }
 

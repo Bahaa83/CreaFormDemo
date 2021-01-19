@@ -139,7 +139,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestyleAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
@@ -434,7 +434,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestylAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
@@ -557,7 +557,7 @@ namespace CreaFormDemo.Migrations
 
                     b.Property<int>("LifestylAreaID")
                         .HasColumnType("int")
-                        .HasColumnName("Livs stil område");
+                        .HasColumnName("Livs stil område ID");
 
                     b.HasKey("ID");
 
