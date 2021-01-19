@@ -2,6 +2,7 @@
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.DtoModel.UserDtoModel;
 using CreaFormDemo.Entitys;
+using CreaFormDemo.Entitys.LifestyleModel.Habits;
 using CreaFormDemo.Entitys.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ namespace CreaFormDemo.Services.Data
         }
         public void SeedUserData()
         {
+            string [] lifestyleAreas={ "Vanor","Arbete","Privat"};
+            string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
             if (!db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
@@ -36,9 +39,56 @@ namespace CreaFormDemo.Services.Data
                 db.users.Add(newuser);
                 db.SaveChanges();
             }
+            if(!db.lifestyleAreas.Any())
+            {
+                for (int i = 0; i < lifestyleAreas.Length; i++)
+                {
+                    var lifestyle = new LifestyleArea()
+                    {
+                        Name = lifestyleAreas[i]
+
+                    };
+                    db.lifestyleAreas.Add(lifestyle);
+                }
+                db.SaveChanges();
+                //var lifestyleArea1 = new LifestyleArea()
+                //{
+                //    Name="Vanor"
+                //};
+                //var lifestyleArea2 = new LifestyleArea()
+                //{
+                //    Name = "Arbete"
+                //};
+                //var lifestyleArea3 = new LifestyleArea()
+                //{
+                //    Name = "Privat"
+                //};
+                //db.lifestyleAreas.Add(lifestyleArea1);
+                //db.lifestyleAreas.Add(lifestyleArea2);
+                //db.lifestyleAreas.Add(lifestyleArea3);
+                //db.SaveChanges();
+            }
+            if(!db.habitsCategories.Any())
+            {
+                for (int i = 0; i < VanorKategori.Length; i++)
+                {
+                    var categoryname = new HabitsCategory()
+                    {
+                        CategoryName= VanorKategori[i],
+                        LifestyleAreaID=1
+                        
+                    };
+                    db.habitsCategories.Add(categoryname);
+                    db.SaveChanges();
+                }
+                
+            }
         }
 
-
+        //private void SaveChanges()
+        //{
+        //    db.SaveChanges();
+        //}
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
         {
            using(var hmac= new System.Security.Cryptography.HMACSHA512())
