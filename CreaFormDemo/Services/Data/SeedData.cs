@@ -24,7 +24,7 @@ namespace CreaFormDemo.Services.Data
         public void SeedUserData()
         {
             string [] lifestyleAreas={ "Vanor","Arbete","Privat"};
-            string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
+            string[] VanorKategori = new string[] { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
             if (!db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
@@ -50,8 +50,7 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.lifestyleAreas.Add(lifestyle);
                 }
-                db.SaveChanges();
-               
+                SaveCHanges();
             }
             if(!db.habitsCategories.Any())
             {
@@ -60,20 +59,20 @@ namespace CreaFormDemo.Services.Data
                     var categoryname = new HabitsCategory()
                     {
                         CategoryName= VanorKategori[i],
-                        LifestyleAreaID=1
+                        LifestyleAreaID=7
                         
                     };
                     db.habitsCategories.Add(categoryname);
-                   
+                    SaveCHanges();
                 }
-                db.SaveChanges();
+            
             }
         }
 
-        //private void SaveChanges()
-        //{
-        //    db.SaveChanges();
-        //}
+        private void SaveCHanges()
+        {
+            db.SaveChanges();
+        }
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
         {
            using(var hmac= new System.Security.Cryptography.HMACSHA512())
