@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CreaFormDemo.Migrations
 {
-    public partial class INITIAL : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,8 +184,7 @@ namespace CreaFormDemo.Migrations
                         name: "FK_Vanors kategori_Livs stil område_Livs stil område ID",
                         column: x => x.LivsstilområdeID,
                         principalTable: "Livs stil område",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -644,8 +643,7 @@ namespace CreaFormDemo.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Vanors kategori_Livs stil område ID",
                 table: "Vanors kategori",
-                column: "Livs stil område ID",
-                unique: true);
+                column: "Livs stil område ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -67,9 +67,10 @@ namespace CreaFormDemo.Entitys
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<LifestyleArea>()
-                           .HasOne<HabitsCategory>(x => x.habitscategory)
+                           .HasMany<HabitsCategory>(x => x.habitscategory)
                            .WithOne(p => p.lifestyleArea)
-                           .HasForeignKey<HabitsCategory>(p => p.LifestyleAreaID);
+                           .HasForeignKey(p => p.LifestyleAreaID)
+                           .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<PlusMinusGroup>()
                 .HasMany<PlusMinusUnderGroup>(x => x.plusMinusUnderGroups)

@@ -16,7 +16,7 @@ namespace CreaFormDemo.Entitys.LifestyleModel.Habits
         [Key]
         public int ID { get; set; }
         public string Name { get; set; }
-        public HabitsCategory habitscategory { get; set; }
+        public IEnumerable< HabitsCategory> habitscategory { get; set; }
         public PrivatCategory privatcategory { get; set; }
         public JobCategory jobcategory { get; set; }
      

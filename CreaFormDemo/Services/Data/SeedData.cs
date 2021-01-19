@@ -24,7 +24,7 @@ namespace CreaFormDemo.Services.Data
         public void SeedUserData()
         {
             string [] lifestyleAreas={ "Vanor","Arbete","Privat"};
-            string[] VanorKategori = new string[] { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
+            string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
             if (!db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
@@ -59,13 +59,12 @@ namespace CreaFormDemo.Services.Data
                     var categoryname = new HabitsCategory()
                     {
                         CategoryName= VanorKategori[i],
-                        LifestyleAreaID=7
-                        
+                        LifestyleAreaID=1
                     };
                     db.habitsCategories.Add(categoryname);
-                    SaveCHanges();
+                   
                 }
-            
+                SaveCHanges();
             }
         }
 

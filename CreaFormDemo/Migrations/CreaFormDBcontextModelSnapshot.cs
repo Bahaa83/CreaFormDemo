@@ -143,8 +143,7 @@ namespace CreaFormDemo.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("LifestyleAreaID")
-                        .IsUnique();
+                    b.HasIndex("LifestyleAreaID");
 
                     b.ToTable("Vanors kategori");
                 });
@@ -789,9 +788,9 @@ namespace CreaFormDemo.Migrations
             modelBuilder.Entity("CreaFormDemo.Entitys.LifestyleModel.Habits.HabitsCategory", b =>
                 {
                     b.HasOne("CreaFormDemo.Entitys.LifestyleModel.Habits.LifestyleArea", "lifestyleArea")
-                        .WithOne("habitscategory")
-                        .HasForeignKey("CreaFormDemo.Entitys.LifestyleModel.Habits.HabitsCategory", "LifestyleAreaID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithMany("habitscategory")
+                        .HasForeignKey("LifestyleAreaID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("lifestyleArea");
