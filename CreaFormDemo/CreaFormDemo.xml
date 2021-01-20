@@ -90,7 +90,7 @@
             <summary>
             Klienten kan Uppdatera sin profile(Namn och kontakt uppgifter)
             </summary>
-            <param name="userid">User id som gjorde inloggning</param>
+            <param name="Userid">User id som gjorde inloggning</param>
             <param name="clientToupdate">CompletionClientDto model</param>
             <returns>ClientToReturnDto model</returns>
         </member>
