@@ -24,6 +24,13 @@ namespace CreaFormDemo.Services.Repository
             return result.Entity;
         }
 
+        public async Task<Client> GetClientByUserID(int ID)
+        {
+            var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == ID);
+            if (client == null) return null;
+            return client;
+        }
+
         public async Task<User> GetUserByID(int Id)
         {
             var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);

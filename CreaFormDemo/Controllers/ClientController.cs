@@ -77,5 +77,36 @@ namespace CreaFormDemo.Controllers
             }
 
         }
+        /// <summary>
+        /// Klienten kan Uppdatera sin profile(Namn och kontakt uppgifter)
+        /// </summary>
+        /// <param name="userid">User id som gjorde inloggning</param>
+        /// <param name="clientToupdate">CompletionClientDto model</param>
+        /// <returns>ClientToReturnDto model</returns>
+        [Authorize(Roles ="Client")]
+        [HttpPost("{Userid}/UpdateClientProfile")]
+        [ProducesResponseType(200,Type =typeof(ClientToReturnDto))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult>UpdateClientProfile(int userid,CompletionClientDto clientToupdate)
+        {
+            try
+            {
+                if (userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var oldclient = await repo.GetClientByUserID(userid);
+                if (oldclient == null) return BadRequest();
+                mapper.Map(clientToupdate, oldclient);
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
+                var updatedclient = mapper.Map<ClientToReturnDto>(oldclient);
+                return Ok(updatedclient);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
     }
 }

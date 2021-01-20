@@ -10,6 +10,7 @@ namespace CreaFormDemo.Services.IRepository
     {
         Task<Client> CompletionClientProfile(Client client);
         Task<User> GetUserByID(int ID);
+        Task<Client> GetClientByUserID(int ID);
         Task<bool> Save();
     }
 }
