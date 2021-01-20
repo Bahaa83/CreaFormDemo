@@ -1,4 +1,5 @@
 ﻿using CreaFormDemo.Entitys;
+using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,20 @@ namespace CreaFormDemo.Services.Repository
         public async Task<Client> CompletionClientProfile( Client client)
         {
             var result = await db.clients.AddAsync(client);
+            if (!await Save()) return null;
+            return result.Entity;
+        }
+
+        public async Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions profile)
+        {
+            var result = await db.clientProfiles.AddAsync(profile);
+            if (!await Save()) return null;
+            return result.Entity;
+        }
+
+        public async Task<Medicine> FillInTheMedicineInformations(Medicine medicine)
+        {
+            var result = await db.medicines.AddAsync(medicine);
             if (!await Save()) return null;
             return result.Entity;
         }

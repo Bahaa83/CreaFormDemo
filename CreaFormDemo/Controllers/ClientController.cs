@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CreaFormDemo.DtoModel.ClientDtoModel;
+using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
+using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.AspNetCore.Authorization;
@@ -108,6 +110,39 @@ namespace CreaFormDemo.Controllers
             {
 
                 return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Fyll i allmänna Klientfrågor
+        /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning</param>
+        /// <param name="model">CreateGeneralQuesDto model</param>
+        /// <returns>GeneralQuesDt model</returns>
+        [Authorize(Roles ="Client")]
+        [HttpPost("{Userid}/GeneralQuestions")]
+        [ProducesResponseType(200,Type =typeof(GeneralQuesDto))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> GeneralQuestions(int Userid,CreateGeneralQuesDto model)
+        {
+            try
+            {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var client = await repo.GetClientByUserID(Userid);
+                if (client == null) return BadRequest();
+                var generalQuesdto = mapper.Map<GeneralQuesDto>(model);
+                generalQuesdto.ClientID = client.ID;
+                var generalQues = mapper.Map<GeneralQuestions>(generalQuesdto);
+                var resulttoreturn = await repo.FillInTheGeneralQuestions(generalQues);
+                if (resulttoreturn == null) return BadRequest("Något gick fel när du fyllde i allmänna frågor");
+                return Ok(generalQuesdto);
+            }
+            catch (Exception)
+            {
+
+                StatusCode(500);
             }
         }
     }

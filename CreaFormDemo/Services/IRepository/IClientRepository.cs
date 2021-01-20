@@ -1,4 +1,5 @@
-﻿using CreaFormDemo.Entitys.Users;
+﻿using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,9 @@ namespace CreaFormDemo.Services.IRepository
         Task<Client> CompletionClientProfile(Client client);
         Task<User> GetUserByID(int ID);
         Task<Client> GetClientByUserID(int ID);
+        Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
+        Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
+
         Task<bool> Save();
     }
 }

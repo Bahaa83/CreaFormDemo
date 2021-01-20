@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CreaFormDemo.Entitys.Clientprofile
 {
     [Table(name: "Allmänt")]
-    public class clientProfile
+    public class GeneralQuestions
     {
         public int ID { get; set; }
         [Column(name: "Befattning/arbete")]
@@ -40,6 +40,7 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string OtherInformation { get; set; }
         public int ClientID { get; set; }
         public Client client  { get; set; }
+        public IEnumerable<Medicine> medicines { get; set; }
 
     }
 }

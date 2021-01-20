@@ -163,20 +163,15 @@ namespace CreaFormDemo.Entitys
 
             #region//Allmänt//
             modelBuilder.Entity<Client>()
-                .HasOne<clientProfile>(X => X.clientProfile)
+                .HasOne<GeneralQuestions>(X => X.clientProfile)
                 .WithOne(X => X.client)
-                .HasForeignKey<clientProfile>(X => X.ClientID);
-            modelBuilder.Entity<ClientMedicine>()
-              .HasKey(CM => new { CM.ClientID,CM.MedicineID});
-            modelBuilder.Entity<ClientMedicine>()
-                .HasOne<Client>(x => x.client)
-                .WithMany(x => x.clientMedicines)
-                .HasForeignKey(x => x.ClientID);
-            modelBuilder.Entity<ClientMedicine>()
-                .HasOne(x => x.medicine)
-                .WithMany(x => x.clientMedicines)
-                .HasForeignKey(x => x.MedicineID);
-
+                .HasForeignKey<GeneralQuestions>(X => X.ClientID);
+            modelBuilder.Entity<GeneralQuestions>()
+                    .HasMany<Medicine>(X => X.medicines)
+                    .WithOne(X => X.clientProfile)
+                    .HasForeignKey(X => X.clientProfileID)
+                    .OnDelete(DeleteBehavior.NoAction);
+                    
             #endregion
             base.OnModelCreating(modelBuilder);
         }
@@ -200,8 +195,8 @@ namespace CreaFormDemo.Entitys
         public DbSet<Advisor>  advisors { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
-        public DbSet<clientProfile>  clientProfiles { get; set; }
-        public DbSet<ClientMedicine>  clientMedicines{ get; set; }
+        public DbSet<GeneralQuestions>  clientProfiles { get; set; }
+      
         
 
 
