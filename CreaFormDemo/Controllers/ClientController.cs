@@ -49,6 +49,8 @@ namespace CreaFormDemo.Controllers
                 {
                     return Unauthorized("Du är inte auktoriserad");
                 }
+                var clienttest = await repo.GetClientByUserID(userid);
+                if (clienttest != null) return BadRequest("Du har kompletterat din profile redan!");
                 var user = await repo.GetUserByID(userid);
                 if (user == null)
                 {
@@ -96,7 +98,7 @@ namespace CreaFormDemo.Controllers
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var oldclient = await repo.GetClientByUserID(userid);
-                if (oldclient == null) return BadRequest();
+                if (oldclient == null) return BadRequest(" felet är har");
                 mapper.Map(clientToupdate, oldclient);
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
                 var updatedclient = mapper.Map<ClientToReturnDto>(oldclient);
