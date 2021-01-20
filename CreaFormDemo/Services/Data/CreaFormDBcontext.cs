@@ -166,10 +166,10 @@ namespace CreaFormDemo.Entitys
                 .HasOne<GeneralQuestions>(X => X.clientProfile)
                 .WithOne(X => X.client)
                 .HasForeignKey<GeneralQuestions>(X => X.ClientID);
-            modelBuilder.Entity<GeneralQuestions>()
+            modelBuilder.Entity<Client>()
                     .HasMany<Medicine>(X => X.medicines)
-                    .WithOne(X => X.clientProfile)
-                    .HasForeignKey(X => X.clientProfileID)
+                    .WithOne(X => X.client)
+                    .HasForeignKey(X => X.ClientID)
                     .OnDelete(DeleteBehavior.NoAction);
                     
             #endregion

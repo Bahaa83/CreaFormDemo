@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CreaFormDemo.DtoModel.ClientDtoModel;
 using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
+using CreaFormDemo.DtoModel.MedicineDtoModel;
 using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
@@ -117,12 +118,12 @@ namespace CreaFormDemo.Controllers
         /// </summary>
         /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model">CreateGeneralQuesDto model</param>
-        /// <returns>GeneralQuesDt model</returns>
+        /// <returns>GeneralQuesDto model</returns>
         [Authorize(Roles ="Client")]
         [HttpPost("{Userid}/GeneralQuestions")]
         [ProducesResponseType(200,Type =typeof(GeneralQuesDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GeneralQuestions(int Userid,CreateGeneralQuesDto model)
+        public async Task<ActionResult>GeneralQuestions(int Userid,CreateGeneralQuesDto model)
         {
             try
             {
@@ -135,14 +136,53 @@ namespace CreaFormDemo.Controllers
                 var generalQuesdto = mapper.Map<GeneralQuesDto>(model);
                 generalQuesdto.ClientID = client.ID;
                 var generalQues = mapper.Map<GeneralQuestions>(generalQuesdto);
-                var resulttoreturn = await repo.FillInTheGeneralQuestions(generalQues);
-                if (resulttoreturn == null) return BadRequest("Något gick fel när du fyllde i allmänna frågor");
-                return Ok(generalQuesdto);
+                var entity = await repo.FillInTheGeneralQuestions(generalQues);
+                if (entity == null) return BadRequest("Något gick fel när du fyllde i allmänna frågor");
+                var generalQuesToreturn = mapper.Map<GeneralQuesDto>(entity);
+
+                return Ok(generalQuesToreturn);
+             
             }
             catch (Exception)
             {
 
-                StatusCode(500);
+               return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Fyll i läkemedelsinformationen för klienten
+        /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning</param>
+        /// <param name="model">CreateMedicineDto model</param>
+        /// <returns>MedicineDto Model</returns>
+        [Authorize(Roles ="Client")]
+        [HttpPost("{Userid}/MedicineInformation")]
+        [ProducesResponseType(200,Type =typeof(MedicineDto))]
+        [ProducesDefaultResponseType]
+           
+        public async Task<ActionResult>MedicineInformation(int Userid,CreateMedicineDto model)
+        {
+            try
+            {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var client = await repo.GetClientByUserID(Userid);
+                if (client == null) return BadRequest();
+                var medicineDto = mapper.Map<MedicineDto>(model);
+                medicineDto.clientID = client.ID;
+                var medicine = mapper.Map<Medicine>(medicineDto);
+                var entity = await repo.FillInTheMedicineInformations(medicine);
+                if (entity == null) return BadRequest("Något gick fel när du fyllde i Läkemedelsinformation");
+                var MedicineToReturn = mapper.Map<MedicineDto>(entity);
+                return Ok(MedicineToReturn);
+               
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
             }
         }
     }

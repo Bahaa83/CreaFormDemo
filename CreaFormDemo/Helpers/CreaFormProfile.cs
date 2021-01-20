@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CreaFormDemo.DtoModel.ClientDtoModel;
 using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
+using CreaFormDemo.DtoModel.MedicineDtoModel;
 using CreaFormDemo.DtoModel.UserDtoModel;
 using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Users;
@@ -28,6 +29,8 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Client, CompletionClientDto>().ReverseMap();
             CreateMap<GeneralQuesDto, CreateGeneralQuesDto>().ReverseMap();
             CreateMap<GeneralQuesDto, GeneralQuestions>().ReverseMap();
+            CreateMap<CreateMedicineDto, MedicineDto>().ReverseMap();
+            CreateMap<Medicine, MedicineDto>().ReverseMap();
         }
 
     }

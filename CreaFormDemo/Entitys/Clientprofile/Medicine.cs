@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CreaFormDemo.Entitys.Users;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,8 +15,8 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string MedicinName { get; set; }
         [Column("anledning till medicineringen")]
         public string CauseOfMedication { get; set; }
-        public int clientProfileID { get; set; }
-        public GeneralQuestions clientProfile { get; set; }
+        public int ClientID { get; set; }
+        public Client client { get; set; }
 
     }
 }

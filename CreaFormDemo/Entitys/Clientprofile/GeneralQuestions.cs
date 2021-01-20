@@ -40,7 +40,7 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string OtherInformation { get; set; }
         public int ClientID { get; set; }
         public Client client  { get; set; }
-        public IEnumerable<Medicine> medicines { get; set; }
+       
 
     }
 }
