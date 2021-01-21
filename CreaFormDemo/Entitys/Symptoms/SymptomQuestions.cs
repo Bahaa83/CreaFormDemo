@@ -12,7 +12,6 @@ namespace CreaFormDemo.Entitys.Symptoms
         public int ID { get; set; }
         [Column(name:"Symtom text")]
         public string FråganText { get; set; }
-        [Column(name: "Beskrivning")]
         public int SymptomsCategoryID { get; set; }
         
         public SymptomsCategory symptomsCategory { get; set; }

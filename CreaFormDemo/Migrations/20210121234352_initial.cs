@@ -259,14 +259,14 @@ namespace CreaFormDemo.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Symtomtext = table.Column<string>(name: "Symtom text", type: "nvarchar(max)", nullable: true),
-                    Beskrivning = table.Column<int>(type: "int", nullable: false)
+                    SymptomsCategoryID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Symtom Frågor ", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Symtom Frågor _Symtom kategori_Beskrivning",
-                        column: x => x.Beskrivning,
+                        name: "FK_Symtom Frågor _Symtom kategori_SymptomsCategoryID",
+                        column: x => x.SymptomsCategoryID,
                         principalTable: "Symtom kategori",
                         principalColumn: "ID");
                 });
@@ -663,9 +663,9 @@ namespace CreaFormDemo.Migrations
                 column: "Styrka-Brist Grupp ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Symtom Frågor _Beskrivning",
+                name: "IX_Symtom Frågor _SymptomsCategoryID",
                 table: "Symtom Frågor ",
-                column: "Beskrivning");
+                column: "SymptomsCategoryID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Vanors alternativ_Fråga ID",

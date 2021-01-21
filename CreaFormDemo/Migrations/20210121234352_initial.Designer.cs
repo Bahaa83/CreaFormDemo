@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210121230941_initial")]
+    [Migration("20210121234352_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -669,8 +669,7 @@ namespace CreaFormDemo.Migrations
                         .HasColumnName("Symtom text");
 
                     b.Property<int>("SymptomsCategoryID")
-                        .HasColumnType("int")
-                        .HasColumnName("Beskrivning");
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 

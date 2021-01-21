@@ -667,8 +667,7 @@ namespace CreaFormDemo.Migrations
                         .HasColumnName("Symtom text");
 
                     b.Property<int>("SymptomsCategoryID")
-                        .HasColumnType("int")
-                        .HasColumnName("Beskrivning");
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
