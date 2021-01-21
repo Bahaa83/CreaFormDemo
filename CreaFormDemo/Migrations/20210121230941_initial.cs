@@ -8,6 +8,20 @@ namespace CreaFormDemo.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Frekvens",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FrekvensText = table.Column<string>(name: "Frekvens Text", type: "nvarchar(max)", nullable: true),
+                    Värde = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Frekvens", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Livs stil område",
                 columns: table => new
                 {
@@ -18,20 +32,6 @@ namespace CreaFormDemo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Livs stil område", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Läkemedel",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Läkemedel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    anledningtillmedicineringen = table.Column<string>(name: "anledning till medicineringen", type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Läkemedel", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -108,6 +108,33 @@ namespace CreaFormDemo.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Styrka-Brist Grupp", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Svårighet",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Värde = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Svårighet", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Symtom kategori",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Kategorisnamn = table.Column<string>(name: "Kategoris namn", type: "nvarchar(max)", nullable: true),
+                    OrderBy = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Symtom kategori", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -222,6 +249,25 @@ namespace CreaFormDemo.Migrations
                         name: "FK_Styrka-Brist under Grupp_Styrka-Brist Grupp_Styrka-Brist Grupp ID",
                         column: x => x.StyrkaBristGruppID,
                         principalTable: "Styrka-Brist Grupp",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Symtom Frågor ",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Symtomtext = table.Column<string>(name: "Symtom text", type: "nvarchar(max)", nullable: true),
+                    Beskrivning = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Symtom Frågor ", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Symtom Frågor _Symtom kategori_Beskrivning",
+                        column: x => x.Beskrivning,
+                        principalTable: "Symtom kategori",
                         principalColumn: "ID");
                 });
 
@@ -478,27 +524,23 @@ namespace CreaFormDemo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "clientMedicines",
+                name: "Läkemedel",
                 columns: table => new
                 {
-                    ClientID = table.Column<int>(type: "int", nullable: false),
-                    MedicineID = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Läkemedel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    anledningtillmedicineringen = table.Column<string>(name: "anledning till medicineringen", type: "nvarchar(max)", nullable: true),
+                    ClientID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clientMedicines", x => new { x.ClientID, x.MedicineID });
+                    table.PrimaryKey("PK_Läkemedel", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_clientMedicines_Klient_ClientID",
+                        name: "FK_Läkemedel_Klient_ClientID",
                         column: x => x.ClientID,
                         principalTable: "Klient",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_clientMedicines_Läkemedel_MedicineID",
-                        column: x => x.MedicineID,
-                        principalTable: "Läkemedel",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -558,11 +600,6 @@ namespace CreaFormDemo.Migrations
                 column: "Styrka/Brist under grupp ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_clientMedicines_MedicineID",
-                table: "clientMedicines",
-                column: "MedicineID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Klient_Rådgivare ID",
                 table: "Klient",
                 column: "Rådgivare ID");
@@ -572,6 +609,11 @@ namespace CreaFormDemo.Migrations
                 table: "Klient",
                 column: "UserID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Läkemedel_ClientID",
+                table: "Läkemedel",
+                column: "ClientID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Plus minus under grupp_ Plus minus grupp ID",
@@ -621,6 +663,11 @@ namespace CreaFormDemo.Migrations
                 column: "Styrka-Brist Grupp ID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Symtom Frågor _Beskrivning",
+                table: "Symtom Frågor ",
+                column: "Beskrivning");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Vanors alternativ_Fråga ID",
                 table: "Vanors alternativ",
                 column: "Fråga ID");
@@ -655,7 +702,10 @@ namespace CreaFormDemo.Migrations
                 name: "Arbete Svaror");
 
             migrationBuilder.DropTable(
-                name: "clientMedicines");
+                name: "Frekvens");
+
+            migrationBuilder.DropTable(
+                name: "Läkemedel");
 
             migrationBuilder.DropTable(
                 name: "Privat Alternativ");
@@ -664,13 +714,16 @@ namespace CreaFormDemo.Migrations
                 name: "Program-Alternativ");
 
             migrationBuilder.DropTable(
+                name: "Svårighet");
+
+            migrationBuilder.DropTable(
+                name: "Symtom Frågor ");
+
+            migrationBuilder.DropTable(
                 name: "Arbete frågor");
 
             migrationBuilder.DropTable(
                 name: "Klient");
-
-            migrationBuilder.DropTable(
-                name: "Läkemedel");
 
             migrationBuilder.DropTable(
                 name: "Privat Frågor");
@@ -683,6 +736,9 @@ namespace CreaFormDemo.Migrations
 
             migrationBuilder.DropTable(
                 name: "Vanors alternativ");
+
+            migrationBuilder.DropTable(
+                name: "Symtom kategori");
 
             migrationBuilder.DropTable(
                 name: "Arbete Kategori");

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210120113633_REMOVECLIENTMEDCINE")]
-    partial class REMOVECLIENTMEDCINE
+    [Migration("20210121230941_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,32 +21,7 @@ namespace CreaFormDemo.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.Medicine", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<string>("CauseOfMedication")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("anledning till medicineringen");
-
-                    b.Property<string>("MedicinName")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Läkemedel");
-
-                    b.Property<int>("clientProfileID")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("clientProfileID");
-
-                    b.ToTable("Läkemedel");
-                });
-
-            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.clientProfile", b =>
+            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.GeneralQuestions", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -116,6 +91,31 @@ namespace CreaFormDemo.Migrations
                         .IsUnique();
 
                     b.ToTable("Allmänt");
+                });
+
+            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.Medicine", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("CauseOfMedication")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("anledning till medicineringen");
+
+                    b.Property<int>("ClientID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MedicinName")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Läkemedel");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClientID");
+
+                    b.ToTable("Läkemedel");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.LifestyleModel.Habits.HabitsCategory", b =>
@@ -621,6 +621,83 @@ namespace CreaFormDemo.Migrations
                     b.ToTable("Arbete frågor");
                 });
 
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.Difficulty", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int")
+                        .HasColumnName("Värde");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Svårighet");
+                });
+
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.Frequency", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int")
+                        .HasColumnName("Värde");
+
+                    b.Property<string>("frequencyText")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Frekvens Text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Frekvens");
+                });
+
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("FråganText")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Symtom text");
+
+                    b.Property<int>("SymptomsCategoryID")
+                        .HasColumnType("int")
+                        .HasColumnName("Beskrivning");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("SymptomsCategoryID");
+
+                    b.ToTable("Symtom Frågor ");
+                });
+
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Kategoris namn");
+
+                    b.Property<int>("OrderBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Symtom kategori");
+                });
+
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Advisor", b =>
                 {
                     b.Property<int>("ID")
@@ -747,23 +824,23 @@ namespace CreaFormDemo.Migrations
                     b.ToTable("users");
                 });
 
-            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.Medicine", b =>
-                {
-                    b.HasOne("CreaFormDemo.Entitys.Clientprofile.clientProfile", "clientProfile")
-                        .WithMany("medicines")
-                        .HasForeignKey("clientProfileID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("clientProfile");
-                });
-
-            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.clientProfile", b =>
+            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.GeneralQuestions", b =>
                 {
                     b.HasOne("CreaFormDemo.Entitys.Users.Client", "client")
                         .WithOne("clientProfile")
-                        .HasForeignKey("CreaFormDemo.Entitys.Clientprofile.clientProfile", "ClientID")
+                        .HasForeignKey("CreaFormDemo.Entitys.Clientprofile.GeneralQuestions", "ClientID")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("client");
+                });
+
+            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.Medicine", b =>
+                {
+                    b.HasOne("CreaFormDemo.Entitys.Users.Client", "client")
+                        .WithMany("medicines")
+                        .HasForeignKey("ClientID")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("client");
@@ -957,6 +1034,17 @@ namespace CreaFormDemo.Migrations
                     b.Navigation("JobCategory");
                 });
 
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", b =>
+                {
+                    b.HasOne("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", "symptomsCategory")
+                        .WithMany("symptomQuestions")
+                        .HasForeignKey("SymptomsCategoryID")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("symptomsCategory");
+                });
+
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Advisor", b =>
                 {
                     b.HasOne("CreaFormDemo.Entitys.Users.User", "user")
@@ -985,11 +1073,6 @@ namespace CreaFormDemo.Migrations
                     b.Navigation("advisor");
 
                     b.Navigation("user");
-                });
-
-            modelBuilder.Entity("CreaFormDemo.Entitys.Clientprofile.clientProfile", b =>
-                {
-                    b.Navigation("medicines");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.LifestyleModel.Habits.HabitsCategory", b =>
@@ -1069,6 +1152,11 @@ namespace CreaFormDemo.Migrations
                     b.Navigation("jobchoises");
                 });
 
+            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", b =>
+                {
+                    b.Navigation("symptomQuestions");
+                });
+
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Advisor", b =>
                 {
                     b.Navigation("clients");
@@ -1077,6 +1165,8 @@ namespace CreaFormDemo.Migrations
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Client", b =>
                 {
                     b.Navigation("clientProfile");
+
+                    b.Navigation("medicines");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.User", b =>

@@ -14,8 +14,7 @@ namespace CreaFormDemo.Entitys.Symptoms
         public string frequencyText { get; set; }
         [Column(name: "Värde")]
         public int Value { get; set; }
-        //public int SymptomQuestionsID { get; set; }
-        //public SymptomQuestions symptomQuestion { get; set; }
+
 
     }
 }

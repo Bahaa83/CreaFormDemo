@@ -24,10 +24,6 @@ namespace CreaFormDemo.Services.Data
         }
         public void SeedUserData()
         {
-           
-
-            string [] lifestyleAreas={ "Vanor","Arbete","Privat"};
-            string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
             if (!db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
@@ -42,7 +38,10 @@ namespace CreaFormDemo.Services.Data
                 db.users.Add(newuser);
                 db.SaveChanges();
             }
-            if(!db.lifestyleAreas.Any())//lagra data i livsstil område
+            #region   //lagra data i livsstil område
+            string[] lifestyleAreas = { "Vanor", "Arbete", "Privat" };
+            string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
+            if (!db.lifestyleAreas.Any())//
             {
                 for (int i = 0; i < lifestyleAreas.Length; i++)
                 {
@@ -55,6 +54,7 @@ namespace CreaFormDemo.Services.Data
                 }
                 SaveCHanges();
             }
+
             if(!db.habitsCategories.Any())//lagra data i Vanor Kategori
             {
                 for (int i = 0; i < VanorKategori.Length; i++)
@@ -69,6 +69,7 @@ namespace CreaFormDemo.Services.Data
                 }
                 SaveCHanges();
             }
+            #endregion
             #region  lagrar data i Symtom
             string[] Symptomscategory = { "Energi och sömn", " Känslomässig balans", "Kognitiv kapacitet ",
                 "Sinnesorgan,aptit,törst", "Munhålan", "Temperaturreglering", "Smärta ", "Muskler,balans,kroppskontroll",
@@ -102,15 +103,15 @@ namespace CreaFormDemo.Services.Data
                 "Vita fläckar i huden (vitiligo)", "Hudrodnad","Hudbristningar/sträckmärken","Hudsprickor","Celluliter","Knottror på huden på överarmar,lår,stjärt",
                 "Torrt hår","Fett hår","Håravfall (ej årstidsbetingat)","Flagnande hårbotten","Mörka ringar under ögonen",
                 "Sköra naglar","Räfflade naglar","Nagelsvamp eller svamp på huden" };
-            string[] Frekvenstext = { "Hela dagen/flera gånger om dagen", "Någon gång varje dag", "Nästan varje dag", "Någon gång i veckan", "Någon gång i månaden/ periodvis", "Någon gång om året eller ännu mer sällan" };
-            int[] FrekvensValue = {10,9,7,5,3,1 };
+           
             if (! db.symptomsCategories.Any())//lagra data i Symtom Kategori
             {
                 for (int i = 0; i < Symptomscategory.Length ; i++)
                 {
                     var Scategoryname = new SymptomsCategory()
                     {
-                        Name = Symptomscategory[i]
+                        Name = Symptomscategory[i],
+                        OrderBy=i+1
                     };
                     db.symptomsCategories.Add(Scategoryname);
                 }
@@ -279,7 +280,9 @@ namespace CreaFormDemo.Services.Data
             }
             #endregion
             #region//Lagra data i Frekvens
-            if(!db.frequencies.Any())
+            string[] Frekvenstext = { "Hela dagen/flera gånger om dagen", "Någon gång varje dag", "Nästan varje dag", "Någon gång i veckan", "Någon gång i månaden/ periodvis", "Någon gång om året eller ännu mer sällan" };
+            int[] FrekvensValue = { 10, 9, 7, 5, 3, 1 };
+            if (!db.frequencies.Any())
             {
                 for (int i = 0; i < Frekvenstext.Length; i++)
                 {
@@ -294,6 +297,22 @@ namespace CreaFormDemo.Services.Data
                 SaveCHanges();
             }
             #endregion
+            #region //lagra data i Difficulty
+            int[] Difficulty = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            if(!db.difficulties.Any())
+            {
+                for (int i = 0; i < Difficulty.Length; i++)
+                {
+                    var difficulty = new Difficulty()
+                    {
+                        Value = Difficulty[i]
+                    };
+                    db.difficulties.Add(difficulty);
+                }
+                SaveCHanges();
+                #endregion
+
+            }
 
         }
 

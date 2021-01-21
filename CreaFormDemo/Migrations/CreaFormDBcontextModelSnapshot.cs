@@ -626,16 +626,11 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("SymptomQuestionsID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Value")
                         .HasColumnType("int")
                         .HasColumnName("Värde");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SymptomQuestionsID");
 
                     b.ToTable("Svårighet");
                 });
@@ -647,9 +642,6 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("SymptomQuestionsID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Value")
                         .HasColumnType("int")
                         .HasColumnName("Värde");
@@ -659,8 +651,6 @@ namespace CreaFormDemo.Migrations
                         .HasColumnName("Frekvens Text");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("SymptomQuestionsID");
 
                     b.ToTable("Frekvens");
                 });
@@ -672,16 +662,13 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Beskrivning");
-
                     b.Property<string>("FråganText")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Symtom text");
 
                     b.Property<int>("SymptomsCategoryID")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("Beskrivning");
 
                     b.HasKey("ID");
 
@@ -700,6 +687,9 @@ namespace CreaFormDemo.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Kategoris namn");
+
+                    b.Property<int>("OrderBy")
+                        .HasColumnType("int");
 
                     b.HasKey("ID");
 
@@ -1042,28 +1032,6 @@ namespace CreaFormDemo.Migrations
                     b.Navigation("JobCategory");
                 });
 
-            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.Difficulty", b =>
-                {
-                    b.HasOne("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", "symptomQuestion")
-                        .WithMany("difficultie")
-                        .HasForeignKey("SymptomQuestionsID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("symptomQuestion");
-                });
-
-            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.Frequency", b =>
-                {
-                    b.HasOne("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", "symptomQuestion")
-                        .WithMany("frequencies")
-                        .HasForeignKey("SymptomQuestionsID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("symptomQuestion");
-                });
-
             modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", b =>
                 {
                     b.HasOne("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", "symptomsCategory")
@@ -1180,13 +1148,6 @@ namespace CreaFormDemo.Migrations
             modelBuilder.Entity("CreaFormDemo.Entitys.LifestyleModel.job.JobQuestion", b =>
                 {
                     b.Navigation("jobchoises");
-                });
-
-            modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomQuestions", b =>
-                {
-                    b.Navigation("difficultie");
-
-                    b.Navigation("frequencies");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", b =>
