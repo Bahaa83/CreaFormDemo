@@ -2,6 +2,7 @@
 using CreaFormDemo.Entitys.LifestyleModel.Habits;
 using CreaFormDemo.Entitys.LifestyleModel.job;
 using CreaFormDemo.Entitys.LifestyleModel.Privat;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services.Repository;
@@ -171,7 +172,14 @@ namespace CreaFormDemo.Entitys
                     .WithOne(X => X.client)
                     .HasForeignKey(X => X.ClientID)
                     .OnDelete(DeleteBehavior.NoAction);
-                    
+
+            #endregion
+            #region //Symtom//
+            modelBuilder.Entity<SymptomsCategory>()
+                .HasMany<SymptomQuestions>(x => x.symptomQuestions)
+                .WithOne(x => x.symptomsCategory)
+                .HasForeignKey(x => x.SymptomsCategoryID)
+                .OnDelete(DeleteBehavior.NoAction);
             #endregion
             base.OnModelCreating(modelBuilder);
         }
@@ -196,8 +204,16 @@ namespace CreaFormDemo.Entitys
         public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
         public DbSet<GeneralQuestions>  clientProfiles { get; set; }
-      
-        
+        public DbSet<SymptomQuestions> symptomQuestions { get; set; }
+        public DbSet<SymptomsCategory> symptomsCategories  { get; set; }
+        public DbSet<Frequency> frequencies { get; set; }
+        public DbSet<Difficulty> difficulties { get; set; }
+
+
+
+
+
+
 
 
 

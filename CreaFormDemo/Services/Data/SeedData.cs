@@ -23,6 +23,7 @@ namespace CreaFormDemo.Services.Data
         }
         public void SeedUserData()
         {
+            string[] SymptomsCategory = { "Energi och sömn", " Känslomässig balans", "Kognitiv kapacitet ", "Sinnesorgan,aptit,törst", "Munhålan", "Temperaturreglering", "Smärta ", "Muskler, balans, kroppskontroll", "Mage-tarm", "Immunförsvaret", "Hjärta och cirkulation", "Njurar, urinvägar", "Hormonellt", "Hår,hud,naglar", };
             string [] lifestyleAreas={ "Vanor","Arbete","Privat"};
             string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
             if (!db.users.Any())
@@ -39,7 +40,7 @@ namespace CreaFormDemo.Services.Data
                 db.users.Add(newuser);
                 db.SaveChanges();
             }
-            if(!db.lifestyleAreas.Any())
+            if(!db.lifestyleAreas.Any())//lagra data i livsstil område
             {
                 for (int i = 0; i < lifestyleAreas.Length; i++)
                 {
@@ -65,6 +66,17 @@ namespace CreaFormDemo.Services.Data
                    
                 }
                 SaveCHanges();
+            }
+            if(! db.symptomsCategories.Any())
+            {
+                for (int i = 0; i < SymptomsCategory.Length ; i++)
+                {
+                    //var Scategoryname = new SymptomsCategory()
+                    //{
+
+                    //};
+
+                }
             }
         }
 
