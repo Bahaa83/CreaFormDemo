@@ -16,6 +16,8 @@ namespace CreaFormDemo.Entitys.Symptoms
         public string Description { get; set; }
         public int SymptomsCategoryID { get; set; }
         public SymptomsCategory symptomsCategory { get; set; }
-       
+        //public IEnumerable<Frequency> frequencies  { get; set; }
+        //public IEnumerable<Difficulty> difficultie { get; set; }
+
     }
 }

@@ -14,6 +14,7 @@ namespace CreaFormDemo.Entitys.Symptoms
         public int ID { get; set; }
         [Column(name: "Kategoris namn")]
         public string Name { get; set; }
+
         public IEnumerable<SymptomQuestions> symptomQuestions { get; set; }
 
     }

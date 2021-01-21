@@ -169,7 +169,7 @@ namespace CreaFormDemo.Controllers
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var client = await repo.GetClientByUserID(Userid);
-                if (client == null) return BadRequest();
+                 if (client == null) return BadRequest();
                 var medicineDto = mapper.Map<MedicineDto>(model);
                 medicineDto.clientID = client.ID;
                 var medicine = mapper.Map<Medicine>(medicineDto);

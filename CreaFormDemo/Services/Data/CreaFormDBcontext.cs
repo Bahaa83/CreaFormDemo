@@ -180,6 +180,17 @@ namespace CreaFormDemo.Entitys
                 .WithOne(x => x.symptomsCategory)
                 .HasForeignKey(x => x.SymptomsCategoryID)
                 .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<SymptomQuestions>()
+                .HasMany<Frequency>(x => x.frequencies)
+                .WithOne(x => x.symptomQuestion)
+                .HasForeignKey(x => x.SymptomQuestionsID)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<SymptomQuestions>()
+               .HasMany<Difficulty>(x => x.difficultie)
+               .WithOne(x => x.symptomQuestion)
+               .HasForeignKey(x => x.SymptomQuestionsID)
+               .OnDelete(DeleteBehavior.NoAction);
+
             #endregion
             base.OnModelCreating(modelBuilder);
         }

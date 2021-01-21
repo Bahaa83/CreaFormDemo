@@ -102,7 +102,8 @@ namespace CreaFormDemo.Services.Data
                 "Vita fläckar i huden (vitiligo)", "Hudrodnad","Hudbristningar/sträckmärken","Hudsprickor","Celluliter","Knottror på huden på överarmar,lår,stjärt",
                 "Torrt hår","Fett hår","Håravfall (ej årstidsbetingat)","Flagnande hårbotten","Mörka ringar under ögonen",
                 "Sköra naglar","Räfflade naglar","Nagelsvamp eller svamp på huden" };
-
+            string[] Frekvenstext = { "Hela dagen/flera gånger om dagen", "Någon gång varje dag", "Nästan varje dag", "Någon gång i veckan", "Någon gång i månaden/ periodvis", "Någon gång om året eller ännu mer sällan" };
+            int[] FrekvensValue = {10,9,7,5,3,1 };
             if (! db.symptomsCategories.Any())//lagra data i Symtom Kategori
             {
                 for (int i = 0; i < Symptomscategory.Length ; i++)
@@ -271,10 +272,29 @@ namespace CreaFormDemo.Services.Data
                     db.symptomQuestions.Add(hairskinnails);
                 }
                 SaveCHanges();
+                
+
 
 
             }
             #endregion
+            #region//Lagra data i Frekvens
+            if(!db.frequencies.Any())
+            {
+                for (int i = 0; i < Frekvenstext.Length; i++)
+                {
+                    var frekvenstext = new Frequency()
+                    {
+                        frequencyText = Frekvenstext[i],
+                       Value = FrekvensValue[i]
+
+                    };
+                    db.frequencies.Add(frekvenstext);
+                }
+                SaveCHanges();
+            }
+            #endregion
+
         }
 
         private void SaveCHanges()
