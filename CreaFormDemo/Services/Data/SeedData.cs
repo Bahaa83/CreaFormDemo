@@ -114,8 +114,9 @@ namespace CreaFormDemo.Services.Data
                         OrderBy= i+1
                     };
                     db.symptomsCategories.Add(Scategoryname);
+                    SaveCHanges();
                 }
-                 SaveCHanges();
+                 //SaveCHanges();
             }
             if(! db.symptomQuestions.Any())//lagra data i Symtom 
             {

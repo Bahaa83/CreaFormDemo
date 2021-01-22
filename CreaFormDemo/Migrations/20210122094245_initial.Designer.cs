@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210122093348_intitial")]
-    partial class intitial
+    [Migration("20210122094245_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
