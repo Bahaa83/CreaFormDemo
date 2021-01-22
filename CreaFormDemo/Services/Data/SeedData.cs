@@ -71,34 +71,34 @@ namespace CreaFormDemo.Services.Data
             }
             #endregion
             #region  lagrar data i Symtom
-            string[] Symptomscategory = { "Energi och sömn", " Känslomässig balans", "Kognitiv kapacitet ",
-                "Sinnesorgan,aptit,törst", "Munhålan", "Temperaturreglering", "Smärta ", "Muskler,balans,kroppskontroll",
-                "Mage-tarm", "Immunförsvaret", "Hjärta och cirkulation", "Njurar,urinvägar", "Hormonellt", "Hår,hud,naglar", };
-            string[] EnergyAndSleep = { "Svårt att somna", "Sover dåligt/störd sömn", "Trött på morgonen", "Trött stora delar av dagen", "Kraftlöshet/orkeslöshet", "Allmän sjukdomskänsla" };
-            string[] Emotionalbalance = { "Brist på tålamod", "Lättretlig/irritabilitet", "Blir lätt aggressiv", "Nedstämd/depression", "Känslo-/humörsvängningar", "Gråtmildhet", "Rastlöshet", "Apati/olust/likgiltighet", "Orolig/nervös", "Ångest/panikångest", "Uppvarvad/hyperaktiv" };
-            string[] Cognitivecapacity = { "Minnesproblem", "Nedsatt stresshanteringsförmåga", "Svårt/orkar inte/tänka/klart/", "Beslutsångest", "Koncentrationssvårigheter" };
-            string[] Sensoryorgans = { "Ljuskänslig", "Dimmig/suddig syn", "Ser fläckar/prickar framför ögonen/ljusblixtar", "Dubbelseende/tunnelseende", "Nattblindhet", "Svullnad över/under/runt ögonen", "Gruskänsla i ögonen",
+            string[] Symptomscategory =new string[] { "Energi och sömn", " Känslomässig balans", "Kognitiv kapacitet ",
+                "Sinnesorgan aptit törst", "Munhålan", "Temperaturreglering", "Smärta ", "Muskler balans kroppskontroll",
+                "Mage-tarm", "Immunförsvaret", "Hjärta och cirkulation", "Njurar urinvägar", "Hormonellt", "Hår hud naglar", };
+            string[] EnergyAndSleep = new string[]{ "Svårt att somna", "Sover dåligt/störd sömn", "Trött på morgonen", "Trött stora delar av dagen", "Kraftlöshet/orkeslöshet", "Allmän sjukdomskänsla" };
+            string[] Emotionalbalance = new string[] { "Brist på tålamod", "Lättretlig/irritabilitet", "Blir lätt aggressiv", "Nedstämd/depression", "Känslo-/humörsvängningar", "Gråtmildhet", "Rastlöshet", "Apati/olust/likgiltighet", "Orolig/nervös", "Ångest/panikångest", "Uppvarvad/hyperaktiv" };
+            string[] Cognitivecapacity = new string[]{ "Minnesproblem", "Nedsatt stresshanteringsförmåga", "Svårt/orkar inte/tänka/klart/", "Beslutsångest", "Koncentrationssvårigheter" };
+            string[] Sensoryorgans = new string[] { "Ljuskänslig", "Dimmig/suddig syn", "Ser fläckar/prickar framför ögonen/ljusblixtar", "Dubbelseende/tunnelseende", "Nattblindhet", "Svullnad över/under/runt ögonen", "Gruskänsla i ögonen",
                 "Torra ögon", "Vattniga ögon/ökat tårflöde", "Kliande ögon", "Ögoninflammation","Ögonryckningar" ,"Gulfärgade ögonvitor","Ljudöverkänslig","Tinnitus, brus eller ringningar i örat","Luktsinnet har blivit sämre","Känner mig hela tiden hungrig","Aptitlöshet","Stark törst","Sällan törstig"};
-            string[] Theoralcavity = { "Inflammationer i tandköttet (blödande)", "Munsår", "Blåsor i munnen", "Sprickor i mungiporna", "Muntorrhet",
+            string[] Theoralcavity = new string[] { "Inflammationer i tandköttet (blödande)", "Munsår", "Blåsor i munnen", "Sprickor i mungiporna", "Muntorrhet",
                 "Ökad salivutsöndring", "Dålig andedräkt", "Tungan har en synlig vit beläggning", "Svullen tunga", "Tandlossning"};
-            string[] Temperaturecontrol = { "Fryser lätt", "Känner mig alltid varm (het)", "Vallningar",
+            string[] Temperaturecontrol = new string[] { "Fryser lätt", "Känner mig alltid varm (het)", "Vallningar",
                 "Ansiktshetta", "Brännande känsla i  t ex händer/fötter", "Alltid kall om endast händer/fötter", "Svettas aldrig eller mycket sällan", "Svettas mycket lätt", "Kallsvettningar", "Illaluktande svett" };
-            string[] Pain = { "Huvudvärk", "Migrän", "Nervsmärtor", "Smärta annan. Specificera vad/var i det grå fälten på följ rade",
+            string[] Pain = new string[]{ "Huvudvärk", "Migrän", "Nervsmärtor", "Smärta annan. Specificera vad/var i det grå fälten på följ rade",
                 "Stelhet i kroppen", "Vissa delar av kroppen domnar lätt bort / stickningar", "Myrkrypningar, restless legs" };
-            string[] Muscles = { "Dålig balans", "Yrsel", "Nedsatt reaktionsförmåga / långsamma reflexer", "Rörelsesvårigheter", "Skakningar/darrningar t ex i händer", "Muskelkramp", "Snarkar" };
+            string[] Muscles = new string[] { "Dålig balans", "Yrsel", "Nedsatt reaktionsförmåga / långsamma reflexer", "Rörelsesvårigheter", "Skakningar/darrningar t ex i händer", "Muskelkramp", "Snarkar" };
             string[] Gastrointestinal = { "Förstoppning", "Diarré", "Gaser", "Svullen buk", "Trött efter måltid",
                 "Buksmärta", "Illamående", "Halsbränna", "Sura uppstötningar", "Rapningar", "Sväljsvårigheter","Hungersugningar i magtrakten","Smärta över leverområdet (under lungan på höger sida)" };
-            string[] Theimmunesystem = { "Ofta förkyld", "Ofta lätt feberstegring", "Ofta luftvägsinfektioner", "Ofta halsfluss / ont i halsen",
+            string[] Theimmunesystem = new string[] { "Ofta förkyld", "Ofta lätt feberstegring", "Ofta luftvägsinfektioner", "Ofta halsfluss / ont i halsen",
                 "Ofta halsfluss / ont i halsen", "Vid insjuknande tar det veckor innan jag blir frisk",
                 "Heshet", "Hosta", "Slembildning", "Harklar ofta", "Nästäppa","Försämrad sårläkning","Blöder lätt","Allergiska reaktioner" };
-            string[] Heart = { "Andfådd vid lättare aktivitet", "Andnöd vid vila", "Torrhosta under natten",
+            string[] Heart = new string[] { "Andfådd vid lättare aktivitet", "Andnöd vid vila", "Torrhosta under natten",
                 "Bröstsmärta/känner tryck mot bröstkorgen", "Vid bröstsmärta kan smärtan kännas ut mot armar eller nacke" +
                 "Hjärtklappning", "Oregelbundna/snabba eller dunkande hjärtslag", "Åderbråck", "Näsblod" };
-            string[] Kidneysurinarytract = { "Behöver ofta kissa", "Mörk urin", "Vaknar mer än en gång på natten av att jag behöver gå på toaletten",
+            string[] Kidneysurinarytract = new string[] { "Behöver ofta kissa", "Mörk urin", "Vaknar mer än en gång på natten av att jag behöver gå på toaletten",
                 "Ofta urinvägsinfektion", "Smärtsam/svår urinering", "Vätskekvarhållning", "Svullnad i benområdena"};
-            string[] Hormonal = { "PMS", "Menstruationssmärtor", "Oregelbundna menstruationer", "Uteblivna menstruationer",
+            string[] Hormonal = new string[]{ "PMS", "Menstruationssmärtor", "Oregelbundna menstruationer", "Uteblivna menstruationer",
                 "Rikliga menstruationer", "Nedsatt libido/sexlust", "Flytningar", "Ofta ömma bröst", "Övergångsbesvär", "Prostatabesvär", "Brösttillväxt hos män" };
-            string[] Hairskinnails = { "Eksem", "Acne / bölder", "Andra hudutslag", "Vårtor", "Herpes",
+            string[] Hairskinnails = new string[]{ "Eksem", "Acne / bölder", "Andra hudutslag", "Vårtor", "Herpes",
                 "Hudklåda", "Blåmärken uppkommer lätt", "Torr hud och/eller flagnande hud", "Torra händer/torra fötter",
                 "Vita fläckar i huden (vitiligo)", "Hudrodnad","Hudbristningar/sträckmärken","Hudsprickor","Celluliter","Knottror på huden på överarmar,lår,stjärt",
                 "Torrt hår","Fett hår","Håravfall (ej årstidsbetingat)","Flagnande hårbotten","Mörka ringar under ögonen",
@@ -111,7 +111,7 @@ namespace CreaFormDemo.Services.Data
                     var Scategoryname = new SymptomsCategory()
                     {
                         Name = Symptomscategory[i],
-                        OrderBy=i+1
+                        OrderBy= i+1
                     };
                     db.symptomsCategories.Add(Scategoryname);
                 }
