@@ -1,5 +1,6 @@
 ﻿using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.LifestyleModel.Habits;
+using CreaFormDemo.Entitys.Symptoms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -37,7 +38,8 @@ namespace CreaFormDemo.Entitys.Users
         public Advisor advisor { get; set; }
         public GeneralQuestions  clientProfile { get; set; }
         public IEnumerable<Medicine> medicines { get; set; }
-       
+        public Well_being well_Being { get; set; }
+
 
     }
 }

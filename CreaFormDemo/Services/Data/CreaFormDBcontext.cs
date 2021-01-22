@@ -180,7 +180,11 @@ namespace CreaFormDemo.Entitys
                 .WithOne(x => x.symptomsCategory)
                 .HasForeignKey(x => x.SymptomsCategoryID)
                 .OnDelete(DeleteBehavior.NoAction);
-           
+            modelBuilder.Entity<Client>()
+                 .HasOne<Well_being>(x => x.well_Being)
+                 .WithOne(x => x.client)
+                 .HasForeignKey<Well_being>(x => x.ClientID)
+                 .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
             base.OnModelCreating(modelBuilder);
@@ -210,6 +214,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<SymptomsCategory> symptomsCategories  { get; set; }
         public DbSet<Frequency> frequencies { get; set; }
         public DbSet<Difficulty> difficulties { get; set; }
+        public DbSet<Well_being> well_Beings { get; set; }
 
 
 

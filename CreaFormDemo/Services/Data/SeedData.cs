@@ -24,6 +24,7 @@ namespace CreaFormDemo.Services.Data
         }
         public void SeedUserData()
         {
+            #region//lagra Admin
             if (! db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
@@ -38,6 +39,7 @@ namespace CreaFormDemo.Services.Data
                 db.users.Add(newuser);
                 db.SaveChanges();
             }
+            #endregion
             #region   //lagra data i livsstil område
             string[] lifestyleAreas = { "Vanor", "Arbete", "Privat" };
             string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
@@ -311,9 +313,10 @@ namespace CreaFormDemo.Services.Data
                     db.difficulties.Add(difficulty);
                 }
               SaveCHanges();
-                #endregion
+               
 
             }
+            #endregion
 
         }
 
