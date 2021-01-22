@@ -22,9 +22,9 @@ namespace CreaFormDemo.Services.Data
         {
             this.db = db;
         }
-        public async void SeedUserData()
+        public void SeedUserData()
         {
-            if (!await db.users.AnyAsync())
+            if (! db.users.Any())
             {
                 byte[] passwordhash, passwordsald;
                 CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
@@ -41,7 +41,7 @@ namespace CreaFormDemo.Services.Data
             #region   //lagra data i livsstil område
             string[] lifestyleAreas = { "Vanor", "Arbete", "Privat" };
             string[] VanorKategori = { "Vätske-intag", "Kost-näring", "Måltids-vanor", "Stimu-lantia", "Sömn", "Stress-återhämtning", "Fysisk aktivitet", "Droger" };
-            if (! await db.lifestyleAreas.AnyAsync())//
+            if (!  db.lifestyleAreas.Any())//
             {
                 for (int i = 0; i < lifestyleAreas.Length; i++)
                 {
@@ -52,10 +52,10 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.lifestyleAreas.Add(lifestyle);
                 }
-                SaveCHanges();
+                 SaveCHanges();
             }
 
-            if(!await db.habitsCategories.AnyAsync())//lagra data i Vanor Kategori
+            if(! db.habitsCategories.Any())//lagra data i Vanor Kategori
             {
                 for (int i = 0; i < VanorKategori.Length; i++)
                 {
@@ -67,7 +67,7 @@ namespace CreaFormDemo.Services.Data
                     db.habitsCategories.Add(categoryname);
                    
                 }
-                SaveCHanges();
+                 SaveCHanges();
             }
             #endregion
             #region  lagrar data i Symtom
@@ -104,7 +104,7 @@ namespace CreaFormDemo.Services.Data
                 "Torrt hår","Fett hår","Håravfall (ej årstidsbetingat)","Flagnande hårbotten","Mörka ringar under ögonen",
                 "Sköra naglar","Räfflade naglar","Nagelsvamp eller svamp på huden" };
            
-            if (!await db.symptomsCategories.AnyAsync())//lagra data i Symtom Kategori
+            if (! db.symptomsCategories.Any())//lagra data i Symtom Kategori
             {
                 for (int i = 0; i < Symptomscategory.Length ; i++)
                 {
@@ -115,9 +115,9 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.symptomsCategories.Add(Scategoryname);
                 }
-                SaveCHanges();
+                 SaveCHanges();
             }
-            if(!await db.symptomQuestions.AnyAsync())//lagra data i Symtom 
+            if(! db.symptomQuestions.Any())//lagra data i Symtom 
             {
                 for (int i = 0; i < EnergyAndSleep.Length; i++)
                 {
@@ -140,7 +140,7 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.symptomQuestions.Add(emotionalbalance);
                 }
-                SaveCHanges();
+               SaveCHanges();
                 for (int i = 0; i < Cognitivecapacity.Length; i++)
                 {
                     var cognitivecapacity = new SymptomQuestions()
@@ -173,7 +173,7 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.symptomQuestions.Add(theoralcavity);
                 }
-                SaveCHanges();
+               SaveCHanges();
                 for (int i = 0; i < Temperaturecontrol.Length; i++)
                 {
                     var temperaturecontrol = new SymptomQuestions()
@@ -261,7 +261,7 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.symptomQuestions.Add(hormonal);
                 }
-                SaveCHanges();
+               SaveCHanges();
                 for (int i = 0; i < Hairskinnails.Length; i++)
                 {
                     var hairskinnails = new SymptomQuestions()
@@ -282,7 +282,7 @@ namespace CreaFormDemo.Services.Data
             #region//Lagra data i Frekvens
             string[] Frekvenstext = { "Hela dagen/flera gånger om dagen", "Någon gång varje dag", "Nästan varje dag", "Någon gång i veckan", "Någon gång i månaden/ periodvis", "Någon gång om året eller ännu mer sällan" };
             int[] FrekvensValue = { 10, 9, 7, 5, 3, 1 };
-            if (!await db.frequencies.AnyAsync())
+            if (! db.frequencies.Any())
             {
                 for (int i = 0; i < Frekvenstext.Length; i++)
                 {
@@ -299,7 +299,7 @@ namespace CreaFormDemo.Services.Data
             #endregion
             #region //lagra data i Difficulty
             int[] Difficulty = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-            if(!await db.difficulties.AnyAsync())
+            if(! db.difficulties.Any())
             {
                 for (int i = 0; i < Difficulty.Length; i++)
                 {
@@ -309,16 +309,16 @@ namespace CreaFormDemo.Services.Data
                     };
                     db.difficulties.Add(difficulty);
                 }
-                SaveCHanges();
+              SaveCHanges();
                 #endregion
 
             }
 
         }
 
-        private async void SaveCHanges()
+        private void  SaveCHanges()
         {
-            await db.SaveChangesAsync();
+             db.SaveChanges();
         }
         private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
         {
