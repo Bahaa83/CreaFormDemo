@@ -27,7 +27,7 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions profile)
         {
-            var result = await db.clientProfiles.AddAsync(profile);
+            var result = await db.generalQuestions.AddAsync(profile);
             if (!await Save()) return null;
             return result.Entity;
         }

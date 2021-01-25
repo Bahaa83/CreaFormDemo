@@ -164,7 +164,7 @@ namespace CreaFormDemo.Entitys
 
             #region//Allmänt//
             modelBuilder.Entity<Client>()
-                .HasOne<GeneralQuestions>(X => X.clientProfile)
+                .HasOne<GeneralQuestions>(X => X.generalQuestions)
                 .WithOne(X => X.client)
                 .HasForeignKey<GeneralQuestions>(X => X.ClientID);
             modelBuilder.Entity<Client>()
@@ -209,7 +209,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<Advisor>  advisors { get; set; }
         public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
-        public DbSet<GeneralQuestions>  clientProfiles { get; set; }
+        public DbSet<GeneralQuestions> generalQuestions { get; set; }
         public DbSet<SymptomQuestions> symptomQuestions { get; set; }
         public DbSet<SymptomsCategory> symptomsCategories  { get; set; }
         public DbSet<Frequency> frequencies { get; set; }

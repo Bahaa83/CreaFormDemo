@@ -36,7 +36,7 @@ namespace CreaFormDemo.Entitys.Users
         [Column(name:"Rådgivare ID")]
         public int AdvisorID { get; set; }
         public Advisor advisor { get; set; }
-        public GeneralQuestions  clientProfile { get; set; }
+        public GeneralQuestions generalQuestions { get; set; }
         public IEnumerable<Medicine> medicines { get; set; }
         public Well_being well_Being { get; set; }
 
