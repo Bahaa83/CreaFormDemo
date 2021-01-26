@@ -14,6 +14,7 @@ namespace CreaFormDemo.Services.IRepository
         Task<Client> GetClientByUserID(int ID);
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
+        Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid);
 
         Task<bool> Save();
     }

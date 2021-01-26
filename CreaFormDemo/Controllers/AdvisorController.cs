@@ -131,7 +131,7 @@ namespace CreaFormDemo.Controllers
                 if (advisorfromRepo == null) return NotFound();
                 mapper.Map(editAdvisor, advisorfromRepo);
 
-                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras");
 
                 var advisordto = mapper.Map<AdvisorDto>(advisorfromRepo);
                 return Ok(advisordto);

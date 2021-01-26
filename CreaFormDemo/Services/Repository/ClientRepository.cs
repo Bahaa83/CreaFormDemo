@@ -46,6 +46,20 @@ namespace CreaFormDemo.Services.Repository
             return client;
         }
 
+        public async Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid)
+        {
+            var client = await GetClientByUserID(userid);
+            var generalquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == client.ID);
+            if (generalquestion != null)
+            {
+                return generalquestion;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public async Task<User> GetUserByID(int Id)
         {
             var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);
@@ -57,5 +71,7 @@ namespace CreaFormDemo.Services.Repository
         {
             return await db.SaveChangesAsync() >= 0 ? true : false;
         }
+
+        
     }
 }

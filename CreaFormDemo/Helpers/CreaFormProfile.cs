@@ -29,6 +29,7 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Client, CompletionClientDto>().ReverseMap();
             CreateMap<GeneralQuesDto, CreateGeneralQuesDto>().ReverseMap();
             CreateMap<GeneralQuesDto, GeneralQuestions>().ReverseMap();
+            CreateMap<GeneralQuestions, CreateGeneralQuesDto>().ReverseMap();
             CreateMap<CreateMedicineDto, MedicineDto>().ReverseMap();
             CreateMap<Medicine, MedicineDto>().ReverseMap();
         }
