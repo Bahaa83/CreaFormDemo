@@ -224,10 +224,10 @@ namespace CreaFormDemo.Controllers
         /// <param name="orderby">Skickar från Client sida</param>
         /// <returns>Den returnerar symptom frågan med sin kategori </returns>
         [Authorize(Roles ="Client")]
-        [HttpGet("{orderby:int}/GetSymtomQuestion")]
+        [HttpGet("{orderby:int}", Name ="GetSymtomQuestion")]
         [ProducesResponseType(200)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetSymtomQuestion([FromBody]int orderby)
+        public async Task<ActionResult> GetSymtomQuestion(int orderby)
         {
             try
             {
