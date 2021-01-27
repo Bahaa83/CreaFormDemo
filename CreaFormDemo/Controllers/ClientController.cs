@@ -232,7 +232,7 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var symtomque = await repo.GetSymptomsQuesbycategory(orderby);
-                if (symtomque == null) return null;
+                if (symtomque == null) return BadRequest();
                 return Ok(symtomque);
                
 
