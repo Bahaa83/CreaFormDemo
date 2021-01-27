@@ -232,8 +232,9 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var symtomque = await repo.GetSymptomsQuesbycategory(orderby);
-                if (symtomque == null) return BadRequest();
+                if (symtomque == null) return null;
                 return Ok(symtomque);
+               
 
             }
             catch (Exception)

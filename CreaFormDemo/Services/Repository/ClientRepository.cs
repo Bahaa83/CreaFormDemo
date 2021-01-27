@@ -61,10 +61,11 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-        public async Task<SymptomsCategory> GetSymptomsQuesbycategory(int orderby)
+        public async Task<IEnumerable< SymptomQuestions>> GetSymptomsQuesbycategory(int orderby)
         {
-            var symtomCategori = await db.symptomsCategories.Include(x => x.symptomQuestions).FirstOrDefaultAsync(x => x.OrderBy == orderby);
-            return symtomCategori;
+            var symtomcategori = await db.symptomsCategories.FirstOrDefaultAsync(x => x.OrderBy == orderby);
+            var symtomques = await db.symptomQuestions.Include(x => x.SymptomsCategoryID).Where(x => x.SymptomsCategoryID == symtomcategori.ID).ToListAsync();
+            return symtomques;
         }
 
         public async Task<User> GetUserByID(int Id)
