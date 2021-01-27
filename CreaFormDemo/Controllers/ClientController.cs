@@ -227,7 +227,7 @@ namespace CreaFormDemo.Controllers
         [HttpGet("{orderby:int}/GetSymtomQuestion")]
         [ProducesResponseType(200)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> GetSymtomQuestion(int orderby)
+        public async Task<ActionResult> GetSymtomQuestion([FromBody]int orderby)
         {
             try
             {
