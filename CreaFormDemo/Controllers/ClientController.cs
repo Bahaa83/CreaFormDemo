@@ -218,5 +218,29 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(500);
             }
         }
+        /// <summary>
+        /// Hämtar Symtom frågor genom OrderBy parameter för Att hämta frågorna enligt Kategori Ordningen
+        /// </summary>
+        /// <param name="orderby">Skickar från Client sida</param>
+        /// <returns>Den returnerar symptom frågan med sin kategori </returns>
+        [Authorize(Roles ="Client")]
+        [HttpGet("{orderby}/GetSymtomQuestion")]
+        [ProducesResponseType(200)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> GetSymtomQuestion(int orderby)
+        {
+            try
+            {
+                var symtomque = await repo.GetSymptomsQues(orderby);
+                if (symtomque == null) return BadRequest();
+                return Ok(symtomque);
+
+            }
+            catch (Exception)
+            {
+
+              return   StatusCode(500);
+            }
+        }
     }
 }

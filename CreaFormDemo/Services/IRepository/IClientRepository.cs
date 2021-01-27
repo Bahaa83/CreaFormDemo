@@ -1,4 +1,5 @@
 ﻿using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace CreaFormDemo.Services.IRepository
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
         Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid);
+        Task<SymptomQuestions> GetSymptomsQues(int orderby);
 
         Task<bool> Save();
     }

@@ -1,5 +1,6 @@
 ﻿using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,12 @@ namespace CreaFormDemo.Services.Repository
             {
                 return null;
             }
+        }
+
+        public async Task<IEnumerable<SymptomQuestions>> GetSymptomsQues(int orderby)
+        {
+            var symtomCategori = await db.symptomsCategories.FirstOrDefaultAsync(x => x.OrderBy == orderby);
+            return await db.symptomQuestions.Include(x => x.symptomsCategory).Where(x => x.SymptomsCategoryID == symtomCategori.ID).ToListAsync();
         }
 
         public async Task<User> GetUserByID(int Id)
