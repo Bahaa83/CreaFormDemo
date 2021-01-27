@@ -118,5 +118,12 @@
             <param name="model">CreateMedicineDto model</param>
             <returns>MedicineDto Model</returns>
         </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.GetSymtomQuestion(System.Int32)">
+            <summary>
+            Hämtar Symtom frågor genom OrderBy parameter för Att hämta frågorna enligt Kategori Ordningen
+            </summary>
+            <param name="orderby">Skickar från Client sida</param>
+            <returns>Den returnerar symptom frågan med sin kategori </returns>
+        </member>
     </members>
 </doc>

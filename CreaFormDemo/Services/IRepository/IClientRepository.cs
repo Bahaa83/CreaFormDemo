@@ -16,7 +16,7 @@ namespace CreaFormDemo.Services.IRepository
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
         Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid);
-        Task<IEnumerable< SymptomQuestions>> GetSymptomsQues(int orderby);
+        Task<IEnumerable<SymptomsCategory>> GetSymptomsQuesbycategory(int orderby);
 
         Task<bool> Save();
     }
