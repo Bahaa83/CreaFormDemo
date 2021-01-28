@@ -3,7 +3,9 @@ using CreaFormDemo.DtoModel.ClientDtoModel;
 using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
 using CreaFormDemo.DtoModel.MedicineDtoModel;
 using CreaFormDemo.DtoModel.UserDtoModel;
+using CreaFormDemo.DtoModel.WellBeingDtoModel;
 using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 
 using System;
@@ -32,6 +34,9 @@ namespace CreaFormDemo.DtoModel
             CreateMap<GeneralQuestions, CreateGeneralQuesDto>().ReverseMap();
             CreateMap<CreateMedicineDto, MedicineDto>().ReverseMap();
             CreateMap<Medicine, MedicineDto>().ReverseMap();
+            CreateMap<Well_being,CreateWellBeing >().ReverseMap();
+            CreateMap<Well_being, WellBeingToReturn>().ReverseMap();
+
         }
 
     }

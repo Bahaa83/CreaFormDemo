@@ -2,7 +2,9 @@
 using CreaFormDemo.DtoModel.ClientDtoModel;
 using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
 using CreaFormDemo.DtoModel.MedicineDtoModel;
+using CreaFormDemo.DtoModel.WellBeingDtoModel;
 using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.AspNetCore.Authorization;
@@ -243,5 +245,84 @@ namespace CreaFormDemo.Controllers
               return   StatusCode(500);
             }
         }
+        /// <summary>
+        /// Hämtar svårighet value
+        /// </summary>
+        /// <returns>list av svårighet</returns>
+        [Authorize(Roles ="Client")]
+        [HttpGet("GetDifficulty")]
+        [ProducesResponseType(200, Type = typeof(List<Difficulty>))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult>GetDifficultyValue()
+        {
+            try
+            {
+                var difficulty = await repo.GetDifficultyValue();
+                if (difficulty == null) return BadRequest();
+                return Ok(difficulty);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Hämtar Frekvens value
+        /// </summary>
+        /// <returns>list av freqvens</returns>
+        [Authorize(Roles = "Client")]
+        [HttpGet("GetFrequency")]
+        [ProducesResponseType(200,Type =typeof( List<Frequency>))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> GetFrequencyValue()
+        {
+            try
+            {
+                var frequency = await repo.GetFrequencyValue();
+                if (frequency == null) return BadRequest();
+                return Ok(frequency);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Klienten kan fylla Välbefinnande - uppskattning 
+        /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning  </param>
+        /// <param name="model">CreateWellBeing model</param>
+        /// <returns>WellBeingToReturn model</returns>
+        [Authorize(Roles ="Client")]
+        [HttpPost("{Userid}/WellBeing")]
+        [ProducesResponseType(200,Type =typeof( WellBeingToReturn))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult>FillInWellBeing(int Userid,CreateWellBeing model)
+        {
+            try
+            {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var client = await repo.GetClientByUserID(Userid);
+                if (client == null) return BadRequest();
+                var wellbeing = mapper.Map<Well_being>(model);
+                wellbeing.ClientID = client.ID;
+                var wellbeingfromRepo = await repo.FillInWellBeing(wellbeing);
+                if (wellbeingfromRepo == null) return BadRequest("Något gick fel när du fyllde i välbefinnande");
+                var objekttoReturn = mapper.Map<WellBeingToReturn>(wellbeingfromRepo);
+                return Ok(objekttoReturn);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+
+
     }
 }

@@ -40,11 +40,32 @@ namespace CreaFormDemo.Services.Repository
             return result.Entity;
         }
 
+        public async Task<Well_being> FillInWellBeing(Well_being model)
+        {
+            var result = await db.well_Beings.AddAsync(model);
+            if (!await Save()) return null;
+            return result.Entity;
+        }
+
         public async Task<Client> GetClientByUserID(int ID)
         {
             var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == ID);
             if (client == null) return null;
             return client;
+        }
+
+        public async Task<IEnumerable< Difficulty>> GetDifficultyValue()
+        {
+            var difficulty = await db.difficulties.ToListAsync();
+            if (difficulty == null) return null;
+            return difficulty;
+        }
+
+        public async Task<IEnumerable< Frequency>> GetFrequencyValue()
+        {
+            var frequency = await db.frequencies.ToListAsync();
+            if (frequency == null) return null;
+            return frequency;
         }
 
         public async Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid)
