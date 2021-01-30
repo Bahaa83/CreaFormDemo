@@ -58,6 +58,8 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAdvisorRepository, AdvisorRepository>();
             services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<ISymtomRepo, SymtomRepo>();
+
             services.AddTransient<SeedData>();
             services.AddAutoMapper(typeof(CreaFormProfile));
 
