@@ -2,6 +2,7 @@
 using CreaFormDemo.DtoModel.ClientDtoModel;
 using CreaFormDemo.DtoModel.GeneralQuesDtoModel;
 using CreaFormDemo.DtoModel.MedicineDtoModel;
+using CreaFormDemo.DtoModel.SymtomDtoModel;
 using CreaFormDemo.DtoModel.WellBeingDtoModel;
 using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Symptoms;
@@ -27,12 +28,14 @@ namespace CreaFormDemo.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IClientRepository repo;
+        private readonly ISymtomRepo symRepo;
         private readonly IMapper mapper;
         private readonly IAdvisorRepository advisorRepo;
 
-        public ClientController(IClientRepository repo,IMapper mapper, IAdvisorRepository advisorRepo)
+        public ClientController(IClientRepository repo,ISymtomRepo SymRepo,IMapper mapper, IAdvisorRepository advisorRepo)
         {
             this.repo = repo;
+            symRepo = SymRepo;
             this.mapper = mapper;
             this.advisorRepo = advisorRepo;
         }
@@ -315,6 +318,32 @@ namespace CreaFormDemo.Controllers
                 if (wellbeingfromRepo == null) return BadRequest("Något gick fel när du fyllde i välbefinnande");
                 var objekttoReturn = mapper.Map<WellBeingToReturn>(wellbeingfromRepo);
                 return Ok(objekttoReturn);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        [Authorize(Roles ="Client")]
+        [HttpPost("{Userid}/FillInSymtom")]
+        [ProducesResponseType(200)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult>FillInSymtom(int Userid, SymtomAnswer model)
+        {
+            try
+            {
+                if(Userid!= int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                int symtomcategoryId = await symRepo.GetSymtomCategoryID(model.SymtomText);
+                var clientsymtom = mapper.Map<ClientSymptom>(model);
+                clientsymtom.SymtomCategoryID = symtomcategoryId;
+                bool result = await symRepo.AddSymtomAnswer(clientsymtom);
+                if (!result) return BadRequest("Något gick fel när du fyllde i Client svar ");
+                return Ok();
+
             }
             catch (Exception)
             {

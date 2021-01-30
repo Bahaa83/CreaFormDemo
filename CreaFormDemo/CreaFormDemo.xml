@@ -125,5 +125,25 @@
             <param name="orderby">Skickar från Client sida</param>
             <returns>Den returnerar symptom frågan med sin kategori </returns>
         </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.GetDifficultyValue">
+            <summary>
+            Hämtar svårighet value
+            </summary>
+            <returns>list av svårighet</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.GetFrequencyValue">
+            <summary>
+            Hämtar Frekvens value
+            </summary>
+            <returns>list av freqvens</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.FillInWellBeing(System.Int32,CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
+            <summary>
+            Klienten kan fylla Välbefinnande - uppskattning 
+            </summary>
+            <param name="Userid">User id som gjorde inloggning  </param>
+            <param name="model">CreateWellBeing model</param>
+            <returns>WellBeingToReturn model</returns>
+        </member>
     </members>
 </doc>
