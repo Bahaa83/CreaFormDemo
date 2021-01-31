@@ -21,8 +21,8 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
-            var completeclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
-            var result = await db.clientSymptoms.AddAsync(completeclient);
+            //var completeclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
+            var result = await db.clientSymptoms.AddAsync(clientSymptom);
             return await Save();
         }
 
