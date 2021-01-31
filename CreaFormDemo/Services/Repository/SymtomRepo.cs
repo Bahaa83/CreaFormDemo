@@ -1,6 +1,7 @@
 ﻿using CreaFormDemo.DtoModel.SymtomDtoModel;
 using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Symptoms;
+using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -19,11 +20,43 @@ namespace CreaFormDemo.Services.Repository
             this.db = db;
         }
 
-        public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
+        public async Task<bool> AddSymtomAnswer(Client client, SymtomAnswer model)
         {
-            //var completeclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
-            var result = await db.clientSymptoms.AddAsync(clientSymptom);
-            return await Save();
+            int totalt = model.Frequency + model.Difficulty;
+            int symtomcategoryId = await GetSymtomCategoryID(model.SymtomText);
+            if(totalt>0)
+            {
+                var compliteclient = new ClientSymptom()
+                {
+                    ClientID = client.ID,
+                    SymtomCategoryID = symtomcategoryId,
+                    Frequency = model.Frequency,
+                    Difficulty = model.Difficulty,
+                    SymtomText = model.SymtomText,
+                    TotPsymtom = totalt,
+                    Numberofsymptoms = 1
+                };
+                await db.clientSymptoms.AddAsync(compliteclient);
+                return await Save();
+            }
+            else
+            {
+                var compliteclient = new ClientSymptom()
+                {
+                    ClientID = client.ID,
+                    SymtomCategoryID = symtomcategoryId,
+                    Frequency = model.Frequency,
+                    Difficulty = model.Difficulty,
+                    SymtomText = model.SymtomText,
+                    TotPsymtom = totalt,
+                    Numberofsymptoms = 0
+                };
+                await db.clientSymptoms.AddAsync(compliteclient);
+                return await Save();
+            }
+
+            
+
         }
 
         private async Task<bool> Save()
