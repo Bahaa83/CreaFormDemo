@@ -47,7 +47,7 @@ namespace CreaFormDemo.Services.Repository
         {
             if(clientSymptom.Frequency>0)
             {
-                clientSymptom.TotPsymtom = clientSymptom.Frequency + clientSymptom.Difficulty;
+                clientSymptom.TotPsymtom = (clientSymptom.Frequency + clientSymptom.Difficulty);
                 clientSymptom.Numberofsymptoms = 1;
                 return clientSymptom;
             }
