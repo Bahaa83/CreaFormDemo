@@ -343,13 +343,13 @@ namespace CreaFormDemo.Controllers
                 {
                     return Unauthorized("Du är inte auktoriserad");
                 }
-                //int symtomcategoryId = await symRepo.GetSymtomCategoryID(model.SymtomText);
+                int symtomcategoryId = await symRepo.GetSymtomCategoryID(model.SymtomText);
                 var client = await repo.GetClientByUserID(Userid);
-                //var clientsymtom = mapper.Map<ClientSymptom>(model);
-                //clientsymtom.SymtomCategoryID = symtomcategoryId;
-                //clientsymtom.ClientID = client.ID;
-                //clientsymtom.TotPsymtom = model.Frequency + model.Difficulty;
-                bool result = await symRepo.AddSymtomAnswer(client, model);
+                var clientsymtom = new ClientSymptom();
+                clientsymtom= mapper.Map<ClientSymptom>(model);
+                clientsymtom.SymtomCategoryID = symtomcategoryId;
+                clientsymtom.ClientID = client.ID;
+                bool result = await symRepo.AddSymtomAnswer( clientsymtom);
                 if (!result) return BadRequest("Något gick fel när du fyllde i Client svar ");
                 return Ok();
 

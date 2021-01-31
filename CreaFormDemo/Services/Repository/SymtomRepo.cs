@@ -20,43 +20,11 @@ namespace CreaFormDemo.Services.Repository
             this.db = db;
         }
 
-        public async Task<bool> AddSymtomAnswer(Client client, SymtomAnswer model)
+        public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
-            int totalt = model.Frequency + model.Difficulty;
-            int symtomcategoryId = await GetSymtomCategoryID(model.SymtomText);
-            if(totalt>0)
-            {
-                var compliteclient = new ClientSymptom()
-                {
-                    ClientID = client.ID,
-                    SymtomCategoryID = symtomcategoryId,
-                    Frequency = model.Frequency,
-                    Difficulty = model.Difficulty,
-                    SymtomText = model.SymtomText,
-                    TotPsymtom = totalt,
-                    Numberofsymptoms = 1
-                };
-                await db.clientSymptoms.AddAsync(compliteclient);
+           
+                await db.clientSymptoms.AddAsync(clientSymptom);
                 return await Save();
-            }
-            else
-            {
-                var compliteclient = new ClientSymptom()
-                {
-                    ClientID = client.ID,
-                    SymtomCategoryID = symtomcategoryId,
-                    Frequency = model.Frequency,
-                    Difficulty = model.Difficulty,
-                    SymtomText = model.SymtomText,
-                    TotPsymtom = totalt,
-                    Numberofsymptoms = 0
-                };
-                await db.clientSymptoms.AddAsync(compliteclient);
-                return await Save();
-            }
-
-            
-
         }
 
         private async Task<bool> Save()
