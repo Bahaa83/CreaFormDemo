@@ -11,6 +11,7 @@ namespace CreaFormDemo.Services.IRepository
     {
         Task<int> GetSymtomCategoryID(string symtomtext);
         Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom);
+       
   
     }
 }

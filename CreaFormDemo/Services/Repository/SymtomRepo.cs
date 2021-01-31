@@ -21,23 +21,9 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
-           
-            if (clientSymptom.Frequency > 0 || clientSymptom.Difficulty > 0)
-            {
-                clientSymptom.TotPsymtom = clientSymptom.Frequency + clientSymptom.Difficulty;
-                clientSymptom.Numberofsymptoms = 1;
-               var result = await db.clientSymptoms.AddAsync(clientSymptom);
-                return await Save();
-            }
-            else
-            {
-               
-                var result = await db.clientSymptoms.AddAsync(clientSymptom);
-                return await Save();
-            }
-
-            ////var result= await db.clientSymptoms.AddAsync(clientSymptom);
-            //return await Save();
+            var completeclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
+            var result = await db.clientSymptoms.AddAsync(completeclient);
+            return await Save();
         }
 
         private async Task<bool> Save()
@@ -57,10 +43,16 @@ namespace CreaFormDemo.Services.Repository
             return CategoryID;
         }
 
-      
-         
-
-
-        
+       private ClientSymptom TotalFrequncyAndNumberOfSymtom(ClientSymptom clientSymptom)
+        {
+            if(clientSymptom.Frequency>0)
+            {
+                clientSymptom.TotPsymtom = clientSymptom.Frequency + clientSymptom.Difficulty;
+                clientSymptom.Numberofsymptoms = 1;
+                return clientSymptom;
+            }
+            return clientSymptom;
+            
+        }
     }
 }
