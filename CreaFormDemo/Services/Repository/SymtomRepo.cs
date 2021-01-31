@@ -21,8 +21,12 @@ namespace CreaFormDemo.Services.Repository
         public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
             var result= await db.clientSymptoms.AddAsync(clientSymptom);
-            if (result == null) return false;
-            return true;
+            return await Save();
+        }
+
+        private async Task<bool> Save()
+        {
+            return await db.SaveChangesAsync() >= 0 ? true : false;
         }
 
         public async Task<int> GetSymtomCategoryID(string symtomtext)
