@@ -31,7 +31,7 @@ namespace CreaFormDemo.Services.Repository
             }
             else
             {
-                clientSymptom.Numberofsymptoms = 0;
+               
                 var result = await db.clientSymptoms.AddAsync(clientSymptom);
                 return await Save();
             }
