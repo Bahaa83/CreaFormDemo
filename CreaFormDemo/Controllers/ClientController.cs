@@ -349,8 +349,7 @@ namespace CreaFormDemo.Controllers
                 clientsymtom= mapper.Map<ClientSymptom>(model);
                 clientsymtom.SymtomCategoryID = symtomcategoryId;
                 clientsymtom.ClientID = client.ID;
-                bool result = await symRepo.AddSymtomAnswer( clientsymtom);
-                if (!result) return BadRequest("Något gick fel när du fyllde i Client svar ");
+                if (!await symRepo.AddSymtomAnswer(clientsymtom)) return BadRequest("Något gick fel när du fyllde i Client svar ");
                 return Ok();
 
             }
