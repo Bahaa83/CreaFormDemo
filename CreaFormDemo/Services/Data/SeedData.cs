@@ -112,7 +112,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var Scategoryname = new SymptomsCategory()
                     {
-                        Name = Symptomscategory[i],
+                        Name = Symptomscategory[i].ToLower(),
                         OrderBy= i+1
                     };
                     db.symptomsCategories.Add(Scategoryname);
@@ -126,7 +126,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var energyandsleep = new SymptomQuestions()
                     {
-                        FråganText = EnergyAndSleep[i],
+                        FråganText = EnergyAndSleep[i].ToLower(),
                         SymptomsCategoryID=1
                         
                     };
@@ -137,7 +137,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var emotionalbalance = new SymptomQuestions()
                     {
-                        FråganText = Emotionalbalance[i],
+                        FråganText = Emotionalbalance[i].ToLower(),
                         SymptomsCategoryID = 2
 
                     };
@@ -148,7 +148,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var cognitivecapacity = new SymptomQuestions()
                     {
-                        FråganText = Cognitivecapacity[i],
+                        FråganText = Cognitivecapacity[i].ToLower(),
                         SymptomsCategoryID = 3
 
                     };
@@ -159,7 +159,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var sensoryorgans = new SymptomQuestions()
                     {
-                        FråganText = Sensoryorgans[i],
+                        FråganText = Sensoryorgans[i].ToLower(),
                         SymptomsCategoryID = 4
 
                     };
@@ -170,7 +170,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var theoralcavity = new SymptomQuestions()
                     {
-                        FråganText = Theoralcavity[i],
+                        FråganText = Theoralcavity[i].ToLower(),
                         SymptomsCategoryID = 5
 
                     };
@@ -181,7 +181,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var temperaturecontrol = new SymptomQuestions()
                     {
-                        FråganText = Temperaturecontrol[i],
+                        FråganText = Temperaturecontrol[i].ToLower(),
                         SymptomsCategoryID = 6
 
                     };
@@ -192,7 +192,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var pain = new SymptomQuestions()
                     {
-                        FråganText = Pain[i],
+                        FråganText = Pain[i].ToLower(),
                         SymptomsCategoryID = 7
 
                     };
@@ -203,7 +203,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var muscles = new SymptomQuestions()
                     {
-                        FråganText = Muscles[i],
+                        FråganText = Muscles[i].ToLower(),
                         SymptomsCategoryID = 8
 
                     };
@@ -214,7 +214,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var gastrointestinal = new SymptomQuestions()
                     {
-                        FråganText = Gastrointestinal[i],
+                        FråganText = Gastrointestinal[i].ToLower(),
                         SymptomsCategoryID = 9
 
                     };
@@ -225,7 +225,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var theimmunesystem = new SymptomQuestions()
                     {
-                        FråganText = Theimmunesystem[i],
+                        FråganText = Theimmunesystem[i].ToLower(),
                         SymptomsCategoryID = 10
 
                     };
@@ -236,7 +236,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var heart = new SymptomQuestions()
                     {
-                        FråganText = Heart[i],
+                        FråganText = Heart[i].ToLower(),
                         SymptomsCategoryID = 11
 
                     };
@@ -247,7 +247,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var kidneysurinarytract = new SymptomQuestions()
                     {
-                        FråganText = Kidneysurinarytract[i],
+                        FråganText = Kidneysurinarytract[i].ToLower(),
                         SymptomsCategoryID = 12
 
                     };
@@ -258,7 +258,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var hormonal = new SymptomQuestions()
                     {
-                        FråganText = Hormonal[i],
+                        FråganText = Hormonal[i].ToLower(),
                         SymptomsCategoryID = 13
 
                     };
@@ -269,7 +269,7 @@ namespace CreaFormDemo.Services.Data
                 {
                     var hairskinnails = new SymptomQuestions()
                     {
-                        FråganText = Hairskinnails[i],
+                        FråganText = Hairskinnails[i].ToLower(),
                         SymptomsCategoryID = 14
 
                     };

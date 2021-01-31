@@ -37,7 +37,7 @@ namespace CreaFormDemo.Services.Repository
             int CategoryID = 0;
             if (!string.IsNullOrEmpty(symtomtext))
             {
-                var symtom = await db.symptomQuestions.FirstOrDefaultAsync(x => x.FråganText == symtomtext);
+                var symtom = await db.symptomQuestions.FirstOrDefaultAsync(x => x.FråganText.Equals(symtomtext));
                  CategoryID = symtom.SymptomsCategoryID;
                 return CategoryID;
             }
