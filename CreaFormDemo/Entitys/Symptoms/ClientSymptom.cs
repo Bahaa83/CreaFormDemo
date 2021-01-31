@@ -22,14 +22,14 @@ namespace CreaFormDemo.Entitys.Symptoms
         public int TotPsymtom { get; set; }
         [Column(name: "Antal symtom")]
         public int Numberofsymptoms { get; set; }
-        public ClientSymptom()
-        {
-            if (this.Frequency + this.Difficulty > 0)
-            {
-                this.TotPsymtom = (this.Frequency + this.Difficulty);
-                this.Numberofsymptoms = 1;
-            }
-        }
+        //public ClientSymptom()
+        //{
+        //    if (this.Frequency + this.Difficulty > 0)
+        //    {
+        //        this.TotPsymtom = (this.Frequency + this.Difficulty);
+        //        this.Numberofsymptoms = 1;
+        //    }
+        //}
 
     }
 }

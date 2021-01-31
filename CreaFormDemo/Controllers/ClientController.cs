@@ -345,10 +345,11 @@ namespace CreaFormDemo.Controllers
                 }
                 int symtomcategoryId = await symRepo.GetSymtomCategoryID(model.SymtomText);
                 var client = await repo.GetClientByUserID(Userid);
-                var clientsymtom = new ClientSymptom();
-                clientsymtom= mapper.Map<ClientSymptom>(model);
+               
+               var clientsymtom= mapper.Map<ClientSymptom>(model);
                 clientsymtom.SymtomCategoryID = symtomcategoryId;
                 clientsymtom.ClientID = client.ID;
+                clientsymtom.TotPsymtom = model.Frequency + model.Difficulty;
                 if (!await symRepo.AddSymtomAnswer(clientsymtom)) return BadRequest("Något gick fel när du fyllde i Client svar ");
                 return Ok();
 

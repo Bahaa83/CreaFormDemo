@@ -22,7 +22,7 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
-           
+            //var compliteclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
                 await db.clientSymptoms.AddAsync(clientSymptom);
                 return await Save();
         }
@@ -46,9 +46,11 @@ namespace CreaFormDemo.Services.Repository
 
        private ClientSymptom TotalFrequncyAndNumberOfSymtom(ClientSymptom clientSymptom)
         {
-            if(clientSymptom.Frequency>0)
+            int frequncy = clientSymptom.Frequency;
+            int difficulty = clientSymptom.Difficulty;
+            if ((frequncy + difficulty)>0)
             {
-                clientSymptom.TotPsymtom = (clientSymptom.Frequency + clientSymptom.Difficulty);
+                clientSymptom.TotPsymtom = frequncy + difficulty;
                 clientSymptom.Numberofsymptoms = 1;
                 return clientSymptom;
             }
