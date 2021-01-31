@@ -1,4 +1,5 @@
-﻿using CreaFormDemo.Entitys.Symptoms;
+﻿using CreaFormDemo.DtoModel.SymtomDtoModel;
+using CreaFormDemo.Entitys.Symptoms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace CreaFormDemo.Services.IRepository
     {
         Task<int> GetSymtomCategoryID(string symtomtext);
         Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom);
+  
     }
 }

@@ -1,4 +1,5 @@
-﻿using CreaFormDemo.Entitys;
+﻿using CreaFormDemo.DtoModel.SymtomDtoModel;
+using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -20,8 +21,23 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
         {
-            var result= await db.clientSymptoms.AddAsync(clientSymptom);
-            return await Save();
+           
+            if (clientSymptom.Frequency > 0 || clientSymptom.Difficulty > 0)
+            {
+                clientSymptom.TotPsymtom = clientSymptom.Frequency + clientSymptom.Difficulty;
+                clientSymptom.Numberofsymptoms = 1;
+               var result = await db.clientSymptoms.AddAsync(clientSymptom);
+                return await Save();
+            }
+            else
+            {
+                clientSymptom.Numberofsymptoms = 0;
+                var result = await db.clientSymptoms.AddAsync(clientSymptom);
+                return await Save();
+            }
+
+            ////var result= await db.clientSymptoms.AddAsync(clientSymptom);
+            //return await Save();
         }
 
         private async Task<bool> Save()
@@ -40,5 +56,11 @@ namespace CreaFormDemo.Services.Repository
             }
             return CategoryID;
         }
+
+      
+         
+
+
+        
     }
 }
