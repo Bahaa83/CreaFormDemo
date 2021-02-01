@@ -53,18 +53,8 @@ namespace CreaFormDemo.Services.Repository
             return CategoryID;
         }
 
-       private ClientSymptom TotalFrequncyAndNumberOfSymtom(ClientSymptom clientSymptom)
-        {
-            int frequncy = clientSymptom.Frequency;
-            int difficulty = clientSymptom.Difficulty;
-            if ((frequncy + difficulty)>0)
-            {
-                clientSymptom.TotPsymtom = frequncy + difficulty;
-                clientSymptom.Numberofsymptoms = 1;
-                return clientSymptom;
-            }
-            return clientSymptom;
-            
-        }
+      
+
+       
     }
 }
