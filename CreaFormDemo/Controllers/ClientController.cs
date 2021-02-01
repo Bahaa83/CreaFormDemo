@@ -340,28 +340,28 @@ namespace CreaFormDemo.Controllers
            
             try
             {
-                int symtomcategoryId;
+                
                
                 if (Userid!= int.Parse(User.FindFirst(ClaimTypes.Name).Value))
                 {
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var client = await repo.GetClientByUserID(Userid);
-                //var clientsymtom = new ClientSymptom();
+                var clientsymtoms = new List<ClientSymptom>();
                 foreach (var symtomanswer in symtomAnswers)
                 {
-                    var clientsymtom = new ClientSymptom();
-                    symtomcategoryId = await symRepo.GetSymtomCategoryID(symtomanswer.SymtomText);
-                    clientsymtom = mapper.Map<ClientSymptom>(symtomanswer);
-                    clientsymtom.SymtomCategoryID = symtomcategoryId;
-                    clientsymtom.ClientID = client.ID;
-                    if (!await symRepo.AddSymtomAnswer(clientsymtom)) return BadRequest("Något gick fel när du fyllde i Client svar ");
-
+                    clientsymtoms.Add( mapper.Map<ClientSymptom>(symtomanswer));
                 }
 
 
 
+                foreach (var clientsymtom in clientsymtoms)
+                {
+                    clientsymtom.ClientID = client.ID;
+                    clientsymtom.SymtomCategoryID = await symRepo.GetSymtomCategoryID(clientsymtom.SymtomText);
 
+                }
+                if (!await symRepo.AddSymtomAnswer(clientsymtoms)) return BadRequest("Något gick fel när du fyllde i Symtom");
                 return Ok();
 
             }

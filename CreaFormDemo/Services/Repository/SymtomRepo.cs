@@ -20,10 +20,13 @@ namespace CreaFormDemo.Services.Repository
             this.db = db;
         }
 
-        public async Task<bool> AddSymtomAnswer(ClientSymptom clientSymptom)
+        public async Task<bool> AddSymtomAnswer(List<ClientSymptom> clientSymptoms)
         {
-            //var compliteclient = TotalFrequncyAndNumberOfSymtom(clientSymptom);
+            foreach (var clientSymptom in clientSymptoms)
+            {
                 await db.clientSymptoms.AddAsync(clientSymptom);
+            }
+               
                 return await Save();
         }
 
