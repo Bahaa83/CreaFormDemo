@@ -329,28 +329,38 @@ namespace CreaFormDemo.Controllers
         /// Fylla in Klienten svar i symtom tabbel
         /// </summary>
         /// <param name="Userid">User id som gjorde inloggning </param>
-        /// <param name="model">SymtomAnswer model</param>
+        /// <param name="symtomAnswers">List av symtom answer </param>
         /// <returns>ok</returns>
         [Authorize(Roles ="Client")]
         [HttpPost("{Userid}/FillInSymtom")]
         [ProducesResponseType(200)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>FillInSymtom(int Userid, SymtomAnswer model)
+        public async Task<ActionResult>FillInSymtom(int Userid, List<SymtomAnswer> symtomAnswers)
         {
+           
             try
             {
-                if(Userid!= int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                int symtomcategoryId;
+               
+                if (Userid!= int.Parse(User.FindFirst(ClaimTypes.Name).Value))
                 {
                     return Unauthorized("Du är inte auktoriserad");
                 }
-                int symtomcategoryId = await symRepo.GetSymtomCategoryID(model.SymtomText);
                 var client = await repo.GetClientByUserID(Userid);
-               
-               var clientsymtom= mapper.Map<ClientSymptom>(model);
-                clientsymtom.SymtomCategoryID = symtomcategoryId;
-                clientsymtom.ClientID = client.ID;
-                clientsymtom.TotPsymtom = model.Frequency + model.Difficulty;
-                if (!await symRepo.AddSymtomAnswer(clientsymtom)) return BadRequest("Något gick fel när du fyllde i Client svar ");
+                var clientsymtom = new ClientSymptom();
+                foreach (var symtomanswer in symtomAnswers)
+                {
+                    symtomcategoryId = await symRepo.GetSymtomCategoryID(symtomanswer.SymtomText);
+                    clientsymtom = mapper.Map<ClientSymptom>(symtomanswer);
+                    clientsymtom.SymtomCategoryID = symtomcategoryId;
+                    clientsymtom.ClientID = client.ID;
+                    if (!await symRepo.AddSymtomAnswer(clientsymtom)) return BadRequest("Något gick fel när du fyllde i Client svar ");
+
+                }
+
+
+
+
                 return Ok();
 
             }
