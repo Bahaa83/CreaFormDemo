@@ -11,7 +11,7 @@ namespace CreaFormDemo.Entitys.Symptoms
     {
         public int ID { get; set; }
         public int ClientID { get; set; }
-        public Client Client { get; set; }
+        public  Client Client { get; set; }
         public string SymtomText { get; set; }
         public int SymtomCategoryID { get; set; }
         [Column(name: "Frekvens")]
@@ -22,6 +22,14 @@ namespace CreaFormDemo.Entitys.Symptoms
         public int TotPsymtom { get; set; }
         [Column(name: "Antal symtom")]
         public int Numberofsymptoms { get; set; }
+        public ClientSymptom()
+        {
+            if(this.Frequency + this.Difficulty>0)
+            {
+                this.TotPsymtom = this.Frequency + this.Difficulty;
+                this.Numberofsymptoms = 1;
+            }
+        }
         
 
     }

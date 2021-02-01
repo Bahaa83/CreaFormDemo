@@ -39,7 +39,7 @@ namespace CreaFormDemo.Entitys.Users
         public GeneralQuestions generalQuestions { get; set; }
         public IEnumerable<Medicine> medicines { get; set; }
         public Well_being well_Being { get; set; }
-        public ClientSymptom clientSymptom { get; set; }
+        public IEnumerable<ClientSymptom> clientSymptoms { get; set; }
 
 
     }
