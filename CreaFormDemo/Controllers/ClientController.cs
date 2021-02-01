@@ -347,9 +347,10 @@ namespace CreaFormDemo.Controllers
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var client = await repo.GetClientByUserID(Userid);
-                var clientsymtom = new ClientSymptom();
+                //var clientsymtom = new ClientSymptom();
                 foreach (var symtomanswer in symtomAnswers)
                 {
+                    var clientsymtom = new ClientSymptom();
                     symtomcategoryId = await symRepo.GetSymtomCategoryID(symtomanswer.SymtomText);
                     clientsymtom = mapper.Map<ClientSymptom>(symtomanswer);
                     clientsymtom.SymtomCategoryID = symtomcategoryId;
