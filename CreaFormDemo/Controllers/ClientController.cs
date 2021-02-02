@@ -106,7 +106,7 @@ namespace CreaFormDemo.Controllers
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var oldclient = await repo.GetClientByUserID(Userid);
-                if (oldclient == null) return BadRequest(" felet är har");
+                if (oldclient == null) return BadRequest();
                 mapper.Map(clientToupdate, oldclient);
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
                 var updatedclient = mapper.Map<ClientToReturnDto>(oldclient);
@@ -119,7 +119,7 @@ namespace CreaFormDemo.Controllers
             }
         }
         /// <summary>
-        /// Fyll i allmänna Klientfrågor
+        /// Fyll i allmänna Klient frågor
         /// </summary>
         /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model">CreateGeneralQuesDto model</param>
@@ -138,6 +138,7 @@ namespace CreaFormDemo.Controllers
                 }
                 var client = await repo.GetClientByUserID(Userid);
                 if (client == null) return BadRequest();
+                if (await repo.IsExist(client.ID)) return BadRequest("Du har fylld din Allmänna frågor redan!");
                 var generalQuesdto = mapper.Map<GeneralQuesDto>(model);
                 generalQuesdto.ClientID = client.ID;
                 var generalQues = mapper.Map<GeneralQuestions>(generalQuesdto);
@@ -347,6 +348,7 @@ namespace CreaFormDemo.Controllers
                     return Unauthorized("Du är inte auktoriserad");
                 }
                 var client = await repo.GetClientByUserID(Userid);
+
                 var clientsymtoms = new List<ClientSymptom>();
                 foreach (var symtomanswer in symtomAnswers)
                 {

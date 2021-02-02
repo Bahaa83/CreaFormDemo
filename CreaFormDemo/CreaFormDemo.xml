@@ -96,7 +96,7 @@
         </member>
         <member name="M:CreaFormDemo.Controllers.ClientController.GeneralQuestions(System.Int32,CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
             <summary>
-            Fyll i allmänna Klientfrågor
+            Fyll i allmänna Klient frågor
             </summary>
             <param name="Userid">User id som gjorde inloggning</param>
             <param name="model">CreateGeneralQuesDto model</param>

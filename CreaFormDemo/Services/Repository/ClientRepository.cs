@@ -49,6 +49,7 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<Client> GetClientByUserID(int ID)
         {
+           
             var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == ID);
             if (client == null) return null;
             return client;
@@ -97,6 +98,14 @@ namespace CreaFormDemo.Services.Repository
             var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);
             if (user == null) return null;
             return user;
+        }
+
+        public async Task<bool> IsExist(int id)
+        {
+          
+            var result = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == id);
+            if (result == null) return false;
+            return true;
         }
 
         public async Task<bool> Save()
