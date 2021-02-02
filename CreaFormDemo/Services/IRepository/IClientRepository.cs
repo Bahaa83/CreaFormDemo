@@ -17,11 +17,11 @@ namespace CreaFormDemo.Services.IRepository
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
         Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid);
         Task<Well_being> GetWellbeingByUserid(int Userid);
+        Task<Medicine> GetMedicineByUserID(int Userid);
         Task<SymptomsCategory> GetSymptomsQuesbycategory(int orderby);
         Task<IEnumerable<Difficulty>> GetDifficultyValue();
         Task<IEnumerable<Frequency>> GetFrequencyValue();
         Task<Well_being> FillInWellBeing(Well_being model);
-        Task<bool> IsExist(int id);
 
         Task<bool> Save();
     }

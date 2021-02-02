@@ -83,14 +83,18 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
+        public async Task<Medicine> GetMedicineByUserID(int Userid)
+        {
+            var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == Userid);
+            var medicine = await db.medicines.FirstOrDefaultAsync(x => x.ClientID == client.ID);
+            return medicine;
+        }
+
         public async Task<SymptomsCategory> GetSymptomsQuesbycategory(int orderby)
         {
             var symtomcategori = await db.symptomsCategories.Include(x=>x.symptomQuestions).FirstOrDefaultAsync(x => x.OrderBy == orderby);
             if (symtomcategori == null) return null;
             return symtomcategori;
-            
-            //return await db.symptomQuestions.Where(x => x.SymptomsCategoryID == symtomcategori.ID).ToListAsync();
-           
         }
 
         public async Task<User> GetUserByID(int Id)
@@ -106,15 +110,6 @@ namespace CreaFormDemo.Services.Repository
             var wellbeing = await db.well_Beings.FirstOrDefaultAsync(x => x.ClientID == client.ID);
             return wellbeing;
         }
-
-        public async Task<bool> IsExist(int id)
-        {
-          
-            var result = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == id);
-            if (result == null) return false;
-            return true;
-        }
-
         public async Task<bool> Save()
         {
             return await db.SaveChangesAsync() >= 0 ? true : false;

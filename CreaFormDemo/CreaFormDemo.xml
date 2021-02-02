@@ -145,6 +145,14 @@
             <param name="model">CreateWellBeing model</param>
             <returns>WellBeingToReturn model</returns>
         </member>
+        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateWellBeing(System.Int32,CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
+            <summary>
+            Klienten kan Uppdatera Välbefinnande - uppskattning 
+            </summary>
+            <param name="Userid">User id som gjorde inloggning  </param>
+            <param name="model">CreateWellBeing model</param>
+            <returns>WellBeingToReturn model</returns>
+        </member>
         <member name="M:CreaFormDemo.Controllers.ClientController.FillInSymtom(System.Int32,System.Collections.Generic.List{CreaFormDemo.DtoModel.SymtomDtoModel.SymtomAnswer})">
             <summary>
             Fylla in Klienten svar i symtom tabbel

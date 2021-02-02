@@ -138,7 +138,6 @@ namespace CreaFormDemo.Controllers
                 }
                 var client = await repo.GetClientByUserID(Userid);
                 if (client == null) return BadRequest();
-                if (await repo.IsExist(client.ID)) return BadRequest("Du har fylld din Allmänna frågor redan!");
                 var generalQuesdto = mapper.Map<GeneralQuesDto>(model);
                 generalQuesdto.ClientID = client.ID;
                 var generalQues = mapper.Map<GeneralQuestions>(generalQuesdto);
@@ -217,6 +216,40 @@ namespace CreaFormDemo.Controllers
                 var MedicineToReturn = mapper.Map<MedicineDto>(entity);
                 return Ok(MedicineToReturn);
                
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// Uppdatera läkemedelsinformationen för klienten
+        /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning</param>
+        /// <param name="model">CreateMedicineDto model</param>
+        /// <returns>MedicineDto Model</returns>
+        [Authorize(Roles = "Client")]
+        [HttpPost("{Userid}/UpdateMedicineInformation")]
+        [ProducesResponseType(200, Type = typeof(MedicineDto))]
+        [ProducesDefaultResponseType]
+
+        public async Task<ActionResult> UpdateMedicineInformation(int Userid, CreateMedicineDto model)
+        {
+            try
+            {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var oldMedicine = await repo.GetMedicineByUserID(Userid);
+                if (oldMedicine == null) return BadRequest();
+                mapper.Map(model, oldMedicine);
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när medicine information Uppdateras");
+                var medicine = mapper.Map<MedicineDto>(oldMedicine);
+                return Ok(medicine);
+
+
             }
             catch (Exception)
             {
