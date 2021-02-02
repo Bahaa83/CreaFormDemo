@@ -327,6 +327,38 @@ namespace CreaFormDemo.Controllers
             }
         }
         /// <summary>
+        /// Klienten kan Uppdatera Välbefinnande - uppskattning 
+        /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning  </param>
+        /// <param name="model">CreateWellBeing model</param>
+        /// <returns>WellBeingToReturn model</returns>
+        [Authorize(Roles = "Client")]
+        [HttpPost("{Userid}/UpdateWellBeing")]
+        [ProducesResponseType(200, Type = typeof(WellBeingToReturn))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> UpdateWellBeing(int Userid, CreateWellBeing model)
+        {
+            try
+            {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var oldWellBeing = await repo.GetWellbeingByUserid(Userid);
+                if (oldWellBeing == null) return BadRequest();
+                mapper.Map(model, oldWellBeing);
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när välbefinnande Uppdateras");
+                var WellBeingtoreturn = mapper.Map<WellBeingToReturn>(oldWellBeing);
+                return Ok(WellBeingtoreturn);
+
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
         /// Fylla in Klienten svar i symtom tabbel
         /// </summary>
         /// <param name="Userid">User id som gjorde inloggning </param>

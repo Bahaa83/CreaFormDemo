@@ -100,6 +100,13 @@ namespace CreaFormDemo.Services.Repository
             return user;
         }
 
+        public async Task<Well_being> GetWellbeingByUserid(int Userid)
+        {
+            var client = await GetClientByUserID(Userid);
+            var wellbeing = await db.well_Beings.FirstOrDefaultAsync(x => x.ClientID == client.ID);
+            return wellbeing;
+        }
+
         public async Task<bool> IsExist(int id)
         {
           
