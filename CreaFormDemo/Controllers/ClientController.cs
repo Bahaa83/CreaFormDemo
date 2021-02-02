@@ -223,40 +223,7 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(500);
             }
         }
-        /// <summary>
-        /// Uppdatera läkemedelsinformationen för klienten
-        /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning</param>
-        /// <param name="model">CreateMedicineDto model</param>
-        /// <returns>MedicineDto Model</returns>
-        [Authorize(Roles = "Client")]
-        [HttpPost("{Userid}/UpdateMedicineInformation")]
-        [ProducesResponseType(200, Type = typeof(MedicineDto))]
-        [ProducesDefaultResponseType]
-
-        public async Task<ActionResult> UpdateMedicineInformation(int Userid, CreateMedicineDto model)
-        {
-            try
-            {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var oldMedicine = await repo.GetMedicineByUserID(Userid);
-                if (oldMedicine == null) return BadRequest();
-                mapper.Map(model, oldMedicine);
-                if (!await repo.Save()) return BadRequest("Ett fel inträffade när medicine information Uppdateras");
-                var medicine = mapper.Map<MedicineDto>(oldMedicine);
-                return Ok(medicine);
-
-
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(500);
-            }
-        }
+       
         /// <summary>
         /// Hämtar Symtom frågor genom OrderBy parameter för Att hämta frågorna enligt Kategori Ordningen
         /// </summary>
