@@ -78,8 +78,20 @@ namespace CreaFormDemo.Services.Repository
             var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x=>x.ID == model.ID);
             if (oldgeneralquestion != null)
             {
-                imapper.Map(model, oldgeneralquestion);
-               await Save();
+                oldgeneralquestion.Diagnoser = model.Diagnoser;
+                oldgeneralquestion.DofB = model.DofB;
+                oldgeneralquestion.Eliteathletes = model.Eliteathletes;
+                oldgeneralquestion.gender = model.gender;
+                oldgeneralquestion.Hip = model.Hip;
+                oldgeneralquestion.Length = model.Length;
+                oldgeneralquestion.OtherInformation = model.OtherInformation;
+                oldgeneralquestion.PositionWork = model.PositionWork;
+                oldgeneralquestion.Pregnant = model.Pregnant;
+                oldgeneralquestion.Supplements = model.Supplements;
+                oldgeneralquestion.Vegetarian = model.Vegetarian;
+                oldgeneralquestion.Waist = model.Waist;
+                oldgeneralquestion.Weight = model.Weight;
+                await Save();
                 return oldgeneralquestion;
             }
             else
