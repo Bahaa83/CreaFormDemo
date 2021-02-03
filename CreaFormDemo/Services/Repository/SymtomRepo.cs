@@ -24,11 +24,7 @@ namespace CreaFormDemo.Services.Repository
         {
             foreach (var clientSymptom in clientSymptoms)
             {
-                //if(clientSymptom.Frequency+clientSymptom.Difficulty>0)
-                //{
-                //    clientSymptom.TotPsymtom = clientSymptom.Frequency + clientSymptom.Difficulty;
-                //    clientSymptom.Numberofsymptoms = 1;
-                //}
+
                 await db.clientSymptoms.AddAsync(clientSymptom);
             }
                

@@ -14,7 +14,7 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
        
         public DateTime DofB { get; set; }
         
-        public string Age { get; set; }
+        public int Age { get; set; }
        
         public Gender gender { get; set; }
        

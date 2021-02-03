@@ -15,8 +15,6 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
         [Required(ErrorMessage = "Födelsedagen är obligatorisk")]
         [DataType(DataType.Date)]
         public DateTime DofB { get; set; }
-       
-        public string Age { get; set; }
         [Required(ErrorMessage = "Kön är obligatorisk")]
         public Gender gender { get; set; }
         [Required(ErrorMessage = "Vikt är obligatorisk")]
