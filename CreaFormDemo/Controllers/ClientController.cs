@@ -157,25 +157,21 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten Kan uppdatera sin Allmänt frågor
         /// </summary>
-        /// <param name=" userid">User ID </param>
         /// <param name="model"> CreateGeneralQuesDto MODEL</param>
         /// <returns>Allmänt som har uppdaterats</returns>
         [Authorize(Roles = "Client")]
-        [HttpPut("{userid}/UpdateGeneral")]
+        [HttpPut("UpdateGeneral")]
         [ProducesResponseType(204, Type = typeof(GeneralQuesDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateGeneralQuestions(int userid, [FromBody] CreateGeneralQuesDto model)
+        public async Task<ActionResult> UpdateGeneralQuestions( [FromBody] CreateGeneralQuesDto model)
         {
             try
             {
-                if (userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
-                var oldgeneralquestion = await repo.GetGeneralQuestionsByUserID(userid);
+                
+                var oldgeneralquestion = await repo.GetGeneralQuestionsByUserID(model.ID);
                 if (oldgeneralquestion == null) return BadRequest();
                 mapper.Map(model, oldgeneralquestion);
-                /*if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras")*/;
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras");
                 var generaltoreturn = mapper.Map<GeneralQuesDto>(oldgeneralquestion);
                 return Ok(generaltoreturn);
 

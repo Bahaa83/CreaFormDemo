@@ -9,7 +9,7 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
 {
     public class CreateGeneralQuesDto
     {
-
+        public int ID { get; set; }
         [Required(ErrorMessage = "Arbete är obligatorisk")]
         public string PositionWork { get; set; }
         [Required(ErrorMessage = "Födelsedagen är obligatorisk")]

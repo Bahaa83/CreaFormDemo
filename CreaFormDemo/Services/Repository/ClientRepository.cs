@@ -69,10 +69,10 @@ namespace CreaFormDemo.Services.Repository
             return frequency;
         }
 
-        public async Task<GeneralQuestions> GetGeneralQuestionsByUserID(int userid)
+        public async Task<GeneralQuestions> GetGeneralQuestionsByUserID(int id)
         {
-            var client = await GetClientByUserID(userid);
-            var generalquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == client.ID);
+         
+            var generalquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == id);
             if (generalquestion != null)
             {
                 return generalquestion;

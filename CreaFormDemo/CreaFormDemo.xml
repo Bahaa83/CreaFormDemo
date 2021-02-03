@@ -102,11 +102,10 @@
             <param name="model">CreateGeneralQuesDto model</param>
             <returns>GeneralQuesDto model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateGeneralQuestions(System.Int32,CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateGeneralQuestions(CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
             <summary>
             Klienten Kan uppdatera sin Allmänt frågor
             </summary>
-            <param name=" userid">User ID </param>
             <param name="model"> CreateGeneralQuesDto MODEL</param>
             <returns>Allmänt som har uppdaterats</returns>
         </member>
