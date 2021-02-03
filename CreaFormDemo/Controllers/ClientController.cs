@@ -175,7 +175,7 @@ namespace CreaFormDemo.Controllers
                 var oldgeneralquestion = await repo.GetGeneralQuestionsByUserID(userid);
                 if (oldgeneralquestion == null) return BadRequest();
                 mapper.Map(model, oldgeneralquestion);
-                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras");
+                /*if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras")*/;
                 var generaltoreturn = mapper.Map<GeneralQuesDto>(oldgeneralquestion);
                 return Ok(generaltoreturn);
 
