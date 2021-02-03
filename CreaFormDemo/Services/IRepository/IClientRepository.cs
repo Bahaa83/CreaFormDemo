@@ -22,6 +22,7 @@ namespace CreaFormDemo.Services.IRepository
         Task<IEnumerable<Difficulty>> GetDifficultyValue();
         Task<IEnumerable<Frequency>> GetFrequencyValue();
         Task<Well_being> FillInWellBeing(Well_being model);
+        Task<int> GetClientidbyGeneralidID(int id);
 
         Task<bool> Save();
     }

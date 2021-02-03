@@ -167,7 +167,9 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
+                int clientid = await repo.GetClientidbyGeneralidID(model.ID);
                 var obj = mapper.Map<GeneralQuestions>(model);
+                obj.ClientID = clientid;
                 var result = await repo.updateGeneralQuestions(obj);
                 if (result == null) return BadRequest();
                 return NoContent();

@@ -120,6 +120,10 @@ namespace CreaFormDemo.Services.Repository
             return await db.SaveChangesAsync() >= 0 ? true : false;
         }
 
-        
+        public async Task<int> GetClientidbyGeneralidID(int id)
+        {
+            var general = await db.generalQuestions.FirstOrDefaultAsync(x => x.ID == id);
+            return general.ClientID;
+        }
     }
 }
