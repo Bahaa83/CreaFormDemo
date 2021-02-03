@@ -161,19 +161,16 @@ namespace CreaFormDemo.Controllers
         /// <returns>Allmänt som har uppdaterats</returns>
         [Authorize(Roles = "Client")]
         [HttpPut("UpdateGeneral")]
-        [ProducesResponseType(204, Type = typeof(GeneralQuesDto))]
+        [ProducesResponseType(204)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> UpdateGeneralQuestions( [FromBody] CreateGeneralQuesDto model)
         {
             try
             {
-                
-                var oldgeneralquestion = await repo.GetGeneralQuestionsByUserID(model.ID);
-                if (oldgeneralquestion == null) return BadRequest();
-                mapper.Map(model, oldgeneralquestion);
-                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen Uppdateras");
-                var generaltoreturn = mapper.Map<GeneralQuesDto>(oldgeneralquestion);
-                return Ok(generaltoreturn);
+                var obj = mapper.Map<GeneralQuestions>(model);
+                var result = await repo.updateGeneralQuestions(obj);
+                if (result == null) return BadRequest();
+                return NoContent();
 
             }
             catch (Exception)

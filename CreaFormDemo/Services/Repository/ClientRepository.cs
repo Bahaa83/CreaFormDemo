@@ -1,4 +1,5 @@
-﻿using CreaFormDemo.Entitys;
+﻿using AutoMapper;
+using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
@@ -14,10 +15,12 @@ namespace CreaFormDemo.Services.Repository
     public class ClientRepository : IClientRepository
     {
         private readonly CreaFormDBcontext db;
+        private readonly IMapper imapper;
 
-        public ClientRepository(CreaFormDBcontext db)
+        public ClientRepository(CreaFormDBcontext db,IMapper imapper)
         {
             this.db = db;
+            this.imapper = imapper;
         }
         public async Task<Client> CompletionClientProfile( Client client)
         {
@@ -69,13 +72,15 @@ namespace CreaFormDemo.Services.Repository
             return frequency;
         }
 
-        public async Task<GeneralQuestions> GetGeneralQuestionsByUserID(int id)
+        public async Task<GeneralQuestions> updateGeneralQuestions(GeneralQuestions model)
         {
          
-            var generalquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == id);
-            if (generalquestion != null)
+            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == model.ID);
+            if (oldgeneralquestion != null)
             {
-                return generalquestion;
+                imapper.Map(model, oldgeneralquestion);
+               await Save();
+                return oldgeneralquestion;
             }
             else
             {
