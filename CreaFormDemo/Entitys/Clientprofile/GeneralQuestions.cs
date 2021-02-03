@@ -19,8 +19,8 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public int  Age
         {
             get { 
-                DateTime today=DateTime.Today;
-                return today.Year - this.DofB.Year;
+                var today=DateTime.Today;
+                return Convert.ToInt32( today.Year - this.DofB.Year);
             }
             set { }
         }
