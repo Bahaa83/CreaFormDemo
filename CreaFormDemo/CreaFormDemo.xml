@@ -118,14 +118,6 @@
             <param name="model">CreateMedicineDto model</param>
             <returns>MedicineDto Model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateMedicineInformation(System.Int32,CreaFormDemo.DtoModel.MedicineDtoModel.CreateMedicineDto)">
-            <summary>
-            Uppdatera läkemedelsinformationen för klienten
-            </summary>
-            <param name="Userid">User id som gjorde inloggning</param>
-            <param name="model">CreateMedicineDto model</param>
-            <returns>MedicineDto Model</returns>
-        </member>
         <member name="M:CreaFormDemo.Controllers.ClientController.GetSymtomQuestion(System.Int32)">
             <summary>
             Hämtar Symtom frågor genom OrderBy parameter för Att hämta frågorna enligt Kategori Ordningen

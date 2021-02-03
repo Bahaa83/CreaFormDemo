@@ -19,17 +19,18 @@ namespace CreaFormDemo.Entitys.Symptoms
         [Column(name: "Svårighet")]
         public int Difficulty { get; set; }
         [Column(name: "Totalpoäng/symtom")]
-        public int TotPsymtom { get; set; }
-        [Column(name: "Antal symtom")]
-        public int Numberofsymptoms { get; set; }
-        public ClientSymptom()
+        public int TotPsymtom 
         {
-            if(this.Frequency + this.Difficulty>0)
-            {
-                this.TotPsymtom = this.Frequency + this.Difficulty;
-                this.Numberofsymptoms = 1;
-            }
+            get { return this.Frequency + this.Difficulty; }
+            set { } 
         }
+        [Column(name: "Antal symtom")]
+        public int Numberofsymptoms
+        {
+            get { return this.TotPsymtom > 0 ? 1 : 0; }
+            set { }
+        }
+       
         
 
     }
