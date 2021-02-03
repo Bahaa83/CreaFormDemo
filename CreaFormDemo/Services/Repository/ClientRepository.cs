@@ -72,25 +72,13 @@ namespace CreaFormDemo.Services.Repository
             return frequency;
         }
 
-        public async Task<GeneralQuestions> updateGeneralQuestions(GeneralQuestions model)
+        public async Task<GeneralQuestions> GetGeneralQuestionsbyUserid(int userid)
         {
          
-            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x=>x.ID == model.ID);
+            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync();
             if (oldgeneralquestion != null)
             {
-                oldgeneralquestion.Diagnoser = model.Diagnoser;
-                oldgeneralquestion.DofB = model.DofB;
-                oldgeneralquestion.Eliteathletes = model.Eliteathletes;
-                oldgeneralquestion.gender = model.gender;
-                oldgeneralquestion.Hip = model.Hip;
-                oldgeneralquestion.Length = model.Length;
-                oldgeneralquestion.OtherInformation = model.OtherInformation;
-                oldgeneralquestion.PositionWork = model.PositionWork;
-                oldgeneralquestion.Pregnant = model.Pregnant;
-                oldgeneralquestion.Supplements = model.Supplements;
-                oldgeneralquestion.Vegetarian = model.Vegetarian;
-                oldgeneralquestion.Waist = model.Waist;
-                oldgeneralquestion.Weight = model.Weight;
+              
                 await Save();
                 return oldgeneralquestion;
             }
@@ -132,10 +120,6 @@ namespace CreaFormDemo.Services.Repository
             return await db.SaveChangesAsync() >= 0 ? true : false;
         }
 
-        public async Task<int> GetClientidbyGeneralidID(int id)
-        {
-            var general = await db.generalQuestions.FirstOrDefaultAsync(x => x.ID == id);
-            return general.ClientID;
-        }
+       
     }
 }

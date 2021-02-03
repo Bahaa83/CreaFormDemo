@@ -8,7 +8,7 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
 {
     public class GeneralQuesDto
     {
-        public int ID { get; set; }
+       
         
         public string PositionWork { get; set; }
         public int Age { get; set; }
@@ -33,7 +33,7 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
         public string Supplements { get; set; }
        
         public string OtherInformation { get; set; }
-        public int ClientID { get; set; }
+       
       
 
     }

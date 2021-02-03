@@ -94,7 +94,7 @@ namespace CreaFormDemo.Controllers
         /// <param name="clientToupdate">CompletionClientDto model</param>
         /// <returns>ClientToReturnDto model</returns>
         [Authorize(Roles ="Client")]
-        [HttpPost("{Userid}/UpdateClientProfile")]
+        [HttpPut("{Userid}/UpdateClientProfile")]
         [ProducesResponseType(200,Type =typeof(ClientToReturnDto))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>UpdateClientProfile(int Userid,CompletionClientDto clientToupdate)
@@ -157,20 +157,25 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten Kan uppdatera sin Allmänt frågor
         /// </summary>
+        /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model"> CreateGeneralQuesDto MODEL</param>
         /// <returns>Allmänt som har uppdaterats</returns>
         [Authorize(Roles = "Client")]
-        [HttpPut("UpdateGeneral")]
+        [HttpPut( "{Userid}/UpdateGeneral")]
         [ProducesResponseType(204)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateGeneralQuestions( [FromBody] CreateGeneralQuesDto model)
+        public async Task<ActionResult> UpdateGeneralQuestions(int Userid, [FromBody] CreateGeneralQuesDto model)
         {
             try
             {
-                
-                var obj = mapper.Map<GeneralQuestions>(model);
-                var result = await repo.updateGeneralQuestions(obj);
-                if (result == null) return BadRequest();
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized("Du är inte auktoriserad");
+                }
+                var oldGeneral = await repo.GetGeneralQuestionsbyUserid(Userid);
+                if (oldGeneral == null) return BadRequest();
+                mapper.Map(model, oldGeneral);
+                if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
                 return NoContent();
             }
             catch (Exception)

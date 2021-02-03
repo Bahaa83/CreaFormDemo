@@ -15,14 +15,14 @@ namespace CreaFormDemo.Services.IRepository
         Task<Client> GetClientByUserID(int ID);
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
-        Task<GeneralQuestions> updateGeneralQuestions(GeneralQuestions model);
+        Task<GeneralQuestions> GetGeneralQuestionsbyUserid(int id);
         Task<Well_being> GetWellbeingByUserid(int Userid);
         Task<Medicine> GetMedicineByUserID(int Userid);
         Task<SymptomsCategory> GetSymptomsQuesbycategory(int orderby);
         Task<IEnumerable<Difficulty>> GetDifficultyValue();
         Task<IEnumerable<Frequency>> GetFrequencyValue();
         Task<Well_being> FillInWellBeing(Well_being model);
-        Task<int> GetClientidbyGeneralidID(int id);
+      
 
         Task<bool> Save();
     }
