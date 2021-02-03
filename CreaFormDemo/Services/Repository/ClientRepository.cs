@@ -74,12 +74,11 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<GeneralQuestions> GetGeneralQuestionsbyUserid(int userid)
         {
-         
-            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync();
+            var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == userid);
+
+            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x=>x.ClientID==client.ID);
             if (oldgeneralquestion != null)
             {
-              
-                await Save();
                 return oldgeneralquestion;
             }
             else
