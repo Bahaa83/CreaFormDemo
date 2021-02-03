@@ -171,7 +171,6 @@ namespace CreaFormDemo.Controllers
                 var result = await repo.updateGeneralQuestions(obj);
                 if (result == null) return BadRequest();
                 return NoContent();
-
             }
             catch (Exception)
             {
