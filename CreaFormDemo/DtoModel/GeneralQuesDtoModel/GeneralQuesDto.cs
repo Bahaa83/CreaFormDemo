@@ -11,8 +11,8 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
        
         
         public string PositionWork { get; set; }
-        public int Age { get; set; }
-       
+        public DateTime DofB { get; set; }
+
         public Gender gender { get; set; }
        
         public double Weight { get; set; }

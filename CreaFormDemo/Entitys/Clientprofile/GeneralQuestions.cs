@@ -15,15 +15,6 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string PositionWork { get; set; }
         [Column(name: "Föddelsedatum")]
         public DateTime DofB { get; set; }
-        [Column(name: "Ålder")]
-        public int  Age
-        {
-            get { 
-                var today=DateTime.Today;
-                return Convert.ToInt32( today.Year - this.DofB.Year);
-            }
-            set { }
-        }
         [Column(name: "Kön")]
         public Gender gender { get; set; }
         [Column("Vikt/kg")]

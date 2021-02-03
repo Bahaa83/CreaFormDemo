@@ -26,10 +26,6 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Age")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Ålder");
-
                     b.Property<int>("ClientID")
                         .HasColumnType("int");
 

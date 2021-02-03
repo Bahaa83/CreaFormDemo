@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210201181652_relation")]
-    partial class relation
+    [Migration("20210203211108_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,10 +27,6 @@ namespace CreaFormDemo.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<string>("Age")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Ålder");
 
                     b.Property<int>("ClientID")
                         .HasColumnType("int");
