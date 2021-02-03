@@ -36,7 +36,8 @@ namespace CreaFormDemo.DtoModel.GeneralQuesDtoModel
         public string Supplements { get; set; }
     
         public string OtherInformation { get; set; }
-      
+        public int ClientID { get; set; }
+
 
     }
 }
