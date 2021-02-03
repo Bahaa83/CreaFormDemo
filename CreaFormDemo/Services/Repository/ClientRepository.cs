@@ -75,7 +75,7 @@ namespace CreaFormDemo.Services.Repository
         public async Task<GeneralQuestions> updateGeneralQuestions(GeneralQuestions model)
         {
          
-            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x => x.ClientID == model.ID);
+            var oldgeneralquestion = await db.generalQuestions.FirstOrDefaultAsync(x=>x.ID == model.ID);
             if (oldgeneralquestion != null)
             {
                 imapper.Map(model, oldgeneralquestion);
