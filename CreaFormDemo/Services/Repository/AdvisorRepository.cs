@@ -78,7 +78,8 @@ namespace CreaFormDemo.Services.Repository
                     }
                     
                 }
-                symtomsviews.Add(Symtomoverview);
+                await db.symtomOverviews.AddAsync(Symtomoverview);
+                await Save();
             }
             
             return symtomsviews;

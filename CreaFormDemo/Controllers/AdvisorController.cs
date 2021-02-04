@@ -213,10 +213,10 @@ namespace CreaFormDemo.Controllers
             }
         }
         /// <summary>
-        /// 
+        /// Rådgivaren kan titta på Symptoms Screening - Overview för en klient
         /// </summary>
-        /// <param name="clientid"></param>
-        /// <returns></returns>
+        /// <param name="clientid">Client id</param>
+        /// <returns> List av SymtomOverview</returns>
         [Authorize(Roles ="Advisor")]
         [HttpGet("{clientid}/SymptomsOverview")]
         [ProducesResponseType(200,Type =typeof(List<SymtomOverview>))]
