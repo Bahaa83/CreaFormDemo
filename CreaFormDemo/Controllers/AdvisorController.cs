@@ -188,7 +188,7 @@ namespace CreaFormDemo.Controllers
         /// En rådgivare kan titta på klientens svar på symtom
         /// </summary>
         /// <param name="clientid"> Klient ID </param>
-        /// <returns>List av ClientSymptom</returns>
+        /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
         [HttpGet("{clientid}/ClientSymptomsOverview")]
         [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
@@ -199,7 +199,12 @@ namespace CreaFormDemo.Controllers
             {
                 var symtomsoverview = await repo.GetClientSymtomOverview(clientid);
                 if (symtomsoverview == null) return BadRequest();
-                return symtomsoverview.ToList();
+                var symtomview = new List<ClientSymtomOverview>();
+                foreach (var item in symtomsoverview)
+                {
+                    symtomview.Add(mapper.Map<ClientSymtomOverview>(item));
+                }
+                return Ok(symtomview) ;
 
             }
             catch (Exception)

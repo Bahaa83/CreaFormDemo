@@ -39,6 +39,8 @@ namespace CreaFormDemo.DtoModel
             CreateMap<Well_being,CreateWellBeing >().ReverseMap();
             CreateMap<Well_being, WellBeingToReturn>().ReverseMap();
             CreateMap<ClientSymptom,SymtomAnswer>().ReverseMap();
+            CreateMap<ClientSymtomOverview,ClientSymptom>().ReverseMap();
+
 
 
         }
