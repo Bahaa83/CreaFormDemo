@@ -184,9 +184,15 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(500);
             }
         }
+        /// <summary>
+        /// En rådgivare kan titta på klientens svar på symtom
+        /// </summary>
+        /// <param name="clientid"> Klient ID </param>
+        /// <returns>List av ClientSymptom</returns>
         [Authorize(Roles = "Advisor")]
         [HttpGet("{clientid}/ClientSymptomsOverview")]
         [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
+        [ProducesDefaultResponseType]
         public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomOverview(int clientid)
         {
             try
