@@ -46,7 +46,7 @@ namespace CreaFormDemo.Services.Repository
           
         }
 
-        public async Task<IEnumerable<ClientSymptom>> GetClientSymtomOverview(int clientid)
+        public async Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(int clientid)
         {
             IEnumerable<ClientSymptom> clientsymtoms = await db.clientSymptoms.
                 Where(x => x.ClientID == clientid).OrderBy(x=>x.SymtomCategoryID).ToListAsync();
@@ -54,6 +54,35 @@ namespace CreaFormDemo.Services.Repository
             return clientsymtoms;
 
             
+        }
+
+        public async Task<IEnumerable<SymtomOverview>>GetSymtomOverview(int clientid)
+        {
+            var symtomsviews = new List<SymtomOverview>();
+            var clientsymtomanswer = await GetClientSymtomAnsewr(clientid);
+            var categorys = await db.symptomsCategories.OrderBy(x=>x.OrderBy).ToListAsync();
+            var Symtomoverview = new SymtomOverview();
+
+            for (int i = 0; i < categorys.Count(); i++)
+            {
+                foreach (var item in clientsymtomanswer)
+                {
+                    Symtomoverview = new SymtomOverview();
+                    if (categorys[i].ID==item.SymtomCategoryID)
+                    {
+                        Symtomoverview.TotalFrequency += item.Frequency;
+                        Symtomoverview.TotalDifficulty += item.Difficulty;
+                        Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
+                        
+
+                    }
+                    
+                }
+                symtomsviews.Add(Symtomoverview);
+            }
+            
+            return symtomsviews;
+          
         }
 
         public async Task<bool> Save()

@@ -190,14 +190,14 @@ namespace CreaFormDemo.Controllers
         /// <param name="clientid"> Klient ID </param>
         /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpGet("{clientid}/ClientSymptomsOverview")]
+        [HttpGet("{clientid}/ClientSymptomsAnsewr")]
         [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomOverview(int clientid)
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int clientid)
         {
             try
             {
-                var symtomsoverview = await repo.GetClientSymtomOverview(clientid);
+                var symtomsoverview = await repo.GetClientSymtomAnsewr(clientid);
                 if (symtomsoverview == null) return BadRequest();
                 var symtomview = new List<ClientSymtomOverview>();
                 foreach (var item in symtomsoverview)
@@ -209,6 +209,32 @@ namespace CreaFormDemo.Controllers
             }
             catch (Exception)
             {
+                return StatusCode(500);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="clientid"></param>
+        /// <returns></returns>
+        [Authorize(Roles ="Advisor")]
+        [HttpGet("{clientid}/SymptomsOverview")]
+        [ProducesResponseType(200,Type =typeof(List<SymtomOverview>))]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> SymptomsOverview(int clientid)
+        {
+            try
+            {
+
+                var symtomview = await repo.GetSymtomOverview(clientid);
+
+                if (symtomview == null) return BadRequest();
+                return Ok(symtomview);
+
+            }
+            catch (Exception)
+            {
+
                 return StatusCode(500);
             }
         }

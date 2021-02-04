@@ -15,7 +15,8 @@ namespace CreaFormDemo.Services.IRepository
         Task<bool> Save();
         Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID);
         Task<IEnumerable<Client>> GetClients(int advisorID);
-        Task<IEnumerable<ClientSymptom>> GetClientSymtomOverview(int clientid);
+        Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(int clientid);
+        Task<IEnumerable<SymtomOverview>> GetSymtomOverview(int clientid);
 
 
     }
