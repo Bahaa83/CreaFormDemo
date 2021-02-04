@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.DtoModel.ClientDtoModel;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.AspNetCore.Authorization;
@@ -183,8 +184,26 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(500);
             }
         }
+        [Authorize(Roles = "Advisor")]
+        [HttpGet("{clientid}/ClientSymptomsOverview")]
+        [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomOverview(int clientid)
+        {
+            try
+            {
+                var symtomsoverview = await repo.GetClientSymtomOverview(clientid);
+                if (symtomsoverview == null) return BadRequest();
+                return symtomsoverview.ToList();
 
-        
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+
 
 
     }

@@ -1,4 +1,5 @@
 ﻿using CreaFormDemo.Entitys;
+using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -43,6 +44,16 @@ namespace CreaFormDemo.Services.Repository
         {
             return  await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
           
+        }
+
+        public async Task<IEnumerable<ClientSymptom>> GetClientSymtomOverview(int clientid)
+        {
+            IEnumerable<ClientSymptom> clientsymtoms = await db.clientSymptoms.
+                Where(x => x.ClientID == clientid).OrderBy(x=>x.SymtomCategoryID).ToListAsync();
+            if (clientsymtoms == null) return null;
+            return clientsymtoms;
+
+            
         }
 
         public async Task<bool> Save()

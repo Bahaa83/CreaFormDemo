@@ -1,4 +1,5 @@
-﻿using CreaFormDemo.Entitys.Users;
+﻿using CreaFormDemo.Entitys.Symptoms;
+using CreaFormDemo.Entitys.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace CreaFormDemo.Services.IRepository
         Task<bool> Save();
         Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID);
         Task<IEnumerable<Client>> GetClients(int advisorID);
+        Task<IEnumerable<ClientSymptom>> GetClientSymtomOverview(int clientid);
 
 
     }
