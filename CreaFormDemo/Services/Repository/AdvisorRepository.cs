@@ -61,32 +61,36 @@ namespace CreaFormDemo.Services.Repository
             var symtomsviews = new List<SymtomOverview>();
             var clientsymtomanswer = await GetClientSymtomAnsewr(clientid);
             var categorys = await db.symptomsCategories.OrderBy(x=>x.OrderBy).ToListAsync();
+
             var Symtomoverview = new SymtomOverview();
 
-            for (int i = 0; i < categorys.Count(); i++)
-            {
+
+            //for (int i = 0; i < categorys.Count(); i++)
+            //{
                 foreach (var item in clientsymtomanswer)
                 {
-                    
-                    if (categorys[i].ID==item.SymtomCategoryID)
+
+                    if ( item.SymtomCategoryID==4)
                     {
+                         Symtomoverview = new SymtomOverview();
                         Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
 
-                        symtomsviews.Add(Symtomoverview);
+                        
                     }
-                    
-                }
+                  
+                //}
+                symtomsviews.Add(Symtomoverview);
                 //Symtomoverview.ClientID = clientid;
                 //await db.symtomOverviews.AddAsync(Symtomoverview);
                 //await Save();
 
             }
-            
+
             return symtomsviews;
-          
+
         }
 
         public async Task<bool> Save()

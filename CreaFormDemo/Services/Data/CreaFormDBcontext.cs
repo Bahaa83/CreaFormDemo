@@ -222,7 +222,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<Well_being> well_Beings { get; set; }
 
         public DbSet<ClientSymptom> clientSymptoms { get; set; }
-        public DbSet<SymtomOverview> symtomOverviews { get; set; }
+        //public DbSet<SymtomOverview> symtomOverviews { get; set; }
 
 
 
