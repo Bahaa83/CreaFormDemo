@@ -71,6 +71,7 @@ namespace CreaFormDemo.Services.Repository
                 {
                     if (item.SymtomCategoryID == i)
                     {
+                       
                         Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
@@ -79,7 +80,7 @@ namespace CreaFormDemo.Services.Repository
                     
                 }
                 symtomsviews.Add(Symtomoverview);
-
+                Symtomoverview = new SymtomOverview();
             }
 
             return symtomsviews;
