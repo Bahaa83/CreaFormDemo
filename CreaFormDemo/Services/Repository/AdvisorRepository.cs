@@ -82,12 +82,13 @@ namespace CreaFormDemo.Services.Repository
                     }
                   
                 //}
-                symtomsviews.Add(Symtomoverview);
+              
                 //Symtomoverview.ClientID = clientid;
                 //await db.symtomOverviews.AddAsync(Symtomoverview);
                 //await Save();
 
             }
+            symtomsviews.Add(Symtomoverview);
 
             return symtomsviews;
 
