@@ -67,19 +67,22 @@ namespace CreaFormDemo.Services.Repository
             {
                 foreach (var item in clientsymtomanswer)
                 {
-                    Symtomoverview = new SymtomOverview();
+                    
                     if (categorys[i].ID==item.SymtomCategoryID)
                     {
+                        Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
                         
 
                     }
-                    
+                    symtomsviews.Add(Symtomoverview);
                 }
-                await db.symtomOverviews.AddAsync(Symtomoverview);
-                await Save();
+                ////Symtomoverview.ClientID = clientid;
+                //await db.symtomOverviews.AddAsync(Symtomoverview);
+                //await Save();
+              
             }
             
             return symtomsviews;
