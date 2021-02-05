@@ -14,6 +14,7 @@ namespace CreaFormDemo.Entitys.Symptoms
         public  Client Client { get; set; }
         public string SymtomText { get; set; }
         public int SymtomCategoryID { get; set; }
+        public SymptomsCategory symptomsCategory { get; set; }
         [Column(name: "Frekvens")]
         public int Frequency { get; set; }
         [Column(name: "Svårighet")]

@@ -67,12 +67,13 @@ namespace CreaFormDemo.Services.Repository
 
             //for (int i = 0; i < categorys.Count(); i++)
             //{
-                foreach (var item in clientsymtomanswer)
+            foreach (var item in clientsymtomanswer)
                 {
+              
 
-                    if ( item.SymtomCategoryID==4)
+                if ( item.SymtomCategoryID==4)
                     {
-                         Symtomoverview = new SymtomOverview();
+                       
                         Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;

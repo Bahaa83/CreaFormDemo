@@ -16,6 +16,7 @@ namespace CreaFormDemo.Entitys.Symptoms
         public string Name { get; set; }
         public int OrderBy { get; set; }
         public IEnumerable<SymptomQuestions> symptomQuestions { get; set; }
+        public IEnumerable<ClientSymptom>  clientSymptom { get; set; }
 
     }
 }
