@@ -69,16 +69,17 @@ namespace CreaFormDemo.Services.Repository
             {
                 foreach (var item in clientsymtomanswer)
                 {
-                if ( item.SymtomCategoryID == i)
+                    if (item.SymtomCategoryID == i)
                     {
                         Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
                     }
-                    symtomsviews.Add(Symtomoverview);
+                    
                 }
-               
+                symtomsviews.Add(Symtomoverview);
+
             }
 
             return symtomsviews;
