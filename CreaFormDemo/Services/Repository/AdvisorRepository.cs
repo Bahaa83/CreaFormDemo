@@ -74,15 +74,15 @@ namespace CreaFormDemo.Services.Repository
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
-                        
 
+                        symtomsviews.Add(Symtomoverview);
                     }
-                    symtomsviews.Add(Symtomoverview);
+                    
                 }
-                ////Symtomoverview.ClientID = clientid;
+                //Symtomoverview.ClientID = clientid;
                 //await db.symtomOverviews.AddAsync(Symtomoverview);
                 //await Save();
-              
+
             }
             
             return symtomsviews;
