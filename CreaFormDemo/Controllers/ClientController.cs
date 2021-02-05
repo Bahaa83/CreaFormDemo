@@ -390,7 +390,7 @@ namespace CreaFormDemo.Controllers
                 foreach (var clientsymtom in clientsymtoms)
                 {
                     clientsymtom.ClientID = client.ID;
-                    clientsymtom.SymtomCategoryID = await symRepo.GetSymtomCategoryID(clientsymtom.SymtomText);
+                    clientsymtom.SymtomCategoryID = await symRepo.GetSymtomCategoryID(clientsymtom.SymtomText.ToLower());
                    
                 }
                 if (!await symRepo.AddSymtomAnswer(clientsymtoms)) return BadRequest("Något gick fel när du fyllde i Symtom");
