@@ -76,9 +76,9 @@ namespace CreaFormDemo.Services.Repository
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
                     }
-
+                    symtomsviews.Add(Symtomoverview);
                 }
-                symtomsviews.Add(Symtomoverview);
+               
             }
 
             return symtomsviews;
