@@ -10,7 +10,7 @@ namespace CreaFormDemo.Entitys.Symptoms
 
         //public int ID { get; set; }
         //public int ClientID { get; set; }
-            public string SymtomCategoryName { get; set; }
+            public string SymtomCategory { get; set; }
             public int TotalFrequency { get; set; }
          
             public int TotalDifficulty { get; set; }
