@@ -13,10 +13,12 @@ namespace CreaFormDemo.Services.Repository
     public class AdvisorRepository : IAdvisorRepository
     {
         private readonly CreaFormDBcontext db;
+        private readonly ISymtomRepo symtomRepo;
 
-        public AdvisorRepository(CreaFormDBcontext db)
+        public AdvisorRepository(CreaFormDBcontext db, ISymtomRepo symtomRepo)
         {
             this.db = db;
+            this.symtomRepo = symtomRepo;
         }
 
         public async Task<Advisor> CompletionAdvisorProfile(Advisor advisor)
@@ -72,7 +74,7 @@ namespace CreaFormDemo.Services.Repository
                     if (item.SymtomCategoryID == i)
                     {
                        
-                        Symtomoverview.SymtomCategoryID = item.SymtomCategoryID;
+                        Symtomoverview.SymtomCategoryName = await symtomRepo.GetSymtomCategoryName( item.SymtomCategoryID);
                         Symtomoverview.TotalFrequency += item.Frequency;
                         Symtomoverview.TotalDifficulty += item.Difficulty;
                         Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;

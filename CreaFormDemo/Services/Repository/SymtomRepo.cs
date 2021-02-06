@@ -50,6 +50,11 @@ namespace CreaFormDemo.Services.Repository
             return CategoryID;
         }
 
-        
+        public async Task<string> GetSymtomCategoryName(int categoryid)
+        {
+            var categoryname = await db.symptomsCategories.FirstOrDefaultAsync(x => x.ID == categoryid);
+            if (categoryname != null) return categoryname.Name;
+            return null;
+        }
     }
 }
