@@ -36,6 +36,13 @@ namespace CreaFormDemo.Services.Repository
             return advisor;
         }
 
+        public async Task<Client> GetClientByID(int id)
+        {
+            var client = await db.clients.FirstOrDefaultAsync(x => x.ID == id);
+            if (client != null) return client;
+            return null;
+        }
+
         public async Task<IEnumerable<Client>> GetClientbyName(string name,int advisorID)
         {
             

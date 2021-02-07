@@ -12,6 +12,7 @@ namespace CreaFormDemo.Services.IRepository
 
         Task<Advisor> CompletionAdvisorProfile(Advisor advisor);
         Task<Advisor> GetAdvisorByUserID(int userid);
+        Task<Client> GetClientByID(int ID);
         Task<bool> Save();
         Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID);
         Task<IEnumerable<Client>> GetClients(int advisorID);

@@ -187,16 +187,25 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// En rådgivare kan titta på klientens svar på symtom
         /// </summary>
+        /// <param name="Userid"> User id som gjorde inloggning </param>
         /// <param name="clientid"> Klient ID </param>
         /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpGet("{clientid}/ClientSymptomsAnsewr")]
+        [HttpGet("{Userid}/ClientSymptomsAnsewr")]
         [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int clientid)
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int Userid,int clientid)
         {
             try
             {
+                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                {
+                    return Unauthorized();
+                }
+                var advisor = await repo.GetAdvisorByUserID(Userid);
+                var client = await repo.GetClientByID(clientid);
+                if (client.AdvisorID != advisor.ID) return Unauthorized();
+
                 var symtomsoverview = await repo.GetClientSymtomAnsewr(clientid);
                 if (symtomsoverview == null) return BadRequest();
                 var symtomview = new List<ClientSymtomOverview>();
