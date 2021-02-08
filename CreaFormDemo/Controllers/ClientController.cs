@@ -373,7 +373,7 @@ namespace CreaFormDemo.Controllers
             
               
                 var client = await repo.GetClientByUserID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
-                if (client.user.ID != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
+                if (client.UserID != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
                     return Unauthorized("Du är inte auktoriserad");
                 var clientsymtoms = new List<ClientSymptom>();
                 foreach (var symtomanswer in symtomAnswers)
