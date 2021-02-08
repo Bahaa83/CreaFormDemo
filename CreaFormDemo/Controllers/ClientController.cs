@@ -331,7 +331,7 @@ namespace CreaFormDemo.Controllers
         /// <param name="model">CreateWellBeing model</param>
         /// <returns>WellBeingToReturn model</returns>
         [Authorize(Roles = "Client")]
-        [HttpPost("{Userid}/UpdateWellBeing")]
+        [HttpPut("{Userid}/UpdateWellBeing")]
         [ProducesResponseType(200, Type = typeof(WellBeingToReturn))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult> UpdateWellBeing(int Userid, CreateWellBeing model)
