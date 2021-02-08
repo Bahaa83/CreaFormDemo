@@ -43,57 +43,75 @@ namespace CreaFormDemo.Services.Repository
             return null;
         }
 
-        public async Task<IEnumerable<Client>> GetClientbyName(string name,int advisorID)
+        public async Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID)
         {
-            
-             return await db.clients.Where(x =>x.Firstname.Equals(name.ToLower()) && x.AdvisorID==advisorID).ToListAsync();
+
+            return await db.clients.Where(x => x.Firstname.Equals(name.ToLower()) && x.AdvisorID == advisorID).ToListAsync();
         }
 
         public async Task<IEnumerable<Client>> GetClients(int advisorID)
         {
-            return  await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
-          
+            return await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
+
         }
 
         public async Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(int clientid)
         {
-            IEnumerable<ClientSymptom> clientsymtoms = await db.clientSymptoms.
-                Where(x => x.ClientID == clientid).OrderBy(x=>x.SymtomCategoryID).ToListAsync();
+            IEnumerable<ClientSymptom> clientsymtoms = await db.clientSymptoms
+                .Include(cs => cs.symptomsCategory)
+                .Where(x => x.ClientID == clientid).OrderBy(x => x.SymtomCategoryID).ToListAsync(); ;
             if (clientsymtoms == null) return null;
             return clientsymtoms;
 
-            
+
         }
 
-        public async Task<IEnumerable<SymtomOverview>>GetSymtomOverview(int clientid)
+        public async Task<IEnumerable<SymtomOverview>> GetSymtomOverview(int clientid)
         {
             var symtomsviews = new List<SymtomOverview>();
             var clientsymtomanswer = await GetClientSymtomAnsewr(clientid);
-            var categorys = await db.symptomsCategories.OrderBy(x => x.OrderBy).ToListAsync();
+            //  var categorys = await db.symptomsCategories.OrderBy(x => x.OrderBy).ToListAsync();
+            // var Symtomoverview = new SymtomOverview();
+            //clientsymtomanswer
+            //    .Join(db.symptomsCategories, c => c.SymtomCategoryID, s => s.ID, (c, s) => new
+            //    {
+            //        CategoryName = s.Name,
+            //        c.SymtomText
+            //    });
+            // Extension Methods , Lambda Expression 
+            //T-SQL >> Transact Sql
+            //select s.Name s CategoryName , c.SystomText from symtomanswer as s
+            //join  symptomsCategories as c on  s.SymtomCategoryID = c.Id|
 
-            var Symtomoverview = new SymtomOverview();
+            var overview = clientsymtomanswer.GroupBy(c => c.symptomsCategory.Name, (key, result) =>
+               new SymtomOverview
+               {
+                   SymtomCategory = key,
+                   TotalFrequency = result.Sum(r => r.Frequency),
+                   TotalDifficulty = result.Sum(r => r.Difficulty),
+                   totalNumberofsymptoms = result.Sum(r => r.Numberofsymptoms)
+               });
 
+            //for (int i = 0; i < categorys.Count(); i++)
+            //{
+            //    foreach (var item in clientsymtomanswer)
+            //    {
+            //        if (item.SymtomCategoryID == categorys[i].ID)
+            //        {
 
-            for (int i = 0; i < categorys.Count(); i++)
-            {
-                foreach (var item in clientsymtomanswer)
-                {
-                    if (item.SymtomCategoryID == categorys[i].ID)
-                    {
-                       
-                        Symtomoverview.SymtomCategory = await symtomRepo.GetSymtomCategoryName( item.SymtomCategoryID);
-                        Symtomoverview.TotalFrequency += item.Frequency;
-                        Symtomoverview.TotalDifficulty += item.Difficulty;
-                        Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
-                    }
-                    
-                }
-                symtomsviews.Add(Symtomoverview);
-                Symtomoverview = new SymtomOverview();
-            }
+            //            Symtomoverview.SymtomCategory = await symtomRepo.GetSymtomCategoryName(item.SymtomCategoryID);
+            //            Symtomoverview.TotalFrequency += item.Frequency;
+            //            Symtomoverview.TotalDifficulty += item.Difficulty;
+            //            Symtomoverview.totalNumberofsymptoms += item.Numberofsymptoms;
+            //        }
 
-            return symtomsviews;
+            //    }
+            //    symtomsviews.Add(Symtomoverview);
+            //    Symtomoverview = new SymtomOverview();
+            //}
 
+            // return symtomsviews;
+            return overview;
         }
 
         public async Task<bool> Save()
@@ -101,6 +119,6 @@ namespace CreaFormDemo.Services.Repository
             return await db.SaveChangesAsync() >= 0 ? true : false;
         }
 
-       
+
     }
 }

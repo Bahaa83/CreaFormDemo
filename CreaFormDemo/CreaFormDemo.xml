@@ -78,10 +78,11 @@
              <param name="name">,String Namn</param>
              <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.Int32,System.Int32)">
             <summary>
             En rådgivare kan titta på klientens svar på symtom
             </summary>
+            <param name="Userid"> User id som gjorde inloggning </param>
             <param name="clientid"> Klient ID </param>
             <returns>List av ClientSymtomOverview</returns>
         </member>

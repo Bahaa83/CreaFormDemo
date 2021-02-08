@@ -158,7 +158,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                if (userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
+                if (userid != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
                 {
                     return Unauthorized();
                 }
@@ -234,8 +234,8 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-
-                var symtomview = await repo.GetSymtomOverview(clientid);
+                var symtomview = await repo.GetSymtomOverview(clientid
+                    );
 
                 if (symtomview == null) return BadRequest();
                 return Ok(symtomview);

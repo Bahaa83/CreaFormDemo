@@ -359,26 +359,22 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Fylla in Klienten svar i symtom tabbel
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning </param>
         /// <param name="symtomAnswers">List av symtom answer </param>
         /// <returns>ok</returns>
         [Authorize(Roles ="Client")]
-        [HttpPost("{Userid}/FillInSymtom")]
+        [HttpPost("FillInSymtom")]
         [ProducesResponseType(200)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>FillInSymtom(int Userid, List<SymtomAnswer> symtomAnswers)
+        public async Task<ActionResult>FillInSymtom( List<SymtomAnswer> symtomAnswers)
         {
            
             try
             {
-                
-               
-                if (Userid!= int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
+            
+              
+                var client = await repo.GetClientByUserID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+                if (client.user.ID != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
                     return Unauthorized("Du är inte auktoriserad");
-                }
-                var client = await repo.GetClientByUserID(Userid);
-
                 var clientsymtoms = new List<ClientSymptom>();
                 foreach (var symtomanswer in symtomAnswers)
                 {
