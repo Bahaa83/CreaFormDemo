@@ -86,13 +86,6 @@
             <param name="clientid"> Klient ID </param>
             <returns>List av ClientSymtomOverview</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.SymptomsOverview(System.Int32)">
-            <summary>
-            Rådgivaren kan titta på Symptoms Screening - Overview för en klient
-            </summary>
-            <param name="clientid">Client id</param>
-            <returns> List av SymtomOverview</returns>
-        </member>
         <member name="M:CreaFormDemo.Controllers.ClientController.CompletionClient(System.Int32,CreaFormDemo.DtoModel.ClientDtoModel.CompletionClientDto)">
             <summary>
             Klienten kan komplettera sin profile(Namn och kontakt uppgifter)

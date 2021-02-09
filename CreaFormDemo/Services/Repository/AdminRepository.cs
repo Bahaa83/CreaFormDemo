@@ -30,7 +30,7 @@ namespace CreaFormDemo.Services.Repository
         }
         public async Task<User> GetUserByID(int id)
         {
-            var user = await dB.users.FirstOrDefaultAsync(x => x.ID == id);
+            var user = await dB.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
             return user;
         }

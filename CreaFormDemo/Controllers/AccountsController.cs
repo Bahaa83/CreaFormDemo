@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 namespace CreaFormDemo.Controllers
 {
 
-    [Authorize]
+  
     [Route("api/[controller]")]
     [ApiController]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]

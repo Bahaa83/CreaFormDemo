@@ -25,18 +25,18 @@ namespace CreaFormDemo.Services.Data
         public void SeedUserData()
         {
             #region//lagra Admin
-            if (! db.users.Any())
+            if (! db.Users.Any())
             {
                 byte[] passwordhash, passwordsald;
                 CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
                 var newuser = new User()
                 {
                     UserName = "Bahaa",
-                    PasswordHash = passwordhash,
-                    PasswordSald = passwordsald,
-                    role = "Admin"
+                    //PasswordHash = passwordhash,
+                    //PasswordSald = passwordsald,
+                    //role = "Admin"
                 };
-                db.users.Add(newuser);
+                db.Users.Add(newuser);
                 db.SaveChanges();
             }
             #endregion
