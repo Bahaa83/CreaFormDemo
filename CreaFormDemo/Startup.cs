@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CreaFormDemo.DtoModel;
 using CreaFormDemo.Entitys;
-using CreaFormDemo.Entitys.IdentityRolr;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services;
@@ -48,35 +47,13 @@ namespace CreaFormDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // globally Autho and Authoriz
-            services.AddControllers(options => {
-                var policy = new AuthorizationPolicyBuilder()
-                .RequireAuthenticatedUser()
-                .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            }).AddNewtonsoftJson(options =>
+            services.AddControllers().AddNewtonsoftJson(options =>
             
-             options.SerializerSettings.ReferenceLoopHandling=Newtonsoft
-             .Json.ReferenceLoopHandling.Ignore
+options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHandling.Ignore
             );
            
             services.AddDbContext<CreaFormDBcontext>
                (options => options.UseSqlServer(Configuration.GetConnectionString("Connst")));
-            //Add Identity core
-            IdentityBuilder identityBuilder = services.AddIdentityCore<User>(Options =>
-              {
-                  Options.Password.RequireDigit = true;
-                  Options.Password.RequiredLength = 4;
-                  Options.Password.RequireUppercase = true;
-                  Options.Password.RequireLowercase = true;
-                  Options.Password.RequireNonAlphanumeric = true;
-              });
-            identityBuilder = new IdentityBuilder(identityBuilder.UserType, typeof(Role), identityBuilder.Services);
-            identityBuilder.AddEntityFrameworkStores<CreaFormDBcontext>();
-            identityBuilder.AddRoleValidator<Role>();
-            identityBuilder.AddRoleManager<Role>();
-            identityBuilder.AddSignInManager<User>();
-
             services.AddScoped<IAuthRepository,AuthRepository>();
             services.AddScoped<IAdminRepository, AdminRepository>();
             services.AddScoped<IAdvisorRepository, AdvisorRepository>();
