@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys.IdentityRolr
 {
-    public class Role: IdentityRole<int>
+    public class UserRole:IdentityUserRole<int>
     {
-        public ICollection<UserRole>  userRoles { get; set; }
+        public User  user { get; set; }
+        public Role  role { get; set; }
     }
 }

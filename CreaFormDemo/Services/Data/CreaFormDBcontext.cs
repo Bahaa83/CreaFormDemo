@@ -17,7 +17,8 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:IdentityDbContext<User,Role,int,IdentityUserClaim<int>,IdentityUserRole<int>, IdentityUserLogin<int>,IdentityRoleClaim<int>,IdentityUserToken<int>>
+    public class CreaFormDBcontext:IdentityDbContext<User,Role,int,IdentityUserClaim<int>,
+        UserRole, IdentityUserLogin<int>,IdentityRoleClaim<int>,IdentityUserToken<int>>
 
     { 
         public CreaFormDBcontext( DbContextOptions<CreaFormDBcontext> options) : base(options)
@@ -26,8 +27,24 @@ namespace CreaFormDemo.Entitys
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-               
-          
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserRole>(
+                userrole =>
+                {
+                    userrole.HasKey(ur => new { ur.UserId, ur.RoleId });
+                    userrole.HasOne(ur => ur.role)
+                    .WithMany(r => r.userRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+                    userrole.HasOne(ur => ur.user)
+                    .WithMany(ur => ur.userRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+                });
+
+
+
 
             #region//Vanor//
 
@@ -198,12 +215,8 @@ namespace CreaFormDemo.Entitys
              .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
-            modelBuilder.Entity<User>()
-                .HasOne<Role>(x => x.role)
-                .WithOne(x => x.user)
-                .HasForeignKey<User>(x => x.roleid)
-                .OnDelete(DeleteBehavior.NoAction);
-            base.OnModelCreating(modelBuilder);
+            
+           
         }
         public DbSet<LifestyleArea> lifestyleAreas { get; set; }
         public DbSet<HabitsCategory> habitsCategories { get; set; }
