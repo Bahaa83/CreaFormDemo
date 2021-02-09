@@ -221,32 +221,7 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(500);
             }
         }
-        /// <summary>
-        /// Rådgivaren kan titta på Symptoms Screening - Overview för en klient
-        /// </summary>
-        /// <param name="clientid">Client id</param>
-        /// <returns> List av SymtomOverview</returns>
-        [Authorize(Roles ="Advisor")]
-        [HttpGet("{clientid}/SymptomsOverview")]
-        [ProducesResponseType(200,Type =typeof(List<SymtomOverview>))]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> SymptomsOverview(int clientid)
-        {
-            try
-            {
-                var symtomview = await repo.GetSymtomOverview(clientid
-                    );
-
-                if (symtomview == null) return BadRequest();
-                return Ok(symtomview);
-
-            }
-            catch (Exception)
-            {
-
-                return StatusCode(500);
-            }
-        }
+       
 
 
 
