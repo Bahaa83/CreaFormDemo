@@ -1,4 +1,5 @@
 ﻿using CreaFormDemo.Entitys.Clientprofile;
+using CreaFormDemo.Entitys.IdentityRolr;
 using CreaFormDemo.Entitys.LifestyleModel.Habits;
 using CreaFormDemo.Entitys.LifestyleModel.job;
 using CreaFormDemo.Entitys.LifestyleModel.Privat;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:DbContext
+    public class CreaFormDBcontext:IdentityDbContext<User,Role,int,IdentityUserClaim<int>,IdentityUserRole<int>, IdentityUserLogin<int>,IdentityRoleClaim<int>,IdentityUserToken<int>>
 
     { 
         public CreaFormDBcontext( DbContextOptions<CreaFormDBcontext> options) : base(options)
@@ -197,6 +198,11 @@ namespace CreaFormDemo.Entitys
              .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
+            modelBuilder.Entity<User>()
+                .HasOne<Role>(x => x.role)
+                .WithOne(x => x.user)
+                .HasForeignKey<User>(x => x.roleid)
+                .OnDelete(DeleteBehavior.NoAction);
             base.OnModelCreating(modelBuilder);
         }
         public DbSet<LifestyleArea> lifestyleAreas { get; set; }
@@ -217,7 +223,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<StrengthLackUnderGroup> strengthLackUnderGroups { get; set; }
         public DbSet<Client>  clients { get; set; }
         public DbSet<Advisor>  advisors { get; set; }
-        public DbSet<User> users { get; set; }
+        //public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
         public DbSet<GeneralQuestions> generalQuestions { get; set; }
         public DbSet<SymptomQuestions> symptomQuestions { get; set; }
@@ -227,6 +233,7 @@ namespace CreaFormDemo.Entitys
         public DbSet<Well_being> well_Beings { get; set; }
 
         public DbSet<ClientSymptom> clientSymptoms { get; set; }
+        public  DbSet<Role> roles { get; set; }
 
 
         //public DbSet<SymtomOverview> symtomOverviews { get; set; }
