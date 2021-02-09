@@ -215,8 +215,8 @@ namespace CreaFormDemo.Entitys
              .OnDelete(DeleteBehavior.NoAction);
 
             #endregion
-            
-           
+
+            base.OnModelCreating(modelBuilder);
         }
         public DbSet<LifestyleArea> lifestyleAreas { get; set; }
         public DbSet<HabitsCategory> habitsCategories { get; set; }
