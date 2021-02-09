@@ -59,7 +59,7 @@ namespace CreaFormDemo.Services.Repository
                 {
 
                     new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role,user.roleid.ToString())
+                    new Claim(ClaimTypes.Role,user.userRoles.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256Signature)
