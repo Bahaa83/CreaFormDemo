@@ -82,6 +82,7 @@ namespace CreaFormDemo.Services.Repository
             //T-SQL >> Transact Sql
             //select s.Name s CategoryName , c.SystomText from symtomanswer as s
             //join  symptomsCategories as c on  s.SymtomCategoryID = c.Id|
+           
 
             var overview = clientsymtomanswer.GroupBy(c => c.symptomsCategory.Name, (key, result) =>
                new SymtomOverview

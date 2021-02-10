@@ -127,6 +127,7 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
             })
             .AddJwtBearer(X =>
             {
+                
                 X.RequireHttpsMetadata = false;
                 X.SaveToken = true;
                 X.TokenValidationParameters = new TokenValidationParameters
