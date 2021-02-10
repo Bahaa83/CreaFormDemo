@@ -192,9 +192,9 @@ namespace CreaFormDemo.Controllers
         /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
         [HttpGet("{Userid}/ClientSymptomsAnsewr")]
-        [ProducesResponseType(200,Type =typeof(List<ClientSymptom>))]
+        [ProducesResponseType(200, Type = typeof(List<ClientSymptom>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int Userid,int clientid)
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int Userid, int clientid)
         {
             try
             {
@@ -213,13 +213,43 @@ namespace CreaFormDemo.Controllers
                 {
                     symtomview.Add(mapper.Map<ClientSymtomOverview>(item));
                 }
-                return Ok(symtomview) ;
+                return Ok(symtomview);
 
             }
             catch (Exception)
             {
                 return StatusCode(500);
             }
+        }
+            /// <summary>
+            /// Rådgivaren kan titta på Symptoms Screening -översikt för en klient
+            /// </summary>
+            /// <param name="clientid"> klient id</param>
+            /// <returns>List SymtomOverview</returns>
+            [Authorize(Roles = "Advisor")]
+            [HttpGet("{clientid}/SymptomsOverview")]
+            [ProducesResponseType(200, Type = typeof(List<SymtomOverview>))]
+            [ProducesDefaultResponseType]
+            public async Task<ActionResult> SymptomsOverview(int clientid)
+            {
+                try
+                {
+                    var client = await repo.GetClientByID(clientid);
+                    var advisor = await repo.GetAdvisorByUserID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+                    if (client.AdvisorID != advisor.ID) return Unauthorized();
+                    var symtomview = await repo.GetSymtomOverview(clientid);
+
+
+                    if (symtomview == null) return BadRequest();
+                    return Ok(symtomview);
+
+                }
+                catch (Exception)
+                {
+
+                    return StatusCode(500);
+                }
+            
         }
        
 
