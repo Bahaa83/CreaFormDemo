@@ -118,6 +118,23 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-       
+        public async Task<User> GetUserByID(int id)
+        {
+            var user = await _dB.users.FirstOrDefaultAsync(x => x.ID == id);
+            if (user != null) return user;
+            return null;
+        }
+
+        public async Task<bool> ChangePassword(User user, string currentpassword, string newpassword)
+        {
+            if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, currentpassword)) return false;
+
+            byte[] newpasswordhash, newpasswordsald;
+            CreatePasswordHash(newpassword, out newpasswordhash, out newpasswordsald);
+            user.PasswordHash = newpasswordhash;
+            user.PasswordSald = newpasswordsald;
+         return   await _dB.SaveChangesAsync() >= 0 ? true : false;
+
+        }
     }
 }

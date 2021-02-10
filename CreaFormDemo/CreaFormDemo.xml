@@ -27,6 +27,13 @@
             <param name="model"></param>
             <returns> Användaren med Token</returns>
         </member>
+        <member name="M:CreaFormDemo.Controllers.AccountsController.ChangePassword(CreaFormDemo.ViewModel.ChangePassword)">
+            <summary>
+            User kan byta Lösenordet
+            </summary>
+            <param name="model">ChangePassword model</param>
+            <returns> Login action</returns>
+        </member>
         <member name="M:CreaFormDemo.Controllers.AdminController.GetAllAdvisors">
             <summary>
             Admin kan hämta alla rådgivare som är finns

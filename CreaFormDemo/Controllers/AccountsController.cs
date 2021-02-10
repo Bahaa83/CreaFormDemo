@@ -4,6 +4,7 @@ using CreaFormDemo.DtoModel.UserDtoModel;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
 using CreaFormDemo.Services;
+using CreaFormDemo.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -135,7 +136,34 @@ namespace CreaFormDemo.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+        /// <summary>
+        /// User kan byta Lösenordet
+        /// </summary>
+        /// <param name="model">ChangePassword model</param>
+        /// <returns> Login action</returns>
+        [Authorize]
+        [HttpPost("ChangePassword")]
+        [ProducesResponseType(204)]
+        [ProducesDefaultResponseType]
+        public async Task<ActionResult> ChangePassword(ChangePassword model)
+        {
+            try
+            {
+                
+                var currentuser = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+              
+                if (currentuser == null) return BadRequest();
+                var result = await repo.ChangePassword(currentuser, model.CurrentPassword, model.NewPassword);
+                if (!result) return BadRequest();
+                return Ok("Lösenordet har ändrats framgångsrikt");
+               
+            }
+            catch (Exception)
+            {
 
+                return StatusCode(500);
+            }
+        }
 
 
 
