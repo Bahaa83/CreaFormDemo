@@ -55,7 +55,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
 
 
@@ -88,7 +88,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                int userid= int.Parse(User.FindFirstValue(ClaimTypes.Name)); //Hämtar user id som är inloggad
+                string userid= User.FindFirstValue(ClaimTypes.Name); //Hämtar user id som är inloggad
 
                 if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
                 var user = await repo.Rigester(userid, model.UserName.ToLower(), model.Password, "Advisor");
@@ -147,7 +147,7 @@ namespace CreaFormDemo.Controllers
             try
             {
                 
-                var currentuser = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+                var currentuser = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));
               
                 if (currentuser == null) return BadRequest();
                 var result = await repo.ChangePassword(currentuser, model.CurrentPassword, model.NewPassword);

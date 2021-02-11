@@ -64,10 +64,10 @@ namespace CreaFormDemo.Controllers
         /// <param name="advisorid">Rådgivare ID</param>
         /// <returns>Rådgivaren som har tagits bort(hans/hennes Konto) </returns>
         [Authorize(Roles = "Admin")]
-        [HttpDelete("{advisorid:int}")]
+        [HttpDelete("{advisorid}")]
         [ProducesResponseType(204,Type =typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<AdvisorDto>> CancelAdvisorAccount(int advisorid)
+        public async Task<ActionResult<AdvisorDto>> CancelAdvisorAccount(string advisorid)
         {
             try
             {

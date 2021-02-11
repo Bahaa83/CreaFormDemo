@@ -18,7 +18,7 @@ namespace CreaFormDemo.Services.Repository
             dB = DB;
         }
 
-        public async Task<Advisor> CancelAdvisorAccount(int  advisorID)
+        public async Task<Advisor> CancelAdvisorAccount(string  advisorID)
         {
             var result = await GetAdvisorByID(advisorID);
             if (result == null) return null;
@@ -28,13 +28,13 @@ namespace CreaFormDemo.Services.Repository
             if (!await Save()) return null;
             return result;
         }
-        public async Task<User> GetUserByID(int id)
+        public async Task<User> GetUserByID(string id)
         {
             var user = await dB.users.FirstOrDefaultAsync(x => x.ID == id);
             if (user == null) return null;
             return user;
         }
-        public async Task<Advisor> GetAdvisorByID(int id)
+        public async Task<Advisor> GetAdvisorByID(string id)
         {
             var advisor = await dB.advisors.FirstOrDefaultAsync(x => x.ID == id);
             if (advisor == null) return null;

@@ -15,7 +15,7 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string MedicinName { get; set; }
         [Column("anledning till medicineringen")]
         public string CauseOfMedication { get; set; }
-        public int ClientID { get; set; }
+        public string ClientID { get; set; }
         public Client client { get; set; }
 
     }

@@ -36,7 +36,7 @@ namespace CreaFormDemo.Entitys.Clientprofile
         public string Supplements { get; set; }
         [Column("Övriga upplysningar ")]
         public string OtherInformation { get; set; }
-        public int ClientID { get; set; }
+        public string ClientID { get; set; }
         public Client client  { get; set; }
        
 

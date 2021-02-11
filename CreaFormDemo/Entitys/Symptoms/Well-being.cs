@@ -19,7 +19,7 @@ namespace CreaFormDemo.Entitys.Symptoms
         public int MentallyCognitively { get; set; }
         [Column(name: "Känslomässigt")]
         public int Emotionally { get; set; }
-        public int ClientID { get; set; }
+        public string ClientID { get; set; }
         public Client client { get; set; }
 
 

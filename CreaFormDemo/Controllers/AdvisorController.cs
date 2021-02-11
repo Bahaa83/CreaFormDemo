@@ -46,7 +46,7 @@ namespace CreaFormDemo.Controllers
             try
             {
 
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 var advisor =  await repo.GetAdvisorByUserID(user.ID);
 
@@ -82,7 +82,7 @@ namespace CreaFormDemo.Controllers
             {
 
                 var user = await repo.GetUserByID
-                    (int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                    (User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
 
                 if (user.ProfileConfirmation) return BadRequest("Du har kompletterat din profile redan!");
 
@@ -119,7 +119,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
 
                 var advisorfromRepo = await repo.GetAdvisorByUserID(user.ID);
@@ -151,7 +151,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 if (string.IsNullOrEmpty(name)) return BadRequest();
                 var advisor = await repo.GetAdvisorByUserID(user.ID);
@@ -181,14 +181,14 @@ namespace CreaFormDemo.Controllers
         /// <param name="clientid"> Klient ID </param>
         /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpGet("ClientSymptomsAnsewr")]
+        [HttpGet("{clientid}/ClientSymptomsAnsewr")]
         [ProducesResponseType(200, Type = typeof(List<ClientSymptom>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr( int clientid)
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(string clientid)
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 var advisor = await repo.GetAdvisorByUserID(user.ID);
                 var client = await repo.GetClientByID(clientid);
@@ -218,12 +218,12 @@ namespace CreaFormDemo.Controllers
             [HttpGet("{clientid}/SymptomsOverview")]
             [ProducesResponseType(200, Type = typeof(List<SymtomOverview>))]
             [ProducesDefaultResponseType]
-            public async Task<ActionResult> SymptomsOverview(int clientid)
+            public async Task<ActionResult> SymptomsOverview(string clientid)
             {
                 try
                 {
                     var client = await repo.GetClientByID(clientid);
-                    var advisor = await repo.GetAdvisorByUserID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+                    var advisor = await repo.GetAdvisorByUserID(User.FindFirstValue(ClaimTypes.Name));
                     if (client.AdvisorID != advisor.ID) return Unauthorized();
                     var symtomview = await repo.GetSymtomOverview(clientid);
 

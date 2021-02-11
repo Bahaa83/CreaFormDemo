@@ -141,13 +141,14 @@ namespace CreaFormDemo.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSald = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordIsChanged = table.Column<bool>(type: "bit", nullable: false),
+                    ProfileConfirmation = table.Column<bool>(type: "bit", nullable: false),
                     UserIdThatCreatedit = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -275,8 +276,7 @@ namespace CreaFormDemo.Migrations
                 name: "Rådgivare",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -284,7 +284,7 @@ namespace CreaFormDemo.Migrations
                     Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postnummer = table.Column<int>(type: "int", nullable: false),
                     Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<int>(type: "int", nullable: false)
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -294,7 +294,7 @@ namespace CreaFormDemo.Migrations
                         column: x => x.UserID,
                         principalTable: "users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,8 +358,7 @@ namespace CreaFormDemo.Migrations
                 name: "Klient",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -368,8 +367,8 @@ namespace CreaFormDemo.Migrations
                     Postnummer = table.Column<int>(type: "int", nullable: false),
                     Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Ärföretagskonto = table.Column<bool>(name: "Är företagskonto", type: "bit", nullable: false),
-                    UserID = table.Column<int>(type: "int", nullable: false),
-                    RådgivareID = table.Column<int>(name: "Rådgivare ID", type: "int", nullable: false)
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RådgivareID = table.Column<string>(name: "Rådgivare ID", type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -384,7 +383,7 @@ namespace CreaFormDemo.Migrations
                         column: x => x.UserID,
                         principalTable: "users",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -509,7 +508,7 @@ namespace CreaFormDemo.Migrations
                     Diagnoser = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Kosttillskott = table.Column<string>(name: "Kosttillskott ", type: "nvarchar(max)", nullable: true),
                     Övrigaupplysningar = table.Column<string>(name: "Övriga upplysningar ", type: "nvarchar(max)", nullable: true),
-                    ClientID = table.Column<int>(type: "int", nullable: false)
+                    ClientID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -519,7 +518,7 @@ namespace CreaFormDemo.Migrations
                         column: x => x.ClientID,
                         principalTable: "Klient",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -528,7 +527,7 @@ namespace CreaFormDemo.Migrations
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientID = table.Column<int>(type: "int", nullable: false),
+                    ClientID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     SymtomText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SymtomCategoryID = table.Column<int>(type: "int", nullable: false),
                     Frekvens = table.Column<int>(type: "int", nullable: false),
@@ -544,6 +543,11 @@ namespace CreaFormDemo.Migrations
                         column: x => x.ClientID,
                         principalTable: "Klient",
                         principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_clientSymptoms_Symtom kategori_SymtomCategoryID",
+                        column: x => x.SymtomCategoryID,
+                        principalTable: "Symtom kategori",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -554,7 +558,7 @@ namespace CreaFormDemo.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Läkemedel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     anledningtillmedicineringen = table.Column<string>(name: "anledning till medicineringen", type: "nvarchar(max)", nullable: true),
-                    ClientID = table.Column<int>(type: "int", nullable: false)
+                    ClientID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -576,7 +580,7 @@ namespace CreaFormDemo.Migrations
                     Fysiskt = table.Column<int>(type: "int", nullable: false),
                     Mentaltkognitivt = table.Column<int>(name: "Mentalt/kognitivt", type: "int", nullable: false),
                     Känslomässigt = table.Column<int>(type: "int", nullable: false),
-                    ClientID = table.Column<int>(type: "int", nullable: false)
+                    ClientID = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -616,7 +620,8 @@ namespace CreaFormDemo.Migrations
                 name: "IX_Allmänt_ClientID",
                 table: "Allmänt",
                 column: "ClientID",
-                unique: true);
+                unique: true,
+                filter: "[ClientID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Arbete frågor_Kategori ID",
@@ -650,6 +655,11 @@ namespace CreaFormDemo.Migrations
                 column: "ClientID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_clientSymptoms_SymtomCategoryID",
+                table: "clientSymptoms",
+                column: "SymtomCategoryID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Klient_Rådgivare ID",
                 table: "Klient",
                 column: "Rådgivare ID");
@@ -658,7 +668,8 @@ namespace CreaFormDemo.Migrations
                 name: "IX_Klient_UserID",
                 table: "Klient",
                 column: "UserID",
-                unique: true);
+                unique: true,
+                filter: "[UserID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Läkemedel_ClientID",
@@ -705,7 +716,8 @@ namespace CreaFormDemo.Migrations
                 name: "IX_Rådgivare_UserID",
                 table: "Rådgivare",
                 column: "UserID",
-                unique: true);
+                unique: true,
+                filter: "[UserID] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Styrka-Brist under Grupp_Styrka-Brist Grupp ID",
@@ -746,7 +758,8 @@ namespace CreaFormDemo.Migrations
                 name: "IX_Välbefinnande - uppskattning_ClientID",
                 table: "Välbefinnande - uppskattning",
                 column: "ClientID",
-                unique: true);
+                unique: true,
+                filter: "[ClientID] IS NOT NULL");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

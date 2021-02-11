@@ -4,20 +4,18 @@
         <name>CreaFormDemo</name>
     </assembly>
     <members>
-        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewClient(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewClient(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
             <summary>
             Skapa ett nytt användare med Klients roll
             </summary>
-            <param name="id">User ID</param>
             <param name="model">UserRegisterDto From body</param>
             <returns> Användare med Klients role</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(System.Int32,CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
+        <member name="M:CreaFormDemo.Controllers.AccountsController.CreateNewAdvisor(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
             <summary>
             Skapa ett nytt användare konto med rådgivare roll
             </summary>
             <param name="model">UserRegisterDto From body</param>
-            <param name="id">User ID</param>
             <returns>Användare med rådgivares role</returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.AccountsController.LoginUser(CreaFormDemo.DtoModel.UserDtoModel.UserLogInDto)">
@@ -40,7 +38,7 @@
             </summary>
             <returns>List av Rådgivare </returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdminController.CancelAdvisorAccount(System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdminController.CancelAdvisorAccount(System.String)">
             <summary>
             Avbryt ett Rådgivare konto
             </summary>
@@ -81,14 +79,14 @@
              <param name="name">,String Namn</param>
              <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.String)">
             <summary>
             En rådgivare kan titta på klientens svar på symtom
             </summary>
             <param name="clientid"> Klient ID </param>
             <returns>List av ClientSymtomOverview</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.SymptomsOverview(System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.SymptomsOverview(System.String)">
             <summary>
             Rådgivaren kan titta på Symptoms Screening -översikt för en klient
             </summary>

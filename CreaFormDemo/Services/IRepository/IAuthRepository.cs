@@ -9,9 +9,9 @@ namespace CreaFormDemo.Repository
   public  interface IAuthRepository
     {
         Task<bool> UserExists(string name);
-        Task<User> Rigester(int UserID,string name, string password,string role);
+        Task<User> Rigester(string UserID,string name, string password,string role);
         Task<User> Login(string name, string password);
-        Task<User> GetUserByID(int id);
+        Task<User> GetUserByID(string id);
         Task<bool> ChangePassword(User user, string currentpassword, string newpassword);
        
     }

@@ -9,7 +9,7 @@ namespace CreaFormDemo.DtoModel
     public class AdvisorDto
     {
 
-        public int ID { get; set; }
+        public string ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -17,7 +17,7 @@ namespace CreaFormDemo.DtoModel
         public string Streetaddress { get; set; }
         public int ZiPCod { get; set; }
         public string Ort { get; set; }
-        public int UserID { get; set; }
+        public string UserID { get; set; }
 
 
 

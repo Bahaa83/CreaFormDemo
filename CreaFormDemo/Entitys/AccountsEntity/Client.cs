@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 namespace CreaFormDemo.Entitys.Users
 {
     [Table("Klient")]
-    public class Client
+    public class Client : Record
     {
-        [Key]
-        public int ID { get; set; }
+        //[Key]
+        //public int ID { get; set; }
         [Column(name:"Förnamn")]
         public string Firstname { get; set; }
         [Column(name: "Efternamn")]
@@ -30,12 +30,12 @@ namespace CreaFormDemo.Entitys.Users
         [Column(name: "Är företagskonto")]
         public bool isCompany { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public User  user { get; set; }
 
        
         [Column(name:"Rådgivare ID")]
-        public int AdvisorID { get; set; }
+        public string AdvisorID { get; set; }
         public Advisor advisor { get; set; }
         public GeneralQuestions generalQuestions { get; set; }
         public IEnumerable<Medicine> medicines { get; set; }
