@@ -48,7 +48,7 @@ namespace CreaFormDemo.Controllers
 
                 var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
-                var advisor =  await repo.GetAdvisorByUserID( user.ID);
+                var advisor =  await repo.GetAdvisorByUserID(user.ID);
 
                 var  Clients = await repo.GetClients(advisor.ID);
                 var ClientsToreturn = new List<ClientToReturnDto>();
