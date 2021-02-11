@@ -43,33 +43,25 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten kan komplettera sin profile(Namn och kontakt uppgifter)
         /// </summary>
-        /// <param name="userid">User id som gjorde inloggning</param>
         /// <param name="model">CompletionClientDto model</param>
         /// <returns></returns>
         [Authorize(Roles ="Client")]
-        [HttpPost("{userid}/CompletionClient")]
+        [HttpPost("CompletionClient")]
         [ProducesResponseType(200,Type =typeof(ClientToReturnDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> CompletionClient(int userid,CompletionClientDto model)
+        public async Task<ActionResult> CompletionClient(CompletionClientDto model)
         {
             try
             {
-                if(userid != int .Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var clienttest = await repo.GetClientByUserID(userid);
-                if (clienttest != null) return BadRequest("Du har kompletterat din profile redan!");
-                var user = await repo.GetUserByID(userid);
-                if (user == null)
-                {
-                    return BadRequest();
-                }
 
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (user.ProfileConfirmation) return Unauthorized("Du har kompletterat din profile redan!");// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var clienttest = await repo.GetClientByUserID(user.ID);
                 var advisor = await advisorRepo.GetAdvisorByUserID(int.Parse(user.UserIdThatCreatedit));
                 var clientDto = mapper.Map<ClientDto>(model);
                 clientDto.AdvisorID = advisor.ID ;
-                clientDto.UserID = userid;
+                clientDto.UserID = user.ID;
+
                 var client = mapper.Map<Client>(clientDto);
                 var result = await repo.CompletionClientProfile(client);
                 if (result == null)
@@ -91,22 +83,19 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten kan Uppdatera sin profile(Namn och kontakt uppgifter)
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="clientToupdate">CompletionClientDto model</param>
         /// <returns>ClientToReturnDto model</returns>
         [Authorize(Roles ="Client")]
-        [HttpPut("{Userid}/UpdateClientProfile")]
+        [HttpPut("UpdateClientProfile")]
         [ProducesResponseType(200,Type =typeof(ClientToReturnDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>UpdateClientProfile(int Userid,CompletionClientDto clientToupdate)
+        public async Task<ActionResult>UpdateClientProfile(CompletionClientDto clientToupdate)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var oldclient = await repo.GetClientByUserID(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var oldclient = await repo.GetClientByUserID(user.ID);
                 if (oldclient == null) return BadRequest();
                 mapper.Map(clientToupdate, oldclient);
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
@@ -122,22 +111,19 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Fyll i allmänna Klient frågor
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model">CreateGeneralQuesDto model</param>
         /// <returns>GeneralQuesDto model</returns>
         [Authorize(Roles ="Client")]
-        [HttpPost("{Userid}/GeneralQuestions")]
+        [HttpPost("GeneralQuestions")]
         [ProducesResponseType(200,Type =typeof(GeneralQuesDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>GeneralQuestions(int Userid,CreateGeneralQuesDto model)
+        public async Task<ActionResult>GeneralQuestions(CreateGeneralQuesDto model)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var client = await repo.GetClientByUserID(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var client = await repo.GetClientByUserID(user.ID);
                 if (client == null) return BadRequest();
                 var generalQuesdto = mapper.Map<GeneralQuesDto>(model);
                 generalQuesdto.ClientID = client.ID;
@@ -158,22 +144,20 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten Kan uppdatera sin Allmänt frågor
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model"> CreateGeneralQuesDto MODEL</param>
         /// <returns>Allmänt som har uppdaterats</returns>
         [Authorize(Roles = "Client")]
-        [HttpPut( "{Userid}/UpdateGeneral")]
+        [HttpPut( "UpdateGeneral")]
         [ProducesResponseType(204)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateGeneralQuestions(int Userid, [FromBody] CreateGeneralQuesDto model)
+        public async Task<ActionResult> UpdateGeneralQuestions( [FromBody] CreateGeneralQuesDto model)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var oldGeneral = await repo.GetGeneralQuestionsbyUserid(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+                var oldGeneral = await repo.GetGeneralQuestionsbyUserid(user.ID);
                 if (oldGeneral == null) return BadRequest();
                 mapper.Map(model, oldGeneral);
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när profilen kompletteras");
@@ -189,7 +173,6 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Fyll i läkemedelsinformationen för klienten
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning</param>
         /// <param name="model">CreateMedicineDto model</param>
         /// <returns>MedicineDto Model</returns>
         [Authorize(Roles ="Client")]
@@ -197,15 +180,13 @@ namespace CreaFormDemo.Controllers
         [ProducesResponseType(200,Type =typeof(MedicineDto))]
         [ProducesDefaultResponseType]
            
-        public async Task<ActionResult>MedicineInformation(int Userid,CreateMedicineDto model)
+        public async Task<ActionResult>MedicineInformation(CreateMedicineDto model)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var client = await repo.GetClientByUserID(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var client = await repo.GetClientByUserID(user.ID);
                  if (client == null) return BadRequest();
                 var medicineDto = mapper.Map<MedicineDto>(model);
                 medicineDto.clientID = client.ID;
@@ -295,22 +276,20 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten kan fylla Välbefinnande - uppskattning 
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning  </param>
         /// <param name="model">CreateWellBeing model</param>
         /// <returns>WellBeingToReturn model</returns>
         [Authorize(Roles ="Client")]
-        [HttpPost("{Userid}/WellBeing")]
+        [HttpPost("WellBeing")]
         [ProducesResponseType(200,Type =typeof( WellBeingToReturn))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>FillInWellBeing(int Userid,CreateWellBeing model)
+        public async Task<ActionResult>FillInWellBeing(CreateWellBeing model)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var client = await repo.GetClientByUserID(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+                var client = await repo.GetClientByUserID(user.ID);
                 if (client == null) return BadRequest();
                 var wellbeing = mapper.Map<Well_being>(model);
                 wellbeing.ClientID = client.ID;
@@ -328,22 +307,20 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Klienten kan Uppdatera Välbefinnande - uppskattning 
         /// </summary>
-        /// <param name="Userid">User id som gjorde inloggning  </param>
         /// <param name="model">CreateWellBeing model</param>
         /// <returns>WellBeingToReturn model</returns>
         [Authorize(Roles = "Client")]
-        [HttpPut("{Userid}/UpdateWellBeing")]
+        [HttpPut("UpdateWellBeing")]
         [ProducesResponseType(200, Type = typeof(WellBeingToReturn))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateWellBeing(int Userid, CreateWellBeing model)
+        public async Task<ActionResult> UpdateWellBeing( CreateWellBeing model)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
-                var oldWellBeing = await repo.GetWellbeingByUserid(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+                var oldWellBeing = await repo.GetWellbeingByUserid(user.ID);
                 if (oldWellBeing == null) return BadRequest();
                 mapper.Map(model, oldWellBeing);
                 if (!await repo.Save()) return BadRequest("Ett fel inträffade när välbefinnande Uppdateras");
@@ -371,9 +348,10 @@ namespace CreaFormDemo.Controllers
            
             try
             {
-            
-              
-                var client = await repo.GetClientByUserID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+                var client = await repo.GetClientByUserID(user.ID);
                 if (client.UserID != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
                     return Unauthorized("Du är inte auktoriserad");
                 var clientsymtoms = new List<ClientSymptom>();

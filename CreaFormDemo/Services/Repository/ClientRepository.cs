@@ -25,6 +25,8 @@ namespace CreaFormDemo.Services.Repository
         public async Task<Client> CompletionClientProfile( Client client)
         {
             var result = await db.clients.AddAsync(client);
+            var user = await GetUserByID(result.Entity.UserID);
+            user.ProfileConfirmation = true;
             if (!await Save()) return null;
             return result.Entity;
         }
