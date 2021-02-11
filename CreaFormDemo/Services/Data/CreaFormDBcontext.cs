@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:DbContext
+    public class CreaFormDBcontext:IdentityDbContext<User,IdentityRole,string>
 
     { 
         public CreaFormDBcontext( DbContextOptions<CreaFormDBcontext> options) : base(options)
@@ -217,7 +217,6 @@ namespace CreaFormDemo.Entitys
         public DbSet<StrengthLackUnderGroup> strengthLackUnderGroups { get; set; }
         public DbSet<Client>  clients { get; set; }
         public DbSet<Advisor>  advisors { get; set; }
-        public DbSet<User> users { get; set; }
         public DbSet<Medicine> medicines { get; set; }
         public DbSet<GeneralQuestions> generalQuestions { get; set; }
         public DbSet<SymptomQuestions> symptomQuestions { get; set; }

@@ -78,6 +78,10 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
                     },
                     Description = "CreaForm API"
                 });
+                //Add Identity
+                services.AddIdentity<User, IdentityRole>()
+                
+                .AddEntityFrameworkStores<CreaFormDBcontext>();
                 //För att visa beskrivningen relaterad till varje metod i kontrollen
                 var Xmlcommentfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlcommentFullPath = Path.Combine(AppContext.BaseDirectory, Xmlcommentfile);
