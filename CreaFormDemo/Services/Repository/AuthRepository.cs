@@ -133,6 +133,7 @@ namespace CreaFormDemo.Services.Repository
             CreatePasswordHash(newpassword, out newpasswordhash, out newpasswordsald);
             user.PasswordHash = newpasswordhash;
             user.PasswordSald = newpasswordsald;
+            user.PasswordIsChanged = true;
          return   await _dB.SaveChangesAsync() >= 0 ? true : false;
 
         }

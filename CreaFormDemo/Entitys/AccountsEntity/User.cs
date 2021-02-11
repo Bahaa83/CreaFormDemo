@@ -1,4 +1,5 @@
 ﻿
+using CreaFormDemo.Helpers;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,9 @@ namespace CreaFormDemo.Entitys.Users
         public byte[] PasswordSald { get; set; }
         public string role { get; set; }
         public bool IsBlocked { get; set; }
+        public bool PasswordIsChanged { get; set; }
+        public bool ProfileConfirmation { get; set; }
+
         [NotMapped]
         public string Token { get; set; }
         public Advisor advisor { get; set; }

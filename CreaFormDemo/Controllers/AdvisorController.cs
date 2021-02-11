@@ -35,22 +35,22 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Hämta alla Klienter som  rådgivaren är ansvårig
         /// </summary>
-        /// <param name="userid">User ID</param>
+       
         /// <returns>Lista av Klienter sor rådgivaren är ansvårig</returns>
         [Authorize(Roles ="Advisor")]
-        [HttpGet("{userid}/GetClients")]
+        [HttpGet("GetClients")]
         [ProducesResponseType(200,Type = typeof(List<ClientToReturnDto>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>GetClients(int userid)
+        public async Task<ActionResult>GetClients()
         {
             try
             {
-                if (userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
-                var advisor =  await repo.GetAdvisorByUserID( userid);
-               var  Clients = await repo.GetClients(advisor.ID);
+
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var advisor =  await repo.GetAdvisorByUserID( user.ID);
+
+                var  Clients = await repo.GetClients(advisor.ID);
                 var ClientsToreturn = new List<ClientToReturnDto>();
 
                 if (Clients.Count()==0) return NotFound("Det finns inga kunder som du är ansvariga för dem ! ");
@@ -69,29 +69,26 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         ///  Komplettering Rådgivare profil
         /// </summary>
-        /// <param name="id"> id</param>
         /// <param name="createddvisordto">CreateAdvisorDto model</param>
         /// <returns>AdvisorDto model</returns>
 
         [Authorize(Roles = "Advisor")]
-        [HttpPost("{id}/CompletionAdvisor")]
+        [HttpPost("CompletionAdvisor")]
         [ProducesResponseType(201,Type=typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>CompletionAdvisor(int id, [FromBody]CreateAdvisorDto createddvisordto)
+        public async Task<ActionResult>CompletionAdvisor( [FromBody]CreateAdvisorDto createddvisordto)
         {
             try
             {
+
+                var user = await repo.GetUserByID
+                    (int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
                 
-                if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
-                var advisortest = await repo.GetAdvisorByUserID(id);
-                if (advisortest != null) return BadRequest("Du har kompletterat din profile redan!");
+                if (user.ProfileConfirmation) return BadRequest("Du har kompletterat din profile redan!");
 
              
                 var advisordto = mapper.Map<AdvisorDto>(createddvisordto);
-                advisordto.UserID = id;
+                advisordto.UserID = user.ID;
                 var advisor = mapper.Map<Advisor>(advisordto);
 
                 var result = await repo.CompletionAdvisorProfile(advisor);
@@ -112,23 +109,20 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Rådgivaren Kan uppdatera sin profile
         /// </summary>
-        /// <param name=" userid">User ID </param>
         /// <param name="editAdvisor"> CreateAdvisorDto MODEL</param>
         /// <returns>rådgivarefilen som har uppdaterats</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpPut("{userid}/Update")]
+        [HttpPut("Update")]
         [ProducesResponseType(204, Type = typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> UpdateAdvisorProfile(int userid , [FromBody] CreateAdvisorDto editAdvisor)
+        public async Task<ActionResult> UpdateAdvisorProfile( [FromBody] CreateAdvisorDto editAdvisor)
         {
             try
             {
-                if (userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
-              
-                var advisorfromRepo = await repo.GetAdvisorByUserID(userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+                var advisorfromRepo = await repo.GetAdvisorByUserID(user.ID);
                 if (advisorfromRepo == null) return NotFound();
                 mapper.Map(editAdvisor, advisorfromRepo);
 
@@ -147,23 +141,20 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         ///Rådgivaren kan söka efter Klienten som är hans ansvar vid namn
         /// </summary>
-        /// <param name="userid">User ID </param>
         /// <param name="name">,String Namn</param>
         /// <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         [Authorize(Roles ="Advisor")]
-        [HttpGet("{userid}/ClientByName")]
+        [HttpGet("{name}/ClientByName")]
         [ProducesResponseType(200,Type =typeof(List<ClientToReturnDto>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult>GetClientsbyName( string name, int userid)
+        public async Task<ActionResult>GetClientsbyName( string name)
         {
             try
             {
-                if (userid != int.Parse(User.FindFirstValue(ClaimTypes.Name)))
-                {
-                    return Unauthorized();
-                }
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 if (string.IsNullOrEmpty(name)) return BadRequest();
-                var advisor = await repo.GetAdvisorByUserID(userid);
+                var advisor = await repo.GetAdvisorByUserID(user.ID);
                 var Clients = await repo.GetClientbyName( name, advisor.ID);
                 if (Clients.Count()==0) return NotFound($"Det finns inte Klienter som matchar den här namnet!{ name}");
                 var ClientsDto = new List<ClientToReturnDto>();
@@ -187,22 +178,19 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// En rådgivare kan titta på klientens svar på symtom
         /// </summary>
-        /// <param name="Userid"> User id som gjorde inloggning </param>
         /// <param name="clientid"> Klient ID </param>
         /// <returns>List av ClientSymtomOverview</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpGet("{Userid}/ClientSymptomsAnsewr")]
+        [HttpGet("ClientSymptomsAnsewr")]
         [ProducesResponseType(200, Type = typeof(List<ClientSymptom>))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr(int Userid, int clientid)
+        public async Task<ActionResult<IEnumerable<ClientSymptom>>> GetSymtomAnsewr( int clientid)
         {
             try
             {
-                if (Userid != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
-                var advisor = await repo.GetAdvisorByUserID(Userid);
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var advisor = await repo.GetAdvisorByUserID(user.ID);
                 var client = await repo.GetClientByID(clientid);
                 if (client.AdvisorID != advisor.ID) return Unauthorized();
 

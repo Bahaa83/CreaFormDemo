@@ -1,6 +1,7 @@
 ﻿using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.LifestyleModel.Habits;
 using CreaFormDemo.Entitys.Symptoms;
+using CreaFormDemo.Helpers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

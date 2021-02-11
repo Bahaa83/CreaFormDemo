@@ -54,44 +54,46 @@
             <param name="Name">Rådgivaren namn</param>
             <returns></returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClients(System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClients">
             <summary>
             Hämta alla Klienter som  rådgivaren är ansvårig
             </summary>
-            <param name="userid">User ID</param>
             <returns>Lista av Klienter sor rådgivaren är ansvårig</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.CompletionAdvisor(System.Int32,CreaFormDemo.DtoModel.CreateAdvisorDto)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.CompletionAdvisor(CreaFormDemo.DtoModel.CreateAdvisorDto)">
             <summary>
              Komplettering Rådgivare profil
             </summary>
-            <param name="id"> id</param>
             <param name="createddvisordto">CreateAdvisorDto model</param>
             <returns>AdvisorDto model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.UpdateAdvisorProfile(System.Int32,CreaFormDemo.DtoModel.CreateAdvisorDto)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.UpdateAdvisorProfile(CreaFormDemo.DtoModel.CreateAdvisorDto)">
             <summary>
             Rådgivaren Kan uppdatera sin profile
             </summary>
-            <param name=" userid">User ID </param>
             <param name="editAdvisor"> CreateAdvisorDto MODEL</param>
             <returns>rådgivarefilen som har uppdaterats</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClientsbyName(System.String,System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetClientsbyName(System.String)">
              <summary>
             Rådgivaren kan söka efter Klienten som är hans ansvar vid namn
              </summary>
-             <param name="userid">User ID </param>
              <param name="name">,String Namn</param>
              <returns>List av Klienter som har samma namn eller en Klient som matchar den här namnet</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.Int32,System.Int32)">
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.GetSymtomAnsewr(System.Int32)">
             <summary>
             En rådgivare kan titta på klientens svar på symtom
             </summary>
-            <param name="Userid"> User id som gjorde inloggning </param>
             <param name="clientid"> Klient ID </param>
             <returns>List av ClientSymtomOverview</returns>
+        </member>
+        <member name="M:CreaFormDemo.Controllers.AdvisorController.SymptomsOverview(System.Int32)">
+            <summary>
+            Rådgivaren kan titta på Symptoms Screening -översikt för en klient
+            </summary>
+            <param name="clientid"> klient id</param>
+            <returns>List SymtomOverview</returns>
         </member>
         <member name="M:CreaFormDemo.Controllers.ClientController.CompletionClient(System.Int32,CreaFormDemo.DtoModel.ClientDtoModel.CompletionClientDto)">
             <summary>
