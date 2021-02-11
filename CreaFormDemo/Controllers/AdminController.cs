@@ -89,7 +89,7 @@ namespace CreaFormDemo.Controllers
         /// <param name="Name">Rådgivaren namn</param>
         /// <returns></returns>
         [Authorize(Roles ="Admin")]
-        [HttpGet("AdvisorByName")]
+        [HttpGet("{name}AdvisorByName")]
         [ProducesResponseType(200,Type =typeof(AdvisorDto))]
         [ProducesDefaultResponseType]
         public async Task<ActionResult>GetAdvisorByname(string Name)

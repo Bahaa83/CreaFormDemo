@@ -45,24 +45,23 @@ namespace CreaFormDemo.Controllers
         /// <summary>
         /// Skapa ett nytt användare med Klients roll
         /// </summary>
-        /// <param name="id">User ID</param>
         /// <param name="model">UserRegisterDto From body</param>
         /// <returns> Användare med Klients role</returns>
         [Authorize(Roles = "Advisor")]
-        [HttpPost("{id}/CreateClient")]
+        [HttpPost("CreateClient")]
         [ProducesResponseType(201, Type = typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> CreateNewClient(int id, [FromBody] UserLogInDto model)
+        public async Task<ActionResult> CreateNewClient( [FromBody] UserLogInDto model)
         {
             try
             {
-                if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized("Du är inte auktoriserad");
-                }
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+
+
                 if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
-                var user = await repo.Rigester(id, model.UserName.ToLower(), model.Password, "Client");
-                if (user == null)
+                var createduser = await repo.Rigester(user.ID, model.UserName.ToLower(), model.Password, "Client");
+                if (createduser == null)
                 { return BadRequest("Ett fel uppstod när Klienten registrerades"); }
 
                 return StatusCode(201, model);
@@ -78,23 +77,21 @@ namespace CreaFormDemo.Controllers
         /// Skapa ett nytt användare konto med rådgivare roll
         /// </summary>
         /// <param name="model">UserRegisterDto From body</param>
-        /// <param name="id">User ID</param>
+        
         /// <returns>Användare med rådgivares role</returns>
         [Authorize(Roles = "Admin")]
-        [HttpPost("{id}/CreateAdvisor")]
+        [HttpPost("CreateAdvisor")]
 
         [ProducesResponseType(201, Type = typeof(CreatedUserDto))]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> CreateNewAdvisor(int id, [FromBody] UserLogInDto model)
+        public async Task<ActionResult> CreateNewAdvisor( [FromBody] UserLogInDto model)
         {
             try
             {
-                if (id != int.Parse(User.FindFirst(ClaimTypes.Name).Value))
-                {
-                    return Unauthorized();
-                }
+                int userid= int.Parse(User.FindFirstValue(ClaimTypes.Name)); //Hämtar user id som är inloggad
+
                 if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
-                var user = await repo.Rigester(id, model.UserName.ToLower(), model.Password, "Advisor");
+                var user = await repo.Rigester(userid, model.UserName.ToLower(), model.Password, "Advisor");
                 if (user == null)
                 { return BadRequest("Ett fel uppstod när Rådgivaren registreras"); }
 

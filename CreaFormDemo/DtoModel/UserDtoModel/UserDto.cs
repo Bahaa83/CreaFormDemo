@@ -10,6 +10,8 @@ namespace CreaFormDemo.DtoModel
 
         public int ID { get; set; }
         public string UserName { get; set; }
+        public bool PasswordIsChanged { get; set; }
+        public bool EmailConfirmation { get; set; }
         public string Token { get; set; }
     }
 }
