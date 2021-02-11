@@ -46,7 +46,7 @@ namespace CreaFormDemo.Controllers
             try
             {
 
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 var advisor =  await repo.GetAdvisorByUserID(user.ID);
 
@@ -82,8 +82,8 @@ namespace CreaFormDemo.Controllers
             {
 
                 var user = await repo.GetUserByID
-                    (int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
-                
+                    (int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
+
                 if (user.ProfileConfirmation) return BadRequest("Du har kompletterat din profile redan!");
 
              
@@ -119,7 +119,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
 
                 var advisorfromRepo = await repo.GetAdvisorByUserID(user.ID);
@@ -151,7 +151,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 if (string.IsNullOrEmpty(name)) return BadRequest();
                 var advisor = await repo.GetAdvisorByUserID(user.ID);
@@ -188,7 +188,7 @@ namespace CreaFormDemo.Controllers
         {
             try
             {
-                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// hämtar user id som är inloggning
+                var user = await repo.GetUserByID(int.Parse(User.FindFirstValue(ClaimTypes.Name)));// Hämtar user id som är inloggad
                 if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 var advisor = await repo.GetAdvisorByUserID(user.ID);
                 var client = await repo.GetClientByID(clientid);

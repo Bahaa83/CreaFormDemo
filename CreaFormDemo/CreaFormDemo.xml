@@ -102,35 +102,31 @@
             <param name="model">CompletionClientDto model</param>
             <returns></returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateClientProfile(System.Int32,CreaFormDemo.DtoModel.ClientDtoModel.CompletionClientDto)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateClientProfile(CreaFormDemo.DtoModel.ClientDtoModel.CompletionClientDto)">
             <summary>
             Klienten kan Uppdatera sin profile(Namn och kontakt uppgifter)
             </summary>
-            <param name="Userid">User id som gjorde inloggning</param>
             <param name="clientToupdate">CompletionClientDto model</param>
             <returns>ClientToReturnDto model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.GeneralQuestions(System.Int32,CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.GeneralQuestions(CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
             <summary>
             Fyll i allmänna Klient frågor
             </summary>
-            <param name="Userid">User id som gjorde inloggning</param>
             <param name="model">CreateGeneralQuesDto model</param>
             <returns>GeneralQuesDto model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateGeneralQuestions(System.Int32,CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateGeneralQuestions(CreaFormDemo.DtoModel.GeneralQuesDtoModel.CreateGeneralQuesDto)">
             <summary>
             Klienten Kan uppdatera sin Allmänt frågor
             </summary>
-            <param name="Userid">User id som gjorde inloggning</param>
             <param name="model"> CreateGeneralQuesDto MODEL</param>
             <returns>Allmänt som har uppdaterats</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.MedicineInformation(System.Int32,CreaFormDemo.DtoModel.MedicineDtoModel.CreateMedicineDto)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.MedicineInformation(CreaFormDemo.DtoModel.MedicineDtoModel.CreateMedicineDto)">
             <summary>
             Fyll i läkemedelsinformationen för klienten
             </summary>
-            <param name="Userid">User id som gjorde inloggning</param>
             <param name="model">CreateMedicineDto model</param>
             <returns>MedicineDto Model</returns>
         </member>
@@ -153,19 +149,17 @@
             </summary>
             <returns>list av freqvens</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.FillInWellBeing(System.Int32,CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.FillInWellBeing(CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
             <summary>
             Klienten kan fylla Välbefinnande - uppskattning 
             </summary>
-            <param name="Userid">User id som gjorde inloggning  </param>
             <param name="model">CreateWellBeing model</param>
             <returns>WellBeingToReturn model</returns>
         </member>
-        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateWellBeing(System.Int32,CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
+        <member name="M:CreaFormDemo.Controllers.ClientController.UpdateWellBeing(CreaFormDemo.DtoModel.WellBeingDtoModel.CreateWellBeing)">
             <summary>
             Klienten kan Uppdatera Välbefinnande - uppskattning 
             </summary>
-            <param name="Userid">User id som gjorde inloggning  </param>
             <param name="model">CreateWellBeing model</param>
             <returns>WellBeingToReturn model</returns>
         </member>
