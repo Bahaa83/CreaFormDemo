@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys.Users
 {
-    public class User
+    public class User: Record
     {
-        [Key]
-        public int ID { get; set; }
+        //[Key]
+        //public int ID { get; set; }
         public string UserName { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSald { get; set; }

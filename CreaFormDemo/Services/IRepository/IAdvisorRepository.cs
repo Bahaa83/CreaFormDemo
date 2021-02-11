@@ -11,14 +11,14 @@ namespace CreaFormDemo.Services.IRepository
     {
 
         Task<Advisor> CompletionAdvisorProfile(Advisor advisor);
-        Task<Advisor> GetAdvisorByUserID(int userid);
-        Task<Client> GetClientByID(int ID);
+        Task<Advisor> GetAdvisorByUserID(string userid);
+        Task<Client> GetClientByID(string ID);
         Task<bool> Save();
-        Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID);
-        Task<IEnumerable<Client>> GetClients(int advisorID);
-        Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(int clientid);
-        Task<IEnumerable<SymtomOverview>> GetSymtomOverview(int clientid);
-        Task<User> GetUserByID(int id);
+        Task<IEnumerable<Client>> GetClientbyName(string name, string advisorID);
+        Task<IEnumerable<Client>> GetClients(string advisorID);
+        Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(string clientid);
+        Task<IEnumerable<SymtomOverview>> GetSymtomOverview(string clientid);
+        Task<User> GetUserByID(string id);
 
 
     }

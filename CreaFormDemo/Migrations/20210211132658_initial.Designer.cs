@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CreaFormDemo.Migrations
 {
     [DbContext(typeof(CreaFormDBcontext))]
-    [Migration("20210205174548_relation")]
-    partial class relation
+    [Migration("20210211132658_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,8 +28,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Diagnoser")
                         .HasColumnType("nvarchar(max)");
@@ -84,7 +84,8 @@ namespace CreaFormDemo.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("ClientID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ClientID] IS NOT NULL");
 
                     b.ToTable("Allmänt");
                 });
@@ -100,8 +101,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("anledning till medicineringen");
 
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("MedicinName")
                         .HasColumnType("nvarchar(max)")
@@ -624,8 +625,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Difficulty")
                         .HasColumnType("int")
@@ -741,8 +742,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ClientID")
-                        .HasColumnType("int");
+                    b.Property<string>("ClientID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Emotionally")
                         .HasColumnType("int")
@@ -763,17 +764,16 @@ namespace CreaFormDemo.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("ClientID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[ClientID] IS NOT NULL");
 
                     b.ToTable("Välbefinnande - uppskattning");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Advisor", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -796,8 +796,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Gatuadress");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ZiPCod")
                         .HasColumnType("int")
@@ -806,20 +806,19 @@ namespace CreaFormDemo.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("UserID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserID] IS NOT NULL");
 
                     b.ToTable("Rådgivare");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.Client", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("AdvisorID")
-                        .HasColumnType("int")
+                    b.Property<string>("AdvisorID")
+                        .HasColumnType("nvarchar(450)")
                         .HasColumnName("Rådgivare ID");
 
                     b.Property<string>("Email")
@@ -840,8 +839,8 @@ namespace CreaFormDemo.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Gatuadress");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ZiPCod")
                         .HasColumnType("int")
@@ -859,17 +858,16 @@ namespace CreaFormDemo.Migrations
                     b.HasIndex("AdvisorID");
 
                     b.HasIndex("UserID")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[UserID] IS NOT NULL");
 
                     b.ToTable("Klient");
                 });
 
             modelBuilder.Entity("CreaFormDemo.Entitys.Users.User", b =>
                 {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
+                    b.Property<string>("ID")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("bit");
@@ -877,8 +875,14 @@ namespace CreaFormDemo.Migrations
                     b.Property<byte[]>("PasswordHash")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<bool>("PasswordIsChanged")
+                        .HasColumnType("bit");
+
                     b.Property<byte[]>("PasswordSald")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<bool>("ProfileConfirmation")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserIdThatCreatedit")
                         .HasColumnType("nvarchar(max)");
@@ -898,9 +902,7 @@ namespace CreaFormDemo.Migrations
                 {
                     b.HasOne("CreaFormDemo.Entitys.Users.Client", "client")
                         .WithOne("generalQuestions")
-                        .HasForeignKey("CreaFormDemo.Entitys.Clientprofile.GeneralQuestions", "ClientID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreaFormDemo.Entitys.Clientprofile.GeneralQuestions", "ClientID");
 
                     b.Navigation("client");
                 });
@@ -910,8 +912,7 @@ namespace CreaFormDemo.Migrations
                     b.HasOne("CreaFormDemo.Entitys.Users.Client", "client")
                         .WithMany("medicines")
                         .HasForeignKey("ClientID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("client");
                 });
@@ -1109,8 +1110,7 @@ namespace CreaFormDemo.Migrations
                     b.HasOne("CreaFormDemo.Entitys.Users.Client", "Client")
                         .WithMany("clientSymptoms")
                         .HasForeignKey("ClientID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CreaFormDemo.Entitys.Symptoms.SymptomsCategory", "symptomsCategory")
                         .WithMany("clientSymptom")
@@ -1139,8 +1139,7 @@ namespace CreaFormDemo.Migrations
                     b.HasOne("CreaFormDemo.Entitys.Users.Client", "client")
                         .WithOne("well_Being")
                         .HasForeignKey("CreaFormDemo.Entitys.Symptoms.Well_being", "ClientID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("client");
                 });
@@ -1149,9 +1148,7 @@ namespace CreaFormDemo.Migrations
                 {
                     b.HasOne("CreaFormDemo.Entitys.Users.User", "user")
                         .WithOne("advisor")
-                        .HasForeignKey("CreaFormDemo.Entitys.Users.Advisor", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreaFormDemo.Entitys.Users.Advisor", "UserID");
 
                     b.Navigation("user");
                 });
@@ -1161,14 +1158,11 @@ namespace CreaFormDemo.Migrations
                     b.HasOne("CreaFormDemo.Entitys.Users.Advisor", "advisor")
                         .WithMany("clients")
                         .HasForeignKey("AdvisorID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("CreaFormDemo.Entitys.Users.User", "user")
                         .WithOne("client")
-                        .HasForeignKey("CreaFormDemo.Entitys.Users.Client", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CreaFormDemo.Entitys.Users.Client", "UserID");
 
                     b.Navigation("advisor");
 

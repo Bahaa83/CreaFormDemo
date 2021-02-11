@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace CreaFormDemo.Entitys.Users
 {
     [Table("Rådgivare")]
-    public class Advisor
+    public class Advisor: Record
     {
-        [Key]
-        public int ID { get; set; }
+        //[Key]
+        //public int ID { get; set; }
         [Column(name:"Förnamn")]
         public string FirstName { get; set; }
         [Column(name:"Efternamn")]
@@ -28,7 +28,7 @@ namespace CreaFormDemo.Entitys.Users
         public IEnumerable<Client>  clients{ get; set; }
 
         [ForeignKey(nameof(user))]
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         public User user  { get; set; }
 
     }

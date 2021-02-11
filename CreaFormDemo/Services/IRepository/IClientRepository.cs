@@ -11,13 +11,13 @@ namespace CreaFormDemo.Services.IRepository
   public  interface IClientRepository
     {
         Task<Client> CompletionClientProfile(Client client);
-        Task<User> GetUserByID(int ID);
-        Task<Client> GetClientByUserID(int ID);
+        Task<User> GetUserByID(string ID);
+        Task<Client> GetClientByUserID(string ID);
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);
-        Task<GeneralQuestions> GetGeneralQuestionsbyUserid(int id);
-        Task<Well_being> GetWellbeingByUserid(int Userid);
-        Task<Medicine> GetMedicineByUserID(int Userid);
+        Task<GeneralQuestions> GetGeneralQuestionsbyUserid(string id);
+        Task<Well_being> GetWellbeingByUserid(string Userid);
+        Task<Medicine> GetMedicineByUserID(string Userid);
         Task<SymptomsCategory> GetSymptomsQuesbycategory(int orderby);
         Task<IEnumerable<Difficulty>> GetDifficultyValue();
         Task<IEnumerable<Frequency>> GetFrequencyValue();

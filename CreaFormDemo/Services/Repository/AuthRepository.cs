@@ -58,7 +58,7 @@ namespace CreaFormDemo.Services.Repository
                 Subject = new ClaimsIdentity(new Claim[]
                 {
 
-                    new Claim(ClaimTypes.Name, user.ID.ToString()),
+                    new Claim(ClaimTypes.Name, user.ID),
                     new Claim(ClaimTypes.Role,user.role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -69,7 +69,7 @@ namespace CreaFormDemo.Services.Repository
             return Token;
         }
 
-        public async Task<User> Rigester(int userID,string name, string password,string role)
+        public async Task<User> Rigester(string userID,string name, string password,string role)
         {
             byte[] passwordhash, passwordsald;
             CreatePasswordHash( password, out passwordhash, out passwordsald);
@@ -118,7 +118,7 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-        public async Task<User> GetUserByID(int id)
+        public async Task<User> GetUserByID(string id)
         {
             var user = await _dB.users.FirstOrDefaultAsync(x => x.ID == id);
             if (user != null) return user;

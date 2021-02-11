@@ -30,33 +30,33 @@ namespace CreaFormDemo.Services.Repository
             return _advisor.Entity;
         }
 
-        public async Task<Advisor> GetAdvisorByUserID(int userid)
+        public async Task<Advisor> GetAdvisorByUserID(string userid)
         {
             var advisor = await db.advisors.FirstOrDefaultAsync(x => x.UserID == userid);
             if (advisor == null) return null;
             return advisor;
         }
 
-        public async Task<Client> GetClientByID(int id)
+        public async Task<Client> GetClientByID(string id)
         {
             var client = await db.clients.FirstOrDefaultAsync(x => x.ID == id);
             if (client != null) return client;
             return null;
         }
 
-        public async Task<IEnumerable<Client>> GetClientbyName(string name, int advisorID)
+        public async Task<IEnumerable<Client>> GetClientbyName(string name, string advisorID)
         {
 
             return await db.clients.Where(x => x.Firstname.Equals(name.ToLower()) && x.AdvisorID == advisorID).ToListAsync();
         }
 
-        public async Task<IEnumerable<Client>> GetClients(int advisorID)
+        public async Task<IEnumerable<Client>> GetClients(string advisorID)
         {
             return await db.clients.Where(x => x.AdvisorID == advisorID).ToListAsync();
 
         }
 
-        public async Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(int clientid)
+        public async Task<IEnumerable<ClientSymptom>> GetClientSymtomAnsewr(string clientid)
         {
             IEnumerable<ClientSymptom> clientsymtoms = await db.clientSymptoms
                 .Include(cs => cs.symptomsCategory)
@@ -67,7 +67,7 @@ namespace CreaFormDemo.Services.Repository
 
         }
 
-        public async Task<IEnumerable<SymtomOverview>> GetSymtomOverview(int clientid)
+        public async Task<IEnumerable<SymtomOverview>> GetSymtomOverview(string clientid)
         {
             var symtomsviews = new List<SymtomOverview>();
             var clientsymtomanswer = await GetClientSymtomAnsewr(clientid);
@@ -116,7 +116,7 @@ namespace CreaFormDemo.Services.Repository
             return overview;
         }
 
-        public async Task<User> GetUserByID(int id)
+        public async Task<User> GetUserByID(string id)
         {
             var user = await db.users.FirstOrDefaultAsync(x => x.ID == id);
             if (user == null) return null;

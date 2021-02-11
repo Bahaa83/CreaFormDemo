@@ -12,7 +12,7 @@ namespace CreaFormDemo.DtoModel.MedicineDtoModel
         public string MedicinName { get; set; }
        
         public string CauseOfMedication { get; set; }
-        public int clientID { get; set; }
+        public string clientID { get; set; }
        
 
     }

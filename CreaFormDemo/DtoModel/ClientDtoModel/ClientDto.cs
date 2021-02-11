@@ -16,7 +16,7 @@ namespace CreaFormDemo.DtoModel.ClientDtoModel
         public int ZiPCod { get; set; }
         public string Ort { get; set; }
         public bool isCompany { get; set; }
-        public int UserID { get; set; }
-        public int AdvisorID { get; set; }
+        public string UserID { get; set; }
+        public string AdvisorID { get; set; }
     }
 }

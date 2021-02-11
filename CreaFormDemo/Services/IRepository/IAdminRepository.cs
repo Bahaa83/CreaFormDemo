@@ -9,8 +9,8 @@ namespace CreaFormDemo.Services.IRepository
   public  interface IAdminRepository
     {
         Task<IEnumerable<Advisor>> GetAllAdvisors();
-        Task<Advisor> CancelAdvisorAccount(int advisorID);
-        Task<Advisor> GetAdvisorByID(int id);
+        Task<Advisor> CancelAdvisorAccount(string advisorID);
+        Task<Advisor> GetAdvisorByID(string id);
         Task<bool> Save();
         Task<IEnumerable<Advisor>> GetAdvisorByName(string name);
     }

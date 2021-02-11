@@ -10,7 +10,7 @@ namespace CreaFormDemo.Entitys.Symptoms
     public class ClientSymptom
     {
         public int ID { get; set; }
-        public int ClientID { get; set; }
+        public string ClientID { get; set; }
         public  Client Client { get; set; }
         public string SymtomText { get; set; }
         public int SymtomCategoryID { get; set; }

@@ -52,7 +52,7 @@ namespace CreaFormDemo.Services.Repository
             return result.Entity;
         }
 
-        public async Task<Client> GetClientByUserID(int ID)
+        public async Task<Client> GetClientByUserID(string ID)
         {
            
             var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == ID);
@@ -74,7 +74,7 @@ namespace CreaFormDemo.Services.Repository
             return frequency;
         }
 
-        public async Task<GeneralQuestions> GetGeneralQuestionsbyUserid(int userid)
+        public async Task<GeneralQuestions> GetGeneralQuestionsbyUserid(string userid)
         {
             var client = await GetClientByUserID(userid);
 
@@ -90,7 +90,7 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-        public async Task<Medicine> GetMedicineByUserID(int Userid)
+        public async Task<Medicine> GetMedicineByUserID(string Userid)
         {
             var client = await db.clients.FirstOrDefaultAsync(x => x.UserID == Userid);
             var medicine = await db.medicines.FirstOrDefaultAsync(x => x.ClientID == client.ID);
@@ -104,14 +104,14 @@ namespace CreaFormDemo.Services.Repository
             return symtomcategori;
         }
 
-        public async Task<User> GetUserByID(int Id)
+        public async Task<User> GetUserByID(string Id)
         {
             var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);
             if (user == null) return null;
             return user;
         }
 
-        public async Task<Well_being> GetWellbeingByUserid(int Userid)
+        public async Task<Well_being> GetWellbeingByUserid(string Userid)
         {
             var client = await GetClientByUserID(Userid);
             var wellbeing = await db.well_Beings.FirstOrDefaultAsync(x => x.ClientID == client.ID);
