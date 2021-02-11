@@ -24,7 +24,8 @@ namespace CreaFormDemo.Services.Repository
         public async Task<Advisor> CompletionAdvisorProfile(Advisor advisor)
         {
             var _advisor = await db.advisors.AddAsync(advisor);
-
+            var user = await GetUserByID(advisor.UserID);
+            user.ProfileConfirmation = true;
             if (!await Save()) return null;
             return _advisor.Entity;
         }
