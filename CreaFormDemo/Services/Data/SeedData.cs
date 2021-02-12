@@ -17,28 +17,43 @@ namespace CreaFormDemo.Services.Data
     public class SeedData
     {
         private readonly CreaFormDBcontext db;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public SeedData(CreaFormDBcontext db)
+        public SeedData(CreaFormDBcontext _db,UserManager<User> userManager,RoleManager<Role> roleManager)
         {
-            this.db = db;
+            db = _db;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
         public void SeedUserData()
         {
-            #region//lagra Admin
-            if (! db.users.Any())
+            #region //lagra Roles
+            if (!_roleManager.Roles.Any())
             {
-                byte[] passwordhash, passwordsald;
-                CreatePasswordHash("Admin1983", out passwordhash, out passwordsald);
-                var newuser = new User()
+                var roles = new List<Role>
                 {
-                    UserName = "Bahaa",
-                    PasswordHash = passwordhash,
-                    PasswordSald = passwordsald,
-                    role = "Admin"
+                    new Role { Name = "Admin" },
+                    new Role { Name = "Advisor" },
+                    new Role { Name = "Client" },
                 };
-                db.users.Add(newuser);
-                db.SaveChanges();
+                foreach (var role in roles)
+                {
+                    _roleManager.CreateAsync(role).Wait();
+                }
             }
+                #endregion
+                #region//lagra Admin
+                if (!_userManager.Users.Any())
+                {
+
+                var adminuser = new UserModel()
+                {
+                    UserName = "Bahaa"
+                };
+            IdentityResult result= _userManager.CreateAsync(adminuser, "Admin1983").Result;
+                _userManager.AddToRoleAsync(adminuser, "Admin").Wait();
+                }
             #endregion
             #region   //lagra data i livsstil område
             string[] lifestyleAreas = { "Vanor", "Arbete", "Privat" };
@@ -319,18 +334,18 @@ namespace CreaFormDemo.Services.Data
             #endregion
 
         }
-     
-        private void  SaveCHanges()
-        {
-             db.SaveChanges();
-        }
-        private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
-        {
-           using(var hmac= new System.Security.Cryptography.HMACSHA512())
+
+            private void SaveCHanges()
             {
-                passwordsald = hmac.Key;
-                passwordhash=hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                db.SaveChanges();
             }
+            //private void CreatePasswordHash(string password, out byte[] passwordhash, out byte[] passwordsald)
+            //{
+            //   using(var hmac= new System.Security.Cryptography.HMACSHA512())
+            //    {
+            //        passwordsald = hmac.Key;
+            //        passwordhash=hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+            //    }
+            //}
         }
-    }
 }

@@ -26,7 +26,7 @@ namespace CreaFormDemo.Services.Repository
         {
             var result = await db.clients.AddAsync(client);
             var user = await GetUserByID(result.Entity.UserID);
-            user.ProfileConfirmation = true;
+            //user.ProfileConfirmation = true;
             if (!await Save()) return null;
             return result.Entity;
         }
@@ -104,9 +104,9 @@ namespace CreaFormDemo.Services.Repository
             return symtomcategori;
         }
 
-        public async Task<User> GetUserByID(string Id)
+        public async Task<UserModel> GetUserByID(string id)
         {
-            var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);
+            var user = await db.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
             return user;
         }

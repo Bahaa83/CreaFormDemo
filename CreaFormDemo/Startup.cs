@@ -62,8 +62,6 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
 
             services.AddTransient<SeedData>();
             services.AddAutoMapper(typeof(CreaFormProfile));
-
-
             //ADD Swagger
             services.AddSwaggerGen(Options =>
             {
@@ -79,9 +77,9 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
                     Description = "CreaForm API"
                 });
                 //Add Identity
-                services.AddIdentity<User, IdentityRole>()
-                
+                services.AddIdentity<UserModel, Role>()
                 .AddEntityFrameworkStores<CreaFormDBcontext>();
+
                 //För att visa beskrivningen relaterad till varje metod i kontrollen
                 var Xmlcommentfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlcommentFullPath = Path.Combine(AppContext.BaseDirectory, Xmlcommentfile);

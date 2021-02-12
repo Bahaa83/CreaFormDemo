@@ -56,11 +56,11 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
-                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                /*if (!User.ProfileConfirmation) return Unauthorized();*/// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
 
 
                 if (await repo.UserExists(model.UserName.ToLower())) return BadRequest("Användarnamnet är redan registrerat");
-                var createduser = await repo.Rigester(user.ID, model.UserName.ToLower(), model.Password, "Client");
+                var createduser = await repo.Rigester(user.Id, model.UserName.ToLower(), model.Password, "Client");
                 if (createduser == null)
                 { return BadRequest("Ett fel uppstod när Klienten registrerades"); }
 

@@ -47,8 +47,8 @@ namespace CreaFormDemo.Controllers
             {
 
                 var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
-                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
-                var advisor =  await repo.GetAdvisorByUserID(user.ID);
+               /* if (!user.ProfileConfirmation) return Unauthorized();*/// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var advisor =  await repo.GetAdvisorByUserID(user.Id);
 
                 var  Clients = await repo.GetClients(advisor.ID);
                 var ClientsToreturn = new List<ClientToReturnDto>();
@@ -84,11 +84,12 @@ namespace CreaFormDemo.Controllers
                 var user = await repo.GetUserByID
                     (User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
 
-                if (user.ProfileConfirmation) return BadRequest("Du har kompletterat din profile redan!");
+                //if (user.ProfileConfirmation)
+                //    return BadRequest("Du har kompletterat din profile redan!");
 
-             
+
                 var advisordto = mapper.Map<AdvisorDto>(createddvisordto);
-                advisordto.UserID = user.ID;
+                advisordto.UserID = user.Id;
                 var advisor = mapper.Map<Advisor>(advisordto);
 
                 var result = await repo.CompletionAdvisorProfile(advisor);
@@ -120,9 +121,9 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
-                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+               /* if (!user.ProfileConfirmation)*/ /*return Unauthorized();*/// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
 
-                var advisorfromRepo = await repo.GetAdvisorByUserID(user.ID);
+                var advisorfromRepo = await repo.GetAdvisorByUserID(user.Id);
                 if (advisorfromRepo == null) return NotFound();
                 mapper.Map(editAdvisor, advisorfromRepo);
 
@@ -152,9 +153,9 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
-                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+               /* if (!user.ProfileConfirmation)*/ /*return Unauthorized();*/// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
                 if (string.IsNullOrEmpty(name)) return BadRequest();
-                var advisor = await repo.GetAdvisorByUserID(user.ID);
+                var advisor = await repo.GetAdvisorByUserID(user.Id);
                 var Clients = await repo.GetClientbyName( name, advisor.ID);
                 if (Clients.Count()==0) return NotFound($"Det finns inte Klienter som matchar den här namnet!{ name}");
                 var ClientsDto = new List<ClientToReturnDto>();
@@ -189,8 +190,8 @@ namespace CreaFormDemo.Controllers
             try
             {
                 var user = await repo.GetUserByID(User.FindFirstValue(ClaimTypes.Name));// Hämtar user id som är inloggad
-                if (!user.ProfileConfirmation) return Unauthorized();// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
-                var advisor = await repo.GetAdvisorByUserID(user.ID);
+               /* if (!user.ProfileConfirmation)*/ /*return Unauthorized();*/// Kontrollera om den här user har kompletterat sitt profil eller inte för att undvika null referens eller status kod 500.
+                var advisor = await repo.GetAdvisorByUserID(user.Id);
                 var client = await repo.GetClientByID(clientid);
                 if (client.AdvisorID != advisor.ID) return Unauthorized();
 

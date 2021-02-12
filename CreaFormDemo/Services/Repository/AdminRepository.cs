@@ -28,9 +28,9 @@ namespace CreaFormDemo.Services.Repository
             if (!await Save()) return null;
             return result;
         }
-        public async Task<User> GetUserByID(string id)
+        public async Task<UserModel> GetUserByID(string id)
         {
-            var user = await dB.users.FirstOrDefaultAsync(x => x.ID == id);
+            var user = await dB.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
             return user;
         }

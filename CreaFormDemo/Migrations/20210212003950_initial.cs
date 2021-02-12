@@ -8,6 +8,48 @@ namespace CreaFormDemo.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "AspNetRoles",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordIsChanged = table.Column<bool>(type: "bit", nullable: false),
+                    UserIdThatCreatedit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Frekvens",
                 columns: table => new
                 {
@@ -138,22 +180,134 @@ namespace CreaFormDemo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    PasswordSald = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IsBlocked = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordIsChanged = table.Column<bool>(type: "bit", nullable: false),
-                    ProfileConfirmation = table.Column<bool>(type: "bit", nullable: false),
-                    UserIdThatCreatedit = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.ID);
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.ForeignKey(
+                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rådgivare",
+                columns: table => new
+                {
+                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Postnummer = table.Column<int>(type: "int", nullable: false),
+                    Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rådgivare", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Rådgivare_AspNetUsers_UserID",
+                        column: x => x.UserID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,28 +427,35 @@ namespace CreaFormDemo.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rådgivare",
+                name: "Klient",
                 columns: table => new
                 {
                     ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Postnummer = table.Column<int>(type: "int", nullable: false),
                     Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Ärföretagskonto = table.Column<bool>(name: "Är företagskonto", type: "bit", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    RådgivareID = table.Column<string>(name: "Rådgivare ID", type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rådgivare", x => x.ID);
+                    table.PrimaryKey("PK_Klient", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Rådgivare_users_UserID",
+                        name: "FK_Klient_AspNetUsers_UserID",
                         column: x => x.UserID,
-                        principalTable: "users",
-                        principalColumn: "ID",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Klient_Rådgivare_Rådgivare ID",
+                        column: x => x.RådgivareID,
+                        principalTable: "Rådgivare",
+                        principalColumn: "ID");
                 });
 
             migrationBuilder.CreateTable(
@@ -352,141 +513,6 @@ namespace CreaFormDemo.Migrations
                         column: x => x.kategoriID,
                         principalTable: "Vanors kategori",
                         principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Klient",
-                columns: table => new
-                {
-                    ID = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gatuadress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Postnummer = table.Column<int>(type: "int", nullable: false),
-                    Ort = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ärföretagskonto = table.Column<bool>(name: "Är företagskonto", type: "bit", nullable: false),
-                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    RådgivareID = table.Column<string>(name: "Rådgivare ID", type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Klient", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Klient_Rådgivare_Rådgivare ID",
-                        column: x => x.RådgivareID,
-                        principalTable: "Rådgivare",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Klient_users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "users",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Arbete Svaror",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Alternativtext = table.Column<string>(name: " Alternativ text", type: "nvarchar(max)", nullable: true),
-                    Poäng = table.Column<double>(type: "float", nullable: false),
-                    Stress = table.Column<bool>(type: "bit", nullable: false),
-                    StyrkaBristID = table.Column<int>(name: "Styrka/Brist ID", type: "int", nullable: false),
-                    StyrkaBristundergruppID = table.Column<int>(name: "Styrka/Brist under grupp ID", type: "int", nullable: false),
-                    FrågeID = table.Column<int>(name: "Fråge ID", type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Arbete Svaror", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Arbete Svaror_Arbete frågor_Fråge ID",
-                        column: x => x.FrågeID,
-                        principalTable: "Arbete frågor",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Arbete Svaror_Styrka-Brist Grupp_Styrka/Brist ID",
-                        column: x => x.StyrkaBristID,
-                        principalTable: "Styrka-Brist Grupp",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Arbete Svaror_Styrka-Brist under Grupp_Styrka/Brist under grupp ID",
-                        column: x => x.StyrkaBristundergruppID,
-                        principalTable: "Styrka-Brist under Grupp",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Privat Alternativ",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Alternativtext = table.Column<string>(name: " Alternativ text", type: "nvarchar(max)", nullable: true),
-                    Poäng = table.Column<double>(name: " Poäng", type: "float", nullable: false),
-                    Stress = table.Column<bool>(type: "bit", nullable: false),
-                    StyrkaBristgruppID = table.Column<int>(name: " Styrka/Brist grupp ID", type: "int", nullable: false),
-                    StyrkaBristundergruppID = table.Column<int>(name: " Styrka/Brist under grupp ID", type: "int", nullable: false),
-                    QuestionID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Privat Alternativ", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Privat Alternativ_Privat Frågor_QuestionID",
-                        column: x => x.QuestionID,
-                        principalTable: "Privat Frågor",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Privat Alternativ_Styrka-Brist Grupp_ Styrka/Brist grupp ID",
-                        column: x => x.StyrkaBristgruppID,
-                        principalTable: "Styrka-Brist Grupp",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Privat Alternativ_Styrka-Brist under Grupp_ Styrka/Brist under grupp ID",
-                        column: x => x.StyrkaBristundergruppID,
-                        principalTable: "Styrka-Brist under Grupp",
-                        principalColumn: "ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vanors alternativ",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Alternativtext = table.Column<string>(name: "Alternativ text", type: "nvarchar(max)", nullable: true),
-                    Poäng = table.Column<double>(type: "float", nullable: false),
-                    Stress = table.Column<bool>(type: "bit", nullable: false),
-                    Subopt = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    Nrmålsättnvitalitplan = table.Column<int>(name: "Nr målsättn vitalit.plan", type: "int", nullable: false),
-                    rättelse = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Plusminusgrupp = table.Column<int>(name: "Plus-minus grupp", type: "int", nullable: false),
-                    Undergrupp = table.Column<int>(type: "int", nullable: false),
-                    FrågaID = table.Column<int>(name: "Fråga ID", type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vanors alternativ", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Vanors alternativ_Plus minus grupp_Plus-minus grupp",
-                        column: x => x.Plusminusgrupp,
-                        principalTable: "Plus minus grupp",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Vanors alternativ_Plus minus under grupp_Undergrupp",
-                        column: x => x.Undergrupp,
-                        principalTable: "Plus minus under grupp",
-                        principalColumn: "ID");
-                    table.ForeignKey(
-                        name: "FK_Vanors alternativ_Vanors Frågor_Fråga ID",
-                        column: x => x.FrågaID,
-                        principalTable: "Vanors Frågor",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -593,6 +619,109 @@ namespace CreaFormDemo.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Arbete Svaror",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Alternativtext = table.Column<string>(name: " Alternativ text", type: "nvarchar(max)", nullable: true),
+                    Poäng = table.Column<double>(type: "float", nullable: false),
+                    Stress = table.Column<bool>(type: "bit", nullable: false),
+                    StyrkaBristID = table.Column<int>(name: "Styrka/Brist ID", type: "int", nullable: false),
+                    StyrkaBristundergruppID = table.Column<int>(name: "Styrka/Brist under grupp ID", type: "int", nullable: false),
+                    FrågeID = table.Column<int>(name: "Fråge ID", type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Arbete Svaror", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Arbete Svaror_Arbete frågor_Fråge ID",
+                        column: x => x.FrågeID,
+                        principalTable: "Arbete frågor",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Arbete Svaror_Styrka-Brist Grupp_Styrka/Brist ID",
+                        column: x => x.StyrkaBristID,
+                        principalTable: "Styrka-Brist Grupp",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Arbete Svaror_Styrka-Brist under Grupp_Styrka/Brist under grupp ID",
+                        column: x => x.StyrkaBristundergruppID,
+                        principalTable: "Styrka-Brist under Grupp",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Privat Alternativ",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Alternativtext = table.Column<string>(name: " Alternativ text", type: "nvarchar(max)", nullable: true),
+                    Poäng = table.Column<double>(name: " Poäng", type: "float", nullable: false),
+                    Stress = table.Column<bool>(type: "bit", nullable: false),
+                    StyrkaBristgruppID = table.Column<int>(name: " Styrka/Brist grupp ID", type: "int", nullable: false),
+                    StyrkaBristundergruppID = table.Column<int>(name: " Styrka/Brist under grupp ID", type: "int", nullable: false),
+                    QuestionID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Privat Alternativ", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Privat Alternativ_Privat Frågor_QuestionID",
+                        column: x => x.QuestionID,
+                        principalTable: "Privat Frågor",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Privat Alternativ_Styrka-Brist Grupp_ Styrka/Brist grupp ID",
+                        column: x => x.StyrkaBristgruppID,
+                        principalTable: "Styrka-Brist Grupp",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Privat Alternativ_Styrka-Brist under Grupp_ Styrka/Brist under grupp ID",
+                        column: x => x.StyrkaBristundergruppID,
+                        principalTable: "Styrka-Brist under Grupp",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vanors alternativ",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Alternativtext = table.Column<string>(name: "Alternativ text", type: "nvarchar(max)", nullable: true),
+                    Poäng = table.Column<double>(type: "float", nullable: false),
+                    Stress = table.Column<bool>(type: "bit", nullable: false),
+                    Subopt = table.Column<string>(type: "nvarchar(1)", nullable: false),
+                    Nrmålsättnvitalitplan = table.Column<int>(name: "Nr målsättn vitalit.plan", type: "int", nullable: false),
+                    rättelse = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Plusminusgrupp = table.Column<int>(name: "Plus-minus grupp", type: "int", nullable: false),
+                    Undergrupp = table.Column<int>(type: "int", nullable: false),
+                    FrågaID = table.Column<int>(name: "Fråga ID", type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vanors alternativ", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Vanors alternativ_Plus minus grupp_Plus-minus grupp",
+                        column: x => x.Plusminusgrupp,
+                        principalTable: "Plus minus grupp",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Vanors alternativ_Plus minus under grupp_Undergrupp",
+                        column: x => x.Undergrupp,
+                        principalTable: "Plus minus under grupp",
+                        principalColumn: "ID");
+                    table.ForeignKey(
+                        name: "FK_Vanors alternativ_Vanors Frågor_Fråga ID",
+                        column: x => x.FrågaID,
+                        principalTable: "Vanors Frågor",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Program-Alternativ",
                 columns: table => new
                 {
@@ -648,6 +777,45 @@ namespace CreaFormDemo.Migrations
                 name: "IX_Arbete Svaror_Styrka/Brist under grupp ID",
                 table: "Arbete Svaror",
                 column: "Styrka/Brist under grupp ID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "AspNetRoles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId",
+                table: "AspNetUserRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "AspNetUsers",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "AspNetUsers",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_clientSymptoms_ClientID",
@@ -771,6 +939,21 @@ namespace CreaFormDemo.Migrations
                 name: "Arbete Svaror");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserRoles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "clientSymptoms");
 
             migrationBuilder.DropTable(
@@ -796,6 +979,9 @@ namespace CreaFormDemo.Migrations
 
             migrationBuilder.DropTable(
                 name: "Arbete frågor");
+
+            migrationBuilder.DropTable(
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Privat Frågor");
@@ -840,7 +1026,7 @@ namespace CreaFormDemo.Migrations
                 name: "Vanors kategori");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Livs stil område");

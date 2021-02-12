@@ -25,7 +25,7 @@ namespace CreaFormDemo.Services.Repository
         {
             var _advisor = await db.advisors.AddAsync(advisor);
             var user = await GetUserByID(advisor.UserID);
-            user.ProfileConfirmation = true;
+            //user.ProfileConfirmation = true;
             if (!await Save()) return null;
             return _advisor.Entity;
         }
@@ -118,7 +118,7 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<User> GetUserByID(string id)
         {
-            var user = await db.users.FirstOrDefaultAsync(x => x.ID == id);
+            var user = await db.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user == null) return null;
             return user;
         }

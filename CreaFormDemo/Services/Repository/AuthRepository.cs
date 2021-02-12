@@ -28,28 +28,28 @@ namespace CreaFormDemo.Services.Repository
         public async Task<bool> UserExists(string name)
         {
       
-            if(await _dB.users.AnyAsync(x => x.UserName.Equals(name)))
+            if(await _dB.Users.AnyAsync(x => x.UserName.Equals(name)))
             {
                 return true;
             }
             return false;
         }
 
-        public async Task<User> Login(string name, string password)
+        public async Task<UserModel> Login(string name, string password)
         {
-            var user = await _dB.users.FirstOrDefaultAsync(x => x.UserName.Equals(name));
+            var user = await _dB.Users.FirstOrDefaultAsync(x => x.UserName.Equals(name));
             if (user == null)
             {
                 return null;
             }
-            if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, password))
-                return null;
-            user.Token = GenerateJwtToken(user);
+            //if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, password))
+            //    return null;
+            //user.Token = GenerateJwtToken(user);
             return user;
 
         }
 
-        public string GenerateJwtToken(User user)
+        public string GenerateJwtToken(UserModel user)
         {
             var tokenhandler = new JwtSecurityTokenHandler();
             var Key = Encoding.ASCII.GetBytes(_appsettings.Secret);
@@ -58,8 +58,8 @@ namespace CreaFormDemo.Services.Repository
                 Subject = new ClaimsIdentity(new Claim[]
                 {
 
-                    new Claim(ClaimTypes.Name, user.ID),
-                    new Claim(ClaimTypes.Role,user.role)
+                    new Claim(ClaimTypes.Name, user.Id),
+                    //new Claim(ClaimTypes.Role,user.role)
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Key), SecurityAlgorithms.HmacSha256Signature)
@@ -69,19 +69,19 @@ namespace CreaFormDemo.Services.Repository
             return Token;
         }
 
-        public async Task<User> Rigester(string userID,string name, string password,string role)
+        public async Task<UserModel> Rigester(string userID,string name, string password,string role)
         {
             byte[] passwordhash, passwordsald;
             CreatePasswordHash( password, out passwordhash, out passwordsald);
-            var newuser = new User()
+            var newuser = new UserModel()
             {
                 UserName = name,
-                PasswordHash = passwordhash,
-                PasswordSald = passwordsald,
-                role = role,
+                //PasswordHash = passwordhash,
+                //PasswordSald = passwordsald,
+                //role = role,
                 UserIdThatCreatedit = userID.ToString()
             };
-            await _dB.users.AddAsync(newuser);
+            await _dB.Users.AddAsync(newuser);
                 await _dB.SaveChangesAsync();
             
          
@@ -118,22 +118,22 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-        public async Task<User> GetUserByID(string id)
+        public async Task<UserModel> GetUserByID(string id)
         {
-            var user = await _dB.users.FirstOrDefaultAsync(x => x.ID == id);
+            var user = await _dB.Users.FirstOrDefaultAsync(x => x.Id == id);
             if (user != null) return user;
             return null;
         }
 
-        public async Task<bool> ChangePassword(User user, string currentpassword, string newpassword)
+        public async Task<bool> ChangePassword(UserModel user, string currentpassword, string newpassword)
         {
-            if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, currentpassword)) return false;
+            //if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, currentpassword)) return false;
 
-            byte[] newpasswordhash, newpasswordsald;
-            CreatePasswordHash(newpassword, out newpasswordhash, out newpasswordsald);
-            user.PasswordHash = newpasswordhash;
-            user.PasswordSald = newpasswordsald;
-            user.PasswordIsChanged = true;
+            //byte[] newpasswordhash, newpasswordsald;
+            //CreatePasswordHash(newpassword, out newpasswordhash, out newpasswordsald);
+            //user.PasswordHash = newpasswordhash;
+            //user.PasswordSald = newpasswordsald;
+            //user.PasswordIsChanged = true;
          return   await _dB.SaveChangesAsync() >= 0 ? true : false;
 
         }
