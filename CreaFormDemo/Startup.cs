@@ -63,6 +63,14 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
             services.AddTransient<SeedData>();
             services.AddAutoMapper(typeof(CreaFormProfile));
 
+            //Add Identity
+            services.AddIdentity<User, IdentityRole>( opt=>
+            { opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 5;
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireUppercase = true;
+            })
+            .AddEntityFrameworkStores<CreaFormDBcontext>();
 
             //ADD Swagger
             services.AddSwaggerGen(Options =>
@@ -78,6 +86,8 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
                     },
                     Description = "CreaForm API"
                 });
+              
+
                 //För att visa beskrivningen relaterad till varje metod i kontrollen
                 var Xmlcommentfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlcommentFullPath = Path.Combine(AppContext.BaseDirectory, Xmlcommentfile);
@@ -148,7 +158,7 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env,SeedData seedData)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedData seedData)
 
         {
             if (env.IsDevelopment())

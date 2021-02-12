@@ -4,6 +4,7 @@ using CreaFormDemo.Entitys.Clientprofile;
 using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,20 @@ namespace CreaFormDemo.Services.Repository
     public class ClientRepository : IClientRepository
     {
         private readonly CreaFormDBcontext db;
+        private readonly UserManager<User> _userManager;
         private readonly IMapper imapper;
 
-        public ClientRepository(CreaFormDBcontext db,IMapper imapper)
+        public ClientRepository(CreaFormDBcontext db,UserManager<User> userManager,IMapper imapper)
         {
             this.db = db;
+            _userManager = userManager;
             this.imapper = imapper;
         }
         public async Task<Client> CompletionClientProfile( Client client)
         {
             var result = await db.clients.AddAsync(client);
             var user = await GetUserByID(result.Entity.UserID);
-            user.ProfileConfirmation = true;
+            //user.ProfileConfirmation = true;
             if (!await Save()) return null;
             return result.Entity;
         }
@@ -104,9 +107,9 @@ namespace CreaFormDemo.Services.Repository
             return symtomcategori;
         }
 
-        public async Task<User> GetUserByID(string Id)
+        public async Task<User> GetUserByID(string id)
         {
-            var user = await db.users.FirstOrDefaultAsync(x => x.ID == Id);
+            var user = await _userManager.FindByIdAsync( id);
             if (user == null) return null;
             return user;
         }

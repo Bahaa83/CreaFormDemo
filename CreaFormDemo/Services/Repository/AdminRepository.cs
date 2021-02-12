@@ -1,6 +1,7 @@
 ﻿using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ namespace CreaFormDemo.Services.Repository
     public class AdminRepository : IAdminRepository
     {
         private readonly CreaFormDBcontext dB;
+        private readonly UserManager<User> _userManager;
 
-        public AdminRepository(CreaFormDBcontext DB)
+        public AdminRepository(CreaFormDBcontext DB,UserManager<User> userManager)
         {
             dB = DB;
+            _userManager = userManager;
         }
 
         public async Task<Advisor> CancelAdvisorAccount(string  advisorID)
@@ -30,7 +33,7 @@ namespace CreaFormDemo.Services.Repository
         }
         public async Task<User> GetUserByID(string id)
         {
-            var user = await dB.users.FirstOrDefaultAsync(x => x.ID == id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user == null) return null;
             return user;
         }
