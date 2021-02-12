@@ -62,7 +62,16 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
 
             services.AddTransient<SeedData>();
             services.AddAutoMapper(typeof(CreaFormProfile));
-            
+
+            //Add Identity
+            services.AddIdentity<User, IdentityRole>( opt=>
+            { opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 5;
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireUppercase = true;
+            })
+            .AddEntityFrameworkStores<CreaFormDBcontext>();
+
             //ADD Swagger
             services.AddSwaggerGen(Options =>
             {
@@ -77,9 +86,7 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
                     },
                     Description = "CreaForm API"
                 });
-                //Add Identity
-                services.AddIdentity<User, Role>()
-                .AddEntityFrameworkStores<CreaFormDBcontext>();
+              
 
                 //För att visa beskrivningen relaterad till varje metod i kontrollen
                 var Xmlcommentfile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -151,7 +158,7 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env/*,SeedData seedData*/)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SeedData seedData)
 
         {
             if (env.IsDevelopment())
@@ -167,7 +174,7 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            //seedData.SeedUserData();// för seed Admin in data base (bara en gång)
+            seedData.SeedUserData();// för seed Admin in data base (bara en gång)
             app.UseCors(X =>
           X.AllowAnyOrigin()
           .AllowAnyMethod()

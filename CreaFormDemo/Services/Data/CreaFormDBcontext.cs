@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:IdentityDbContext<User,Role,string>
+    public class CreaFormDBcontext:IdentityDbContext<User,IdentityRole,string>
 
     { 
         public CreaFormDBcontext( DbContextOptions<CreaFormDBcontext> options) : base(options)

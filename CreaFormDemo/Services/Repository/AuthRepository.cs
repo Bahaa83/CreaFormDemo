@@ -30,7 +30,7 @@ namespace CreaFormDemo.Services.Repository
         }
         public async Task<bool> UserExists(string name)
         {
-            var exist = _userManager.FindByNameAsync(name);
+            var exist = await _userManager.FindByNameAsync(name);
                 if(exist!=null) return true;
                  return false;
         }
