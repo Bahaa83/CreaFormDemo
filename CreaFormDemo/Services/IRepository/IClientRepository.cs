@@ -11,7 +11,7 @@ namespace CreaFormDemo.Services.IRepository
   public  interface IClientRepository
     {
         Task<Client> CompletionClientProfile(Client client);
-        Task<UserModel> GetUserByID(string ID);
+        Task<User> GetUserByID(string ID);
         Task<Client> GetClientByUserID(string ID);
         Task<GeneralQuestions> FillInTheGeneralQuestions(GeneralQuestions clientProfile);
         Task<Medicine> FillInTheMedicineInformations(Medicine medicine);

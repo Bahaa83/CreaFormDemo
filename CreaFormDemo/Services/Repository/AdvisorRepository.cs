@@ -2,6 +2,7 @@
 using CreaFormDemo.Entitys.Symptoms;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Services.IRepository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,13 @@ namespace CreaFormDemo.Services.Repository
     public class AdvisorRepository : IAdvisorRepository
     {
         private readonly CreaFormDBcontext db;
+        private readonly UserManager<User> _userManager;
         private readonly ISymtomRepo symtomRepo;
 
-        public AdvisorRepository(CreaFormDBcontext db, ISymtomRepo symtomRepo)
+        public AdvisorRepository(CreaFormDBcontext db,UserManager<User> userManager, ISymtomRepo symtomRepo)
         {
             this.db = db;
+            _userManager = userManager;
             this.symtomRepo = symtomRepo;
         }
 
@@ -118,8 +121,9 @@ namespace CreaFormDemo.Services.Repository
 
         public async Task<User> GetUserByID(string id)
         {
-            var user = await db.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if (user == null) return null;
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return  null;
             return user;
         }
 

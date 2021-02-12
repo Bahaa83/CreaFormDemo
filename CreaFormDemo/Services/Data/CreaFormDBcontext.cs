@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace CreaFormDemo.Entitys
 {
-    public class CreaFormDBcontext:IdentityDbContext<UserModel,Role,string>
+    public class CreaFormDBcontext:IdentityDbContext<User,Role,string>
 
     { 
         public CreaFormDBcontext( DbContextOptions<CreaFormDBcontext> options) : base(options)
@@ -142,13 +142,13 @@ namespace CreaFormDemo.Entitys
 
             #endregion
             #region//Konton//
-            modelBuilder.Entity<UserModel>()
+            modelBuilder.Entity<User>()
                 .HasOne<Client>(x => x.client)
                 .WithOne(x => x.user)
                 .HasForeignKey<Client>(x => x.UserID);
 
 
-            modelBuilder.Entity<UserModel>()
+            modelBuilder.Entity<User>()
               .HasOne<Advisor>(x => x.advisor)
               .WithOne(x => x.user)
               .HasForeignKey<Advisor>(x => x.UserID);

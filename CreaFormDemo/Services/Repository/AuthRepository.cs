@@ -2,6 +2,7 @@
 using CreaFormDemo.Entitys;
 using CreaFormDemo.Entitys.Users;
 using CreaFormDemo.Repository;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -18,26 +19,25 @@ namespace CreaFormDemo.Services.Repository
     public class AuthRepository : IAuthRepository
     {
         private readonly CreaFormDBcontext _dB;
+        private readonly UserManager<User> _userManager;
         private readonly Appsettings _appsettings;
        
-        public AuthRepository(CreaFormDBcontext DB,IOptions<Appsettings> appsettings)
+        public AuthRepository(CreaFormDBcontext DB,UserManager<User> userManager,IOptions<Appsettings> appsettings)
         {
             _dB = DB;
+           _userManager = userManager;
             _appsettings = appsettings.Value;
         }
         public async Task<bool> UserExists(string name)
         {
-      
-            if(await _dB.Users.AnyAsync(x => x.UserName.Equals(name)))
-            {
-                return true;
-            }
-            return false;
+            var exist = _userManager.FindByNameAsync(name);
+                if(exist!=null) return true;
+                 return false;
         }
 
-        public async Task<UserModel> Login(string name, string password)
+        public async Task<User> Login(string name, string password)
         {
-            var user = await _dB.Users.FirstOrDefaultAsync(x => x.UserName.Equals(name));
+            var user = await _userManager.FindByNameAsync(name);
             if (user == null)
             {
                 return null;
@@ -49,7 +49,7 @@ namespace CreaFormDemo.Services.Repository
 
         }
 
-        public string GenerateJwtToken(UserModel user)
+        public string GenerateJwtToken(User user)
         {
             var tokenhandler = new JwtSecurityTokenHandler();
             var Key = Encoding.ASCII.GetBytes(_appsettings.Secret);
@@ -69,11 +69,11 @@ namespace CreaFormDemo.Services.Repository
             return Token;
         }
 
-        public async Task<UserModel> Rigester(string userID,string name, string password,string role)
+        public async Task<User> Rigester(string userID,string name, string password,string role)
         {
             byte[] passwordhash, passwordsald;
             CreatePasswordHash( password, out passwordhash, out passwordsald);
-            var newuser = new UserModel()
+            var newuser = new User()
             {
                 UserName = name,
                 //PasswordHash = passwordhash,
@@ -81,8 +81,8 @@ namespace CreaFormDemo.Services.Repository
                 //role = role,
                 UserIdThatCreatedit = userID.ToString()
             };
-            await _dB.Users.AddAsync(newuser);
-                await _dB.SaveChangesAsync();
+            await _userManager.CreateAsync(newuser);
+                //await _dB.SaveChangesAsync();
             
          
             return newuser;
@@ -118,14 +118,14 @@ namespace CreaFormDemo.Services.Repository
             }
         }
 
-        public async Task<UserModel> GetUserByID(string id)
+        public async Task<User> GetUserByID(string id)
         {
-            var user = await _dB.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user != null) return user;
             return null;
         }
 
-        public async Task<bool> ChangePassword(UserModel user, string currentpassword, string newpassword)
+        public async Task<bool> ChangePassword(User user, string currentpassword, string newpassword)
         {
             //if (!verifypasswordhash(user.PasswordHash, user.PasswordSald, currentpassword)) return false;
 
