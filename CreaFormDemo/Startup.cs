@@ -65,7 +65,8 @@ options.SerializerSettings.ReferenceLoopHandling=Newtonsoft.Json.ReferenceLoopHa
 
             //Add Identity
             services.AddIdentity<User, IdentityRole>( opt=>
-            { opt.Password.RequireNonAlphanumeric = false;
+            { 
+                opt.Password.RequireNonAlphanumeric = false;
                 opt.Password.RequiredLength = 5;
                 opt.Password.RequireDigit = true;
                 opt.Password.RequireUppercase = true;
